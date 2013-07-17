@@ -1,5 +1,102 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    // Carousel
+    div#myCarousel.carousel.slide
+        div.carousel-inner
+            div.item.active
+                img(src="img/pork_and_corn.jpg", alt="")
+                div.container
+                    div.carousel-caption
+                        h1 Pork + Corn
+                        p.lead
+                            Equals pure bliss. Come on! It's from the legendary Guy Fieri!
+                        a(class="btn btn-large btn-warning", href="#") Learn More
+//-
+            div.item
+                img(src="img/beef.jpg", alt="")
+                div.container
+                    div.carousel-caption
+                        h1 Tangerine Beef
+                        p.lead 
+                            We dare you to try to resist this succulent treat served up by Chef Samantha. We double dare you.
+                            a(class="btn btn-large btn-success", href="#") Learn more
+//-
+            div.item
+                img(src="img/brownie.jpg", alt="")
+                div.container
+                    div.carousel-caption
+                        h1 Brownies!!!
+                        p.lead
+                            Yeah. This really <em>is</em> food porn.
+                        a(class="btn btn-large btn-primary", href="#") Learn more
+
+        a(class="left carousel-control", href="#myCarousel", data-slide="prev") &lsaquo;
+        a(class="right carousel-control", href="#myCarousel", data-slide="next") &rsaquo;
+//-
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    div.container.marketing
+        // Three columns of text below the carousel
+        div.row-fluid
+            div.span4
+                h2 How to VenFu?
+                p
+                    It's just as deep as a Zen koan, but the answer is <em>really</em> simple:  You Decide!
+                p
+                    a(class="btn", href="#1") Learn More &raquo;
+
+            div.span4
+                h2 Become a Ven(Fu)dor!
+                p
+                    We can help you get the food you love making to the people who love eating it!
+                p
+                    a(class="btn", href="#2") Learn More &raquo;
+
+            div.span4
+                h2 Deliver VenFu!
+                p
+                    Become a part of the current crowdsourcing wave! Delight young and old alike by delivering delectable dishes right to their doors!
+                p
+                    a(class="btn" href="#3") Learn More &raquo;
+
+        // START THE FEATURETTES
+
+        hr#1.featurette-divider
+
+        div.featurette
+            img(class="featurette-image pull-right", src="img/bush.jpg")
+            h2.featurette-heading How to VenFu? -
+                span.muted You be the decider.
+            p.lead 
+                With VenFu, you have serious options. You can find a vendor, order food now, and either pick it up or 
+                have it delivered--just like you'd expect... Or you can schedule an order now and get it later, when 
+                and where it's convenient for you.
+            a(class="btn btn-large btn-primary", href="#", type="button") See a Menu
+
+        hr#2.featurette-divider
+
+        div.featurette
+            img(class="featurette-image pull-left", src="img/south_park_chef.gif")
+            h2.featurette-heading Become a Vendor - 
+                span.muted Spread Love.
+            p.lead
+                As a VenFu vendor, you have the ability to focus on what you love, which is making food. 
+                VenFu is a tool that gives vendors easy access to customers, delivery, and all the other so-called 
+                "management" stuff that doesn't have anything to do with the art of making delicious foods.
+            a(class="btn btn-large btn-primary pull-right", href="#", type="button") Become a Vendor
+
+        hr#3.featurette-divider
+
+        div.featurette
+            img(class="featurette-image pull-right", src="img/delivery.jpg")
+            h2.featurette-heading Deliver VenFu - 
+                span.muted Kinda like Santa.
+            p.lead 
+                Whether you are a part-time student, a professional courier, or just plain entrepreneurial, we can use 
+                your help! Click the button and join our delivery team!
+            a(class="btn btn-large btn-primary", href="#", type="button") Deliver VenFu
+
+        hr.featurette-divider

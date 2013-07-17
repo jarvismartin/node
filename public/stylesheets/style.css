@@ -100,6 +100,9 @@
     }
     .featurette-image {
       margin-top: -100px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+      width: 300px; 
+      height: 300px; 
+      border-radius: 5%;
     }
 
     /* Give some space on the sides of the floated elements so text doesn't run right into it. */
