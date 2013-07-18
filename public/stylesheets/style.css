@@ -102,7 +102,8 @@
     .featurette-image {
       margin-top: -100px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
       width: 300px; 
-      height: 300px; 
+      height: 300px;
+      border: 5px solid #ccc;
       border-radius: 5%;
     }
 
@@ -131,6 +132,10 @@
 
     @media (max-width: 979px) {
 
+      .navbar {
+          margin-bottom: 1px;
+      }
+      
       .navbar-wrapper {
           margin-top: 0;
       }
@@ -141,6 +146,10 @@
       .navbar-inner {
         border-radius: 0;
         margin: 0;
+      }
+      
+      .carousel {
+          margin-top: 0;
       }
 
       .carousel .item {
