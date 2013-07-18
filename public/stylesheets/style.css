@@ -160,6 +160,9 @@
         max-width: 40%;
         margin: 0 auto 20px;
       }
+      .featurette-heading {
+          margin: 0;
+      }
     }
 
 
