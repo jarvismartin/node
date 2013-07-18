@@ -4,7 +4,8 @@
 
     body {
       padding-bottom: 40px;
-      color: #5a5a5a;
+      background: #FFF url('/images/squairy_light.png') repeat fixed center;
+
     }
     
     /* CUSTOMIZE THE NAVBAR
@@ -120,6 +121,7 @@
       line-height: 1;
       letter-spacing: -1px;
       margin-top: -40px;
+      text-shadow:1px 1px 1px rgba(255, 255, 255, 0.7), -1px -1px 1px rgba(0, 0, 0, 0.7);
     }
 
 
