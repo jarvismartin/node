@@ -17,10 +17,19 @@ exports.customers = function(req, res){
 
 /*
  * GET vendors page.
+ *
+ * This route uses the database function 'getUserProvider()' (associated in app.js).
+ * The UserProvider object has a function for getting a list of vendors which 
+ * requires a callback function. This callback function handles the database 
+ * results, including any errors (not yet). Then, for debug sake, it logs the results
+ * and sends the vendor list to the vendors view.
  */
-
 exports.vendors = function(req, res){
-  res.render('vendors', { title: 'VenFu - Vendors' });
+  res.getUserProvider().getVendors(function(results) {
+    console.log(results);
+    // res.json(results);
+    res.render('vendors', { title: 'VenFu - Vendors', vendors: results });
+  });
 };
 
 /*

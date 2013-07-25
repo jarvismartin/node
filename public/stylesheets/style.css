@@ -8,17 +8,25 @@
 
     }
     
+    /* Making sure the content begins UNDER the Nav Bar. */
+    .content {
+        margin-top: 42px;
+    }
+    
     /* CUSTOMIZE THE NAVBAR
     -------------------------------------------------- */
-
+      .form-signin {
+          width: 300px;
+      }
 
     /* CUSTOMIZE THE CAROUSEL
     -------------------------------------------------- */
 
     /* Carousel base class */
     .carousel {
-      margin-top: 42px;
-      margin-bottom: 20px;
+      margin-top: 0;
+      margin-bottom: 40px;
+      height: 90%;
       box-shadow: 10px 10px 5px #000;
     }
 
@@ -54,7 +62,8 @@
       bottom: 0;
       max-width: 350px;
       padding: 10px;
-      margin: 280px auto;
+      margin-top: 280px;
+      margin-left: 50px;
       background-color: rgba(0,0,0, 0.6);
       text-align: center;
       border-radius: 2%;
@@ -71,7 +80,19 @@
       margin-top: 10px;
     }
 
-
+    /* SIDEBAR CONTENT
+    -------------------------------------------------- */
+    
+    .sidebar {
+        display: block;      
+    }
+    
+    .sidebar a {
+        width: 140px;
+        margin-top: 40px;
+        color: #EEE;
+        text-shadow:1px 1px 1px rgba(255, 255, 255, 0.7), -1px -1px 1px rgba(0, 0, 0, 0.7);
+    }
 
     /* MARKETING CONTENT
     -------------------------------------------------- */
@@ -131,10 +152,6 @@
     -------------------------------------------------- */
 
     @media (max-width: 979px) {
-
-      .navbar {
-          margin-bottom: 1px;
-      }
       
       .navbar-wrapper {
           margin-top: 0;
@@ -148,16 +165,12 @@
         margin: 0;
       }
       
-      .carousel {
-          margin-top: 0;
+      .content {
+          margin-top: 1px;
       }
-
-      .carousel .item {
-        height: 500px;
-      }
-      .carousel img {
-        width: auto;
-        height: 500px;
+      
+      #myCarousel {
+          display: none;
       }
 
       .featurette {

@@ -1,0 +1,1 @@
+{"ts":1374369879209,"silentsave":true,"restoring":false,"patch":[[{"diffs":[[1,"!function ($) {\n    $(function(){\n        // carousel demo\n        $('#myCarousel').carousel()\n    })\n}(window.jQuery)"]],"start1":0,"start2":0,"length1":0,"length2":118}]],"length":118}
