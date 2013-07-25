@@ -8,6 +8,13 @@
 
     }
     
+    img {
+  		max-width: 100%;
+  		
+  		/* just in case, to force correct aspet ratio */
+  		height: auto !important;
+		}
+    
     /* Making sure the content begins UNDER the Nav Bar. */
     .content {
         margin-top: 42px;
