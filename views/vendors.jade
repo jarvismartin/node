@@ -1,11 +1,11 @@
-doctype 5
-html(lang="en")
-  head
-    title= pageTitle
-  body
-    h1 #{title}
-    #container.col
-      div
-        for vendor in vendors
-          span #{vendor.name}
-          br
+extends layout
+
+block content
+	.content
+		.container
+			h1 #{title}
+			h2 #{vendors}
+			div
+				for vendor in vendors
+					span #{vendor.name}
+					br

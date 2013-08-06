@@ -1,4 +1,4 @@
-div.container-fluid    
+  //- .container.well   
     // FOOTER
     footer
         p.pull-right
@@ -7,9 +7,47 @@ div.container-fluid
             a(href="#", style="margin-left: 2%;") Privacy &middot; 
             a(href="#") Terms
 
-    // Le javascript                
-    // Placed at the end of the document so the pages load faster
-            
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')        
-    script(src="/javascripts/bootstrap.min.js")       
-    script(src="/javascripts/carousel.js")
+// Le javascript                
+// Placed at the end of the document so the pages load faster
+
+// jQuery
+script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+
+// Latest compiled and minified JavaScript 
+script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js")
+// Old Bootstrap
+//script(src="/bootstrap/js/bootstrap.min.js")
+
+// Toggle Nav Menu
+script.
+  $(document).ready(function(){
+  
+    $("#hideNav").click(function(){
+      $("#navContent").hide(200);
+      var audio = $("#star")[0];
+      audio.play();
+    });
+    
+    $("#navMenu").click(function(){
+      $("#navContent").show(200);
+      var audio = $("#star")[0];
+      audio.play();
+    });
+    
+  });
+      
+  //- Submit Form POST Data -- NOT NEEDED
+    script.
+      $(function(){
+        $('#myFormSubmit').click(function(e){
+          e.preventDefault();
+          console.log( $('#myForm').serialize());
+          $.post('/login', 
+            $('#myForm').serialize(), 
+              function(data, status, xhr){
+                // do something here with response;
+                console.log( $('#myForm').serialize());
+              });
+        });
+      });
+
