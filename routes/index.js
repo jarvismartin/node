@@ -81,5 +81,13 @@ exports.about = function(req, res){
   res.render('about', { title: 'How to VenFu' });
 };
 
+/*
+ * GET settings page.
+ */
+
+exports.settings = function(req, res){
+  res.render('settings', { title: 'VenFu - Account Settings' });
+};
+
 
 
