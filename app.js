@@ -148,6 +148,7 @@ app.get('/suggestions', routes.suggestions);
 app.get('/customerService', routes.customerService);
 app.get('/login', routes.login);
 app.get('/register', routes.register);
+app.get('/about', routes.about);
 
 app.post('/login',
   passport.authenticate('local', { successRedirect: '/',

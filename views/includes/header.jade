@@ -15,6 +15,12 @@ html
     <script src="public/javascripts/aFarkas-html5shiv-67bff28/dist/html5shiv.js"></script>
     <![endif]-->
     
+    // jQuery
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    
+    // Latest compiled and minified JavaScript 
+    script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js")
+    
   body
   
     
@@ -39,28 +45,46 @@ html
       // HOME + SIGN UP/IN
       ul.nav.pull-left
         li
-          a(href="/") <icon class="icon-home icon-white"></icon> Home
+          a(href="/")
+            icon.icon-home  Home
        
-        li
-          a(href="#registerModal", id="register", data-toggle="modal") Register
-        li
-          a(href="#loginModal", id="login", data-toggle="modal") Log In
+        //- li
+            a(href="#registerModal", id="register", data-toggle="modal")
+              icon.icon-edit  Register
+            
+            li
+              a(href="#loginModal", id="login", data-toggle="modal")
+                icon.icon-lock  Log In
           
-      ul.nav.pull-left
         li
-          a(href="/customers") Customers
+          a(href="/settings")
+            icon.icon-wrench  Settings
+        
         li
-          a(href="/vendors") Vendors
-        li
-          a(href="/delivery") Delivery
+          a(href="/", id="logout")
+            icon.icon-unlock  Log Out
         
       ul.nav.pull-left
         li
-          a(href="#") About Us
+          a(href="/customers")
+            icon.icon-food  Customers
         li
-          a(href="/suggestions") Suggestions
+          a(href="/vendors")
+            icon.icon-beer  Vendors
         li
-          a(href="/customerService") Problems?
+          a(href="/delivery")  
+            icon.icon-truck  Delivery
+        
+      ul.nav.pull-left
+        li
+          a(href="/about")  
+            icon.icon-info-sign  About Us
+        li
+          a(href="/suggestions")
+            icon.icon-edit  Suggestions
+        li
+          a(href="/customerService")  
+            icon.icon-exclamation-sign   Problems?
       
       #hideNav
         //i.icon-remove-sign.icon-2x

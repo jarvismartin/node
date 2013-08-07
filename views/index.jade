@@ -5,42 +5,42 @@ block content
   #foodPorn.carousel.slide
     // Wrapper for the Slides
     .carousel-inner
-      .item.active
+      a.item.active(href="#")
         img.img-responsive(src="images/beef.jpg", alt="")
-        .carousel-caption
+        //-.carousel-caption
           h2 Tangerine Beef
           p.lead We dare you to try to resist this succulent treat served up by Chef Samantha. We double dare you.
           a.btn.btn-success.pull-right(href="#") More
-      .item
+      a.item(href="#")
         img(src="images/brownie.jpg", alt="")
-        .carousel-caption
+        //-.carousel-caption
           h2 Brownies!!!
           p.lead Yeah. This really <em>is</em> food porn.
           a.btn.btn-info.pull-right(href="#") More
-      .item
+      a.item(href="#")
         img(src="images/pork_and_corn.jpg", alt="")
-        .carousel-caption
+        //-.carousel-caption
           h2 Pork + Corn
           p.lead Equals pure bliss. Come on! It's from the legendary Guy Fieri!
           a.btn.btn-warning.pull-right(href="#") More
           
     // Controls        
-    a.left.carousel-control(href="#foodPorn", data-slide="prev")
-      span.icon-prev
-    a.right.carousel-control(href="#foodPorn", data-slide="next")
-      span.icon-next
+    a.left.carousel-control(href="#foodPorn", data-slide="prev", style="background: none;")
+      span.left-carousel-control.icon-angle-left.icon-4x
+    a.right.carousel-control(href="#foodPorn", data-slide="next", style="background: none;")
+      span.right-carousel-control.icon-angle-right.icon-4x
   
   // Simple layout
   .container
     .row.hello
-      .col-lg-2
-        h1(style="") VenFu
+      .col-12.col-lg-2
+        h1 VenFu
       // SEARCH BAR
-      .col-lg-5
+      .col-12.col-lg-5
         input.form-control(id="bigSearch", type="text", placeholder="Search", style="width: 100%; margin-top: 20px;")
-      .col-lg-4.pull-right(style="")
+      .col-12.col-lg-4.pull-right(style="")
         h2 
-          a(href="#", style="color: #DDD") Do you know VenFu?
+          a(href="/about", style="color: #DDD") Do you know VenFu?
   
 //- Giant Buttons and featurettes
   .container.marketing

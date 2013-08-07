@@ -73,4 +73,13 @@ exports.customerService = function(req, res){
   res.render('customerService', { title: 'VenFu - Customer Service' });
 };
 
+/*
+ * GET about page.
+ */
+
+exports.about = function(req, res){
+  res.render('about', { title: 'How to VenFu' });
+};
+
+
 
