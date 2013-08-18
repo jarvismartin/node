@@ -138,8 +138,6 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 
-
-
 app.get('/users', user.list);
 app.get('/customers', routes.customers);
 app.get('/vendors', routes.vendors);
@@ -151,10 +149,36 @@ app.get('/register', routes.register);
 app.get('/about', routes.about);
 app.get('/settings', routes.settings);
 
+app.get('/logout', function(req, res){
+  // console.log("Logging Out Now...");
+  req.logout();
+  // console.log(req.user);
+  // console.log(req.session);
+  res.redirect('/');
+});
+
 app.post('/login',
   passport.authenticate('local', { successRedirect: '/',
                                    failureRedirect: '/login'})
 );
+
+// function authenticatedOrNot(req, res, next){
+//     if(req.isAuthenticated()){
+//         next();
+//     }else{
+//         res.redirect("/login");
+//     }
+// }
+// 
+// app.get('/user', 
+//   authenticatedOrNot,
+//   // passport.authenticate('local', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     console.log(req.user);
+//     res.json(req.user);
+//   }
+// );
+
 
 app.post('/register',
   // passport.authenticate('local', { successRedirect: '/',
@@ -184,6 +208,8 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
+
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

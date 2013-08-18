@@ -8,6 +8,7 @@ html
     <meta name="author" content="">
     // Latest compiled and minified CSS 
     link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css")
+    // Font Awesome icons
     link(href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css", rel="stylesheet")
     link(rel='stylesheet', href='/stylesheets/style.css')
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -15,11 +16,7 @@ html
     <script src="public/javascripts/aFarkas-html5shiv-67bff28/dist/html5shiv.js"></script>
     <![endif]-->
     
-    // jQuery
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
     
-    // Latest compiled and minified JavaScript 
-    script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js")
     
   body
   
@@ -42,27 +39,31 @@ html
 
       hr(style="color: white;")
       
-      // HOME + SIGN UP/IN
+      // SIGN UP/IN + HOME
       ul.nav.pull-left
+        
+        // Determine if User is logged in and render appropriate content
+        // typeof(user) == undefined
+        if !loggedIn
+          li
+            a(href="#loginModal", id="login", data-toggle="modal")
+              icon.icon-meh  Not signed in
+            
+          li
+            a(href="#loginModal", id="login", data-toggle="modal")
+              icon.icon-lock  Sign in
+        else 
+          li
+            a(href="/settings")
+              icon.icon-user  !{user.username}
+          
+          li
+            a(href="/logout", id="logout")
+              icon.icon-unlock  Log Out
+        
         li
           a(href="/")
             icon.icon-home  Home
-       
-        //- li
-            a(href="#registerModal", id="register", data-toggle="modal")
-              icon.icon-edit  Register
-            
-            li
-              a(href="#loginModal", id="login", data-toggle="modal")
-                icon.icon-lock  Log In
-          
-        li
-          a(href="/settings")
-            icon.icon-wrench  Settings
-        
-        li
-          a(href="/", id="logout")
-            icon.icon-unlock  Log Out
         
       ul.nav.pull-left
         li
@@ -70,7 +71,7 @@ html
             icon.icon-food  Customers
         li
           a(href="/vendors")
-            icon.icon-beer  Vendors
+            icon.icon-coffee  Vendors
         li
           a(href="/delivery")  
             icon.icon-truck  Delivery
@@ -130,10 +131,10 @@ html
                     label Deliver-Fu
                       input(id="chooseDelivery", name="classification", type="checkbox", value="D") 
               .modal-footer
-                button.btn.btn-primary.pull-left(id='myFormSubmit', type="submit") Sign Up 
-                  icon.icon-ok
-                button.btn.btn-default.pull-right(data-dismiss="modal") Cancel 
-                  icon.icon-remove
+                button.btn.btn-primary.pull-left(id='myFormSubmit', type="submit")
+                  icon.icon-lock  Sign Up
+                button.btn.btn-default.pull-right(data-dismiss="modal")
+                  icon.icon-remove  Cancel
         
     #loginModal.modal.fade
       .modal-dialog
@@ -141,24 +142,45 @@ html
           .modal-header
             button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
             h3 Please sign in
+              a.btn.btn-success.pull-right(style="margin-right: 50px", href="#registerModal", id="register", data-toggle="modal", data-dismiss="modal")
+                icon.icon-plus  Join us
           .modal-body
-              form.form-horizontal(id="myForm", action="/login", method="post")
-                .form-group
-                  label.col-lg-2.control-label(for="username") Username
-                  .col-lg-10
-                    input.form-control(type="text", id="username", name="username", placeholder="Username")
-                .form-group
-                  label.col-lg-2.control-label(for="password") Password
-                  .col-lg-10
-                    input.form-control(type="password", id="password", name="password", placeholder="Password")
-                    // .checkbox
-                    //   label Remember me
-                    //     input(type="checkbox", name="classification")
-                .modal-footer
-                  button.btn.btn-primary.pull-left(id='myFormSubmit', type="submit") Sign In 
-                    icon.icon-lock
-                  button.btn.btn-default.pull-right(data-dismiss="modal") Cancel 
-                    icon.icon-remove
+            form.form-horizontal(id="myForm", action="/login", method="post")      
+              .form-group
+                label.col-lg-2.control-label(for="username") Username
+                .col-lg-10
+                  input.form-control(type="text", id="username", name="username", placeholder="Username")
+              .form-group
+                label.col-lg-2.control-label(for="password") Password
+                .col-lg-10
+                  input.form-control(type="password", id="password", name="password", placeholder="Password")
+              .form-group 
+                .col-lg-4
+                  button.btn.btn-primary.col-lg-12(id='myFormSubmit', type="submit")
+                    icon.icon-lock  Sign in
+                .col-lg-4
+                  .checkbox(style="margin-right: 5px;")
+                    label Remember me
+                      input(type="checkbox", name="classification")
+                .col-lg-4
+                  a.btn.btn-link(href="#") Forgot your password?
+              .modal-footer
+                h5.pull-left Or sign in with
+                .col-lg-12.social
+                  a(href="#", title="Facebook")
+                    icon.icon-facebook-sign.icon-4x
+                  a(href="#", title="Twitter")
+                    icon.icon-twitter-sign.icon-4x
+                  a(href="#", title="Google+")
+                    icon.icon-google-plus-sign.icon-4x
+                  a(href="#", title="Pinterest")
+                    icon.icon-pinterest-sign.icon-4x
+                  a(href="#", title="Instagram")
+                    icon.icon-instagram.icon-4x
+                  a(href="#", title="Tumblr")
+                    icon.icon-tumblr-sign.icon-4x
+            
+
 
   //- NAVBAR 
     div.navbar.navbar-fixed-top

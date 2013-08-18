@@ -5,7 +5,8 @@
 
 exports.index = function(req, res){
   // console.log(req);
-  res.render('index', { title: 'VenFu' });
+  // res.json(req.user);
+  res.render('index', { title: 'VenFu', user: req.user, loggedIn: req.isAuthenticated()});
 };
 
 /*

@@ -3,6 +3,10 @@ extends layout
 block content
   // Carousel
   #foodPorn.carousel.slide
+    //- ol.carousel-indicators
+      li.active(data-target="Carousel", data-slide-to="0")
+      li(data-target="Carousel", data-slide-to="1")
+      li(data-target="Carousel", data-slide-to="2")
     // Wrapper for the Slides
     .carousel-inner
       a.item.active(href="#")
@@ -31,16 +35,15 @@ block content
       span.right-carousel-control.icon-angle-right.icon-4x
   
   // Simple layout
-  .container
-    .row.hello
-      .col-12.col-lg-2
-        h1 VenFu
+  .container.hello
+    .row
+      .col-lg-4
+        p.title VenFu
       // SEARCH BAR
-      .col-12.col-lg-5
-        input.form-control(id="bigSearch", type="text", placeholder="Search", style="width: 100%; margin-top: 20px;")
-      .col-12.col-lg-4.pull-right(style="")
-        h2 
-          a(href="/about", style="color: #DDD") Do you know VenFu?
+      .col-lg-5
+        input.bigSearch.form-control(type="text", placeholder="Search")
+      .col-lg-2.know.pull-right
+        a(href="/about") Do you know VenFu?
   
 //- Giant Buttons and featurettes
   .container.marketing
