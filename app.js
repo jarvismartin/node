@@ -11,6 +11,7 @@ var express = require('express')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
   , FacebookStrategy = require('passport-facebook').Strategy
+  , ensureLogin = require('connect-ensure-login')
   , bcrypt = require('bcrypt')
   , mongoose = require('mongoose')
   , Schema = mongoose.Schema;
@@ -27,6 +28,7 @@ var UserSchema = Schema({
     username: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
     salt: { type: String, required: true }
+    
 });
 
 /*
@@ -108,6 +110,51 @@ passport.use(new LocalStrategy({
   }
 ));
 
+// passport.use(new FacebookStrategy({
+//     clientID: 568769829839972,
+//     clientSecret: "d259c829db17890a5b543ac1eb5e2383",
+//     callbackURL: "http://venfu.jarvism.c9.io/auth/facebook/callback"
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     console.log(profile);
+//     done(null, false);
+
+// passport.use(new FacebookStrategy({
+//     clientID: 568769829839972,
+//     clientSecret: "d259c829db17890a5b543ac1eb5e2383",
+//     callbackURL: "http://venfu.jarvism.c9.io/auth/facebook/callback"
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     console.log(profile);
+//     done(null, false);
+
+    
+    // User.findOne({ username: username }, function(err, user) {
+    //   if (err) { 
+    //     console.log(err);
+    //     return done(err); 
+    //   }
+    //   if (!user) {
+    //     console.log({ message: 'Incorrect username.' });
+    //     return done(null, false, { message: 'Incorrect username.' });
+    //   }
+    //   if(!user.validatePassword(password)) {
+    //       console.log({ message: 'Incorrect password.' });
+    //       // console.log(password);
+    //       // console.log(user);
+    //       return done(null, false, { message: 'Incorrect password.' });
+    //   }
+    //   // console.log(user);
+    //   return done(null, user);
+    // });
+    
+    // User.findOrCreate(profile.value, function(err, user) {
+    //   if (err) { return done(err); }
+    //   done(null, user);
+    // });
+//  }
+//));
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -144,8 +191,8 @@ app.get('/vendors', routes.vendors);
 app.get('/delivery', routes.delivery);
 app.get('/suggestions', routes.suggestions);
 app.get('/customerService', routes.customerService);
-app.get('/login', routes.login);
-app.get('/register', routes.register);
+//app.get('/login', routes.login);
+//app.get('/register', routes.register);
 app.get('/about', routes.about);
 app.get('/settings', routes.settings);
 
@@ -157,10 +204,23 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-app.post('/login',
-  passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/login'})
-);
+// Redirect the user to Facebook for authentication.  When complete,
+// Facebook will redirect the user back to the application at
+//     /auth/facebook/callback
+//app.get('/auth/facebook', passport.authenticate('facebook'));
+
+// Facebook will redirect the user to this URL after approval.  Finish the
+// authentication process by attempting to obtain an access token.  If
+// access was granted, the user will be logged in.  Otherwise,
+// authentication has failed.
+//app.get('/auth/facebook/callback', 
+//  passport.authenticate('facebook', { successRedirect: '/',
+//                                      failureRedirect: '/' }));
+
+// app.post('/login',
+//  passport.authenticate('local', { successRedirect: '/',
+//                                   failureRedirect: '/'})
+// );
 
 // function authenticatedOrNot(req, res, next){
 //     if(req.isAuthenticated()){
@@ -169,7 +229,7 @@ app.post('/login',
 //         res.redirect("/login");
 //     }
 // }
-// 
+
 // app.get('/user', 
 //   authenticatedOrNot,
 //   // passport.authenticate('local', { failureRedirect: '/login' }),
@@ -179,23 +239,29 @@ app.post('/login',
 //   }
 // );
 
+app.get('/login', function(req, res) {
+  res.render('login');
+});
+
+app.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
 
 app.post('/register',
   // passport.authenticate('local', { successRedirect: '/',
     // failureRedirect: '/register'}),
   function(req, res) {
     console.log(req);
+    var email = req.body.email;
     var username = req.body.username;
     var password = req.body.password;
-    var email = req.body.email;
+    var classification = req.body.classification;
 
-    var user = new User({username: username, email: email, classification: "C", password: password, salt: "no-salt-please"});
+    var user = new User({username: username, email: email, classification: classification, password: password, salt: "no-salt-please"});
     user.save(function(err) {
       if (err) { 
         console.log(err);
       }
     });
-    res.redirect('#');
+   // res.redirect('#');
   }
 );
 

@@ -14,11 +14,19 @@
 // jQuery
 script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
   
-// Latest compiled and minified JavaScript 
+// Latest compiled and minified Bootstrap JavaScript 
 script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js")
+
+// TinyMCE
+script(src="//tinymce.cachefly.net/4.0/tinymce.min.js")
 
 //- Bootstrap JS
   script(src="/javascripts/bootstrap.min.js")
+  
+//ShareThis
+<script type="text/javascript">var switchTo5x=true;</script>
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "afb68cb8-be20-459d-b5b0-6ae51b39d75c", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
 
 // Toggle Nav Menu
 script.
@@ -26,34 +34,27 @@ script.
   
     $("#hideNav").click(function(){
       $("#navContent").hide(200);
-      var audio = $("#star")[0];
-      audio.play();
+      var audio = $("#gong")[0];
+      audio.pause();
+      audio.currentTime = 0;
     });
     
     $("#navMenu").click(function(){
       $("#navContent").show(200);
-      var audio = $("#star")[0];
+      var audio = $("#gong")[0];
       audio.play();
     });
     
   });
     
-// Start carousel cycle, set carousel height, carousel-control heights, .hello height, center .bigSearch, and place .know
+// Start carousel cycle, set carousel height, .hello height, center .bigSearch
 script.
   $(document).ready(function(){
     $("#foodPorn").carousel('cycle');
     var carouselHeight = 0.75 * window.innerHeight;
-    var helloHeight = 0.15 * window.innerHeight;
+    var helloHeight = 0.21 * window.innerHeight;
     $(".item").attr({        
       style: "height: " + carouselHeight + "px"
-    });
-    
-    $(".left-carousel-control").attr({
-      style: "top: " + (0.5 * carouselHeight - 41) + "px"
-    });
-    
-    $(".right-carousel-control").attr({
-      style: "top: " + (0.5 * carouselHeight - 41) + "px"
     });
     
     $(".hello").attr({
@@ -63,11 +64,26 @@ script.
     var rowHeight = $(".bigSearch").parent().parent().height();
     $(".bigSearch").attr({
       style: "margin-top: " + (0.5 * rowHeight - 20) + "px"
-    });
-    
-    $(".know").attr({
-      style: "margin-top: " + (rowHeight - 20) + "px"
-    });
+    }); 
     
   });
   
+// Auto-resize
+script
+  $(window).resize(function(){
+    var carouselHeight = 0.75 * window.innerHeight;
+    var helloHeight = 0.21 * window.innerHeight;
+    $(".item").attr({        
+      style: "height: " + carouselHeight + "px"
+    });
+    
+    $(".hello").attr({
+      style: "height: " + helloHeight + "px"
+    });
+    
+    var rowHeight = $(".bigSearch").parent().parent().height();
+    $(".bigSearch").attr({
+      style: "margin-top: " + (0.5 * rowHeight - 20) + "px"
+    }); 
+    
+  });

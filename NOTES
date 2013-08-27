@@ -1,0 +1,16 @@
+Jarvis
+
+* After registering, not signed in, redirected to /
+
+At some point, I'm going to have to do MOBILE...
+
+In VenFu, there are many paths...
+
+DONE -- Carousel controls in lower right corner?
+
+DONE --  Make windows resize along with window (onChangeEvent?)
+  This uses a two-step process with "$(document)ready" initially
+  and "$(window).resize" for subsequent changes.  Is this the best way?
+
+DONE -- Make close menu stop gong.mp3
+  Won't actually "stop". Have to pause, then set sound time to zero.

@@ -10,3 +10,4 @@
 {"ts":1376805715850,"patch":[[{"diffs":[[0,"e\": \"0.8"],[-1,".x"],[0,"\"\n  },\n}"]],"start1":233,"start2":233,"length1":18,"length2":16}]],"length":249,"saved":false}
 {"ts":1376806446134,"patch":[[{"diffs":[[0," \"1."],[-1,"2"],[1,"1"],[0,".x\","]],"start1":215,"start2":215,"length1":9,"length2":9}]],"length":249,"saved":false}
 {"ts":1376806468275,"patch":[[{"diffs":[[0,"0.8\"\n  }"],[-1,","],[0,"\n}"]],"start1":238,"start2":238,"length1":11,"length2":10}]],"length":248,"saved":false}
+{"contributors":[],"silentsave":false,"ts":1377302523563,"patch":[[{"diffs":[[0," },\n"],[-1,"  \"engines\": {\n    \"npm\": \"1.1.x\",\n    \"node\": \"0.8\"\n  }\n"],[0,"}"]],"start1":186,"start2":186,"length1":62,"length2":5}]],"length":191,"saved":false}

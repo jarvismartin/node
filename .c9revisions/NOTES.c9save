@@ -1,0 +1,5 @@
+{"ts":1377393130262,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1377393228602,"patch":[[{"diffs":[[1,"Jarvis\n\n1. Make windows resize along with window (onChangeEvent?)\n2. After registering, not signed in, redirected to /"]],"start1":0,"start2":0,"length1":0,"length2":118}]],"length":118,"saved":false}
+{"ts":1377394023045,"patch":[[{"diffs":[[0,"ted to /"],[1,"\n\nCarousel controls in lower right corner?"]],"start1":110,"start2":110,"length1":8,"length2":50}]],"length":160,"saved":false}
+{"ts":1377396819542,"patch":[[{"diffs":[[0,"ted to /"],[1,"\n3. Make close menu stop gong.mp3"],[0,"\n\nCarous"]],"start1":110,"start2":110,"length1":16,"length2":49}]],"length":193,"saved":false}
+{"ts":1377439410426,"patch":[[{"diffs":[[0,"ng.mp3\n\n"],[1,"DONE -- "],[0,"Carousel"]],"start1":145,"start2":145,"length1":16,"length2":24}]],"length":201,"saved":false}

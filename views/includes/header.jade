@@ -22,13 +22,14 @@ html
   
     
     #navMenu
-      img(src="images/throwing-star.png")
+      .relativeContainer
+        img(src="images/egg.png")
     // #navMenu.foldtl
     // #menu.rotate menu
     
-    // Ninja Star Sound
-    audio#star
-      source(src="audio/star.mp3")
+    // Sound
+    audio#gong
+      source(src="audio/gong.mp3")
 
 
     
@@ -41,55 +42,47 @@ html
       
       // SIGN UP/IN + HOME
       ul.nav.pull-left
-        
-        // Determine if User is logged in and render appropriate content
-        // typeof(user) == undefined
-        if !loggedIn
-          li
-            a(href="#loginModal", id="login", data-toggle="modal")
-              icon.icon-meh  Not signed in
-            
-          li
-            a(href="#loginModal", id="login", data-toggle="modal")
-              icon.icon-lock  Sign in
-        else 
-          li
-            a(href="/settings")
-              icon.icon-user  !{user.username}
-          
-          li
-            a(href="/logout", id="logout")
-              icon.icon-unlock  Log Out
-        
         li
           a(href="/")
             icon.icon-home  Home
-        
-      ul.nav.pull-left
-        li
-          a(href="/customers")
-            icon.icon-food  Customers
-        li
-          a(href="/vendors")
-            icon.icon-coffee  Vendors
-        li
-          a(href="/delivery")  
-            icon.icon-truck  Delivery
-        
-      ul.nav.pull-left
         li
           a(href="/about")  
-            icon.icon-info-sign  About Us
+            icon.icon-info-sign  How to
+            
+        // Determine if User is logged in and render appropriate content
+        if loggedIn
+          li
+            a(href="/vendors")
+              icon.icon-coffee  Vendors
+
+      ul.nav.pull-left
+        
         li
           a(href="/suggestions")
             icon.icon-edit  Suggestions
         li
           a(href="/customerService")  
             icon.icon-exclamation-sign   Problems?
+        // Determine if User is logged in and render appropriate content
+        if loggedIn
+           li
+            a(href="/delivery")  
+              icon.icon-truck  Delivery
+      
+      // Determine if User is logged in and render appropriate content
+      ul.nav(style="text-align: center")
+        if !loggedIn
+          li
+            a(href="#loginModal", id="login", data-toggle="modal")
+              icon.icon-signin  Sign in
+        else    
+          li
+            a(href="/logout")
+              icon.icon-signout   Sign out
       
       #hideNav
         //i.icon-remove-sign.icon-2x
-        img(src="images/throwing-star.png")
+        img(src="images/egg.png")
  
     // Modals
     #registerModal.modal.fade
@@ -154,20 +147,21 @@ html
                 label.col-lg-2.control-label(for="password") Password
                 .col-lg-10
                   input.form-control(type="password", id="password", name="password", placeholder="Password")
-              .form-group 
-                .col-lg-4
-                  button.btn.btn-primary.col-lg-12(id='myFormSubmit', type="submit")
-                    icon.icon-lock  Sign in
-                .col-lg-4
-                  .checkbox(style="margin-right: 5px;")
-                    label Remember me
-                      input(type="checkbox", name="classification")
-                .col-lg-4
-                  a.btn.btn-link(href="#") Forgot your password?
               .modal-footer
+                .form-group 
+                  .col-lg-4
+                    button.btn.btn-primary.col-lg-12(id='myFormSubmit', type="submit")
+                      icon.icon-lock  Sign in
+                  .col-lg-4
+                    .checkbox(style="text-align: left")
+                      label Remember me
+                        input(type="checkbox", name="classification")
+                  .col-lg-4
+                    a.btn.btn-link(href="#") Forgot your password?
+              //-.modal-footer
                 h5.pull-left Or sign in with
                 .col-lg-12.social
-                  a(href="#", title="Facebook")
+                  a(href="/auth/facebook", title="Facebook")
                     icon.icon-facebook-sign.icon-4x
                   a(href="#", title="Twitter")
                     icon.icon-twitter-sign.icon-4x

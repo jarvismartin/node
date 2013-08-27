@@ -43,11 +43,13 @@ exports.customers = function(req, res){
  * and sends the vendor list to the vendors view.
  */
 exports.vendors = function(req, res){
-  res.getUserProvider().getVendors(function(results) {
-    console.log(results);
+  //res.getUserProvider().getVendors(function(results) {
+    //console.log(results);
     // res.json(results);
-    res.render('vendors', { title: 'VenFu - Vendors', vendors: results });
-  });
+    //res.render('vendors', { title: 'VenFu - Vendors', vendors: results });
+  //});
+  
+  res.render('vendors', { title: 'VenFu - Vendors' });
 };
 
 /*

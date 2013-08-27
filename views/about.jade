@@ -1,4 +1,40 @@
 extends layout
 
 block content
-  
+  .container
+    .marketing
+      // START THE FEATURETTES
+      #customers(style="margin-top: 65px")
+        .featurette.well
+          img(class="featurette-image pull-right", src="images/bush.jpg")
+          h2.featurette-heading How to VenFu? -<br>
+            span.muted You be the decider.
+          p.lead
+            | With VenFu, you have serious options. You can find a vendor, order food now, and either pick it up or have it delivered--
+            | just like you'd expect... Or you can schedule an order now and get it later, when and where it's convenient for you.
+          a.btn.btn-success(href="/customers", type="button") More 
+          a.btn.btn-default(href="/", type="button") Back
+          
+      #vendors
+        hr.featurette-divider
+        .featurette.well
+          img(class="featurette-image pull-left", src="images/south_park_chef.gif")
+          h2.featurette-heading Become a Vendor -<br> 
+            span.muted Spread Love.
+          p.lead 
+            | As a VenFu vendor, you have the ability to focus on what you love, which is making food. VenFu is a tool that gives vendors easy access 
+            | to customers, delivery, and all the other "management" stuff that doesn't have anything to do with the art of making delicious food.
+          a.btn.btn-default.pull-right(href="/", type="button") Back
+          a.btn.btn-success.pull-right(href="/vendors", type="button") More
+          
+      #delivery
+        hr.featurette-divider      
+        .featurette.well
+          img(class="featurette-image pull-right", src="images/delivery.jpg")
+          h2.featurette-heading Deliver VenFu -<br>
+            span.muted Kinda like Santa.
+          p.lead 
+            | Whether you are a part-time student, a professional courier, or just plain entrepreneurial, we can use your help! Click the button 
+            | and join our delivery team!
+          a.btn.btn-success(href="/delivery", type="button") More 
+          a.btn.btn-default(href="/", type="button") Back

@@ -10,8 +10,4 @@
     "jade": "*",
     "bcrypt":"*"
   },
-  "engines": {
-    "npm": "1.1.x",
-    "node": "0.8"
-  }
 }
