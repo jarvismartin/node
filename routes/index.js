@@ -6,7 +6,11 @@
 exports.index = function(req, res){
   // console.log(req);
   // res.json(req.user);
-  res.render('index', { title: 'VenFu', user: req.user, loggedIn: req.isAuthenticated()});
+  res.render('index', { 
+    title: 'VenFu', 
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, loggedIn: req.isAuthenticated()
+  });
 };
 
 /*
@@ -14,7 +18,11 @@ exports.index = function(req, res){
  */
 
 exports.register = function(req, res){
-  res.render('register', { title: 'VenFu - Register' });
+  res.render('register', { 
+    title: 'VenFu - Register',
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, loggedIn: req.isAuthenticated()
+  });
 };
 
 /*
@@ -22,7 +30,11 @@ exports.register = function(req, res){
  */
 
 exports.login = function(req, res){
-  res.render('login', { title: 'VenFu - Log in' });
+  res.render('login', { 
+    title: 'VenFu - Log in', 
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, loggedIn: req.isAuthenticated()
+  });
 };
 
 /*
@@ -30,7 +42,11 @@ exports.login = function(req, res){
  */
 
 exports.customers = function(req, res){
-  res.render('customers', { title: 'VenFu' });
+  res.render('customers', { 
+    title: 'VenFu',
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, loggedIn: req.isAuthenticated()
+  });
 };
 
 /*
@@ -49,7 +65,11 @@ exports.vendors = function(req, res){
     //res.render('vendors', { title: 'VenFu - Vendors', vendors: results });
   //});
   
-  res.render('vendors', { title: 'VenFu - Vendors' });
+  res.render('vendors', { 
+    title: 'VenFu - Vendors',
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, loggedIn: req.isAuthenticated()
+  });
 };
 
 /*
@@ -57,7 +77,11 @@ exports.vendors = function(req, res){
  */
 
 exports.delivery = function(req, res){
-  res.render('delivery', { title: 'VenFu - Delivery' });
+  res.render('delivery', { 
+    title: 'VenFu - Delivery', 
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, loggedIn: req.isAuthenticated()
+  });
 };
 
 /*
@@ -65,7 +89,11 @@ exports.delivery = function(req, res){
  */
 
 exports.suggestions = function(req, res){
-  res.render('suggestions', { title: 'VenFu - Suggestions' });
+  res.render('suggestions', { 
+    title: 'VenFu - Suggestions', 
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, loggedIn: req.isAuthenticated()
+  });
 };
 
 /*
@@ -73,7 +101,11 @@ exports.suggestions = function(req, res){
  */
 
 exports.customerService = function(req, res){
-  res.render('customerService', { title: 'VenFu - Customer Service' });
+  res.render('customerService', { 
+    title: 'VenFu - Customer Service', 
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, loggedIn: req.isAuthenticated()
+  });
 };
 
 /*
@@ -81,7 +113,11 @@ exports.customerService = function(req, res){
  */
 
 exports.about = function(req, res){
-  res.render('about', { title: 'How to VenFu' });
+  res.render('about', { 
+    title: 'How to VenFu', 
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, loggedIn: req.isAuthenticated()
+  });
 };
 
 /*
@@ -89,7 +125,11 @@ exports.about = function(req, res){
  */
 
 exports.settings = function(req, res){
-  res.render('settings', { title: 'VenFu - Account Settings' });
+  res.render('settings', { 
+    title: 'VenFu - Account Settings', 
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, loggedIn: req.isAuthenticated()
+  });
 };
 
 

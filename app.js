@@ -11,10 +11,13 @@ var express = require('express')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
   , FacebookStrategy = require('passport-facebook').Strategy
-  , ensureLogin = require('connect-ensure-login')
+  , ConnectEnsureLogin = require('connect-ensure-login')
   , bcrypt = require('bcrypt')
   , mongoose = require('mongoose')
-  , Schema = mongoose.Schema;
+  , Schema = mongoose.Schema
+  , nodemailer = require('nodemailer')
+  ,flash = require('connect-flash')
+  ;
 //  , mongooseAuth = require('mongoose-auth');
 //  , UserProvider = require('./db').UserProvider
 
@@ -96,13 +99,13 @@ passport.use(new LocalStrategy({
       }
       if (!user) {
         console.log({ message: 'Incorrect username.' });
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false);
       }
       if(!user.validatePassword(password)) {
-          console.log({ message: 'Incorrect password.' });
+          console.log({ err: 'Incorrect password.' });
           // console.log(password);
           // console.log(user);
-          return done(null, false, { message: 'Incorrect password.' });
+          return done(null, false);
       }
       // console.log(user);
       return done(null, user);
@@ -171,7 +174,8 @@ app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.cookieParser('mr ripley')); // HOW DO WE NEED TO CHANGE THIS ???????????????????
-app.use(express.session({ secret: 'SECRET'})); // HOW DO WE NEED TO CHANGE THIS ???????????????????
+app.use(express.session({ secret: 'SECRET'}, { cookie: { maxAge: 60000 }})); // HOW DO WE NEED TO CHANGE THIS ???????????????????
+app.use(flash());
 app.use(express.methodOverride());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -189,19 +193,19 @@ app.get('/users', user.list);
 app.get('/customers', routes.customers);
 app.get('/vendors', routes.vendors);
 app.get('/delivery', routes.delivery);
-app.get('/suggestions', routes.suggestions);
+
 app.get('/customerService', routes.customerService);
-//app.get('/login', routes.login);
-//app.get('/register', routes.register);
 app.get('/about', routes.about);
-app.get('/settings', routes.settings);
+//app.get('/settings', routes.settings);
 
 app.get('/logout', function(req, res){
   // console.log("Logging Out Now...");
   req.logout();
   // console.log(req.user);
   // console.log(req.session);
+  req.flash('info', ['See ya later.']);
   res.redirect('/');
+  
 });
 
 // Redirect the user to Facebook for authentication.  When complete,
@@ -239,31 +243,53 @@ app.get('/logout', function(req, res){
 //   }
 // );
 
-app.get('/login', function(req, res) {
-  res.render('login');
-});
 
-app.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
-
-app.post('/register',
-  // passport.authenticate('local', { successRedirect: '/',
-    // failureRedirect: '/register'}),
+// *** Register / Sign up ***
+app.get('/register', routes.register);
+app.post('/register', 
   function(req, res) {
-    console.log(req);
+    //console.log(req);
     var email = req.body.email;
     var username = req.body.username;
     var password = req.body.password;
     var classification = req.body.classification;
-
-    var user = new User({username: username, email: email, classification: classification, password: password, salt: "no-salt-please"});
+  
+    var user = new User({
+      username: username, 
+      email: email, 
+      classification: classification, 
+      password: password, 
+      salt: "no-salt-please"});
+      
     user.save(function(err) {
       if (err) { 
         console.log(err);
+        req.flash('err', err);
+        res.redirect('back');
       }
-    });
-   // res.redirect('#');
-  }
-);
+      else {
+        // After successful Sign Up, Sign In
+        //res.redirect('back');
+        req.flash('success', ['Welcome, ' + username]);
+        passport.authenticate('local')(req, res, function () {
+          res.redirect('back');
+        });
+      }
+  });
+});
+
+// ********** LOG IN ***********
+app.get('/login', routes.login);
+// app.post('/login', passport.authenticate('local', {
+//   successReturnToOrRedirect: 'back', successFlash: true, failureRedirect: 'back', failureFlash: true
+// }));
+app.post('/login',
+  passport.authenticate('local'),
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    req.flash('success', ['Welcome, ' + req.user.username]);
+    res.redirect('back');
+  });
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -273,6 +299,49 @@ passport.deserializeUser(function(id, done) {
   User.findOne({_id: id}, function(err, user) {
     done(err, user);
   });
+});
+
+// Settings
+app.get('/settings',
+//  ensureLoggedIn('/login'),
+  function(req, res) {
+    res.render('settings', { user: req.user });
+  });
+
+// Mail and Suggestions
+app.get('/suggestions', routes.suggestions);
+app.post('/suggestions', function (req, res) {
+  var mailOpts, smtpTrans;
+  //Setup Nodemailer transport, I chose gmail. Create an application-specific password to avoid problems.
+  smtpTrans = nodemailer.createTransport('SMTP', {
+      service: 'Gmail',
+      auth: {
+          user: "jarvis.martin75@gmail.com",
+          pass: "kjyewvkjiorxkqym" 
+      }
+  });
+  //Mail options
+  mailOpts = {
+      //- from: req.body.name + ' &lt;' + req.body.email + '&gt;', //grab form data from the request body object
+      from: 'suggestions@venfu.com',
+      to: 'jarvis.martin75@gmail.com',
+      subject: 'Suggestion(s) from venfu.com',
+      text: req.body.email + ' says ' + req.body.message
+  };
+    
+    smtpTrans.sendMail(mailOpts, function (error, response) {
+
+      //Email not sent
+      if (error) {
+        req.flash('err', [error + response]); 
+        res.render('suggestions', { title: "VenFu - Suggestions"});
+      }
+      //Yay!! Email sent
+      else {
+        req.flash('success', ['Message received.  Thank you.']);
+        res.redirect('/');
+      }
+    });
 });
 
 

@@ -2,26 +2,44 @@
 extends layout
 
 block content
-  .container
-    .row-fluid
-      h2 Register
-      form(action="/register", method="post")
-      
-        div
-          label Your Email:
-            input(type="text", name="email")
-      
-        div
-          label Choose a Username:
-            input(type="text", name="username")
-            
-        div
-          label Choose a Password:
-            input(type="password", name="password")
-    
-        div
-          label Confirm Password:
-            input(type="password", name="confirmPassword")
-    
-        div
-          input(type="submit", value="Sign Up")
+  .container(style="padding-top: 5%")
+    .col-xs-12
+      .modal-dialog
+        .modal-content
+          .modal-header
+              button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
+              h3 Join us
+          .modal-body
+            form.form-horizontal(id="registerForm", method="post", action="/register")
+              .form-group
+                label.col-xs-2.control-label(for="email") Email
+                .col-xs-10
+                  input.form-control.notOkay(type="text", id="email", name="email", placeholder="Email", onkeyup="validateEmail()")
+              .form-group
+                label.col-xs-2.control-label(for="username") Username
+                .col-xs-10
+                  input.form-control(type="text", id="username", name="username", placeholder="Username")
+              .form-group
+                label.col-xs-2.control-label(for="password") Password
+                .col-xs-10
+                  input.form-control(type="password", id="password", name="password",placeholder="Password")
+              .form-group
+                label.col-xs-2.control-label(for="confirmPassword") Confirm
+                .col-xs-10
+                  input.form-control.notOkay(type="password", id="confirmPassword", placeholder="Confirm Password", onkeyup="validatePassword()")              
+              .form-group.form-inline
+                .col-xs-4
+                  // NEEDS TOOL TIP !!!!!!!!!
+                  strong(style="text-align: center") How will you VenFu?
+                .col-xs-8.checkboxes
+                  label.checkbox-inline.pull-right Deliver-Fu
+                    input(id="chooseDelivery", name="classification", type="checkbox", value="D")
+                  label.checkbox-inline.pull-right Sell-Fu
+                    input(id="chooseVendor", name="classification", type="checkbox", value="V")  
+                  label.checkbox-inline.pull-right Consume-Fu
+                    input(id="chooseCustomer", name="classification", type="checkbox", value="C")
+              .modal-footer
+                button.disabled.btn.btn-success.pull-left(id='registerFormSubmit', type="submit")
+                  icon.icon-ok  Sign Up
+                button.btn.btn-inverse.pull-right(data-dismiss="modal")
+                  icon.icon-remove  Cancel

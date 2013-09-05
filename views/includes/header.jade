@@ -7,7 +7,7 @@ html
     <meta name="description" content="">
     <meta name="author" content="">
     // Latest compiled and minified CSS 
-    link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css")
+    link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css")
     // Font Awesome icons
     link(href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css", rel="stylesheet")
     link(rel='stylesheet', href='/stylesheets/style.css')
@@ -16,10 +16,55 @@ html
     <script src="public/javascripts/aFarkas-html5shiv-67bff28/dist/html5shiv.js"></script>
     <![endif]-->
     
+    // jQuery
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
     
+    // Start carousel cycle, set carousel height, .hello height, center .bigSearch
+    script.
+      //$(document).ready(function(){
+      $(function() {
+        
+        var 
+          carouselHeight = 0.75 * window.innerHeight;
+          helloHeight = 0.21 * window.innerHeight;
+          rowHeight = $(".bigSearch").parent().parent().height();
+          
+        $("#foodPorn").carousel('cycle');
+        $(".item").attr({        
+          style: "height: " + carouselHeight + "px"
+        });
+        
+        $(".hello").attr({
+          style: "height: " + helloHeight + "px"
+        });
+
+        $(".bigSearch").attr({
+          style: "margin-top: " + (0.5 * rowHeight - 20) + "px"
+        }); 
+        
+      }); 
     
   body
   
+    // Alerts
+    if (msg != "")
+      div.col-xs-4.col-xs-offset-4.col-lg-offset-4.alert.alert-warning
+        // button.close(type="button", data-dismiss="alert", aria-hidden="true")
+        //   icon.icon-remove
+        icon.icon-info-sign
+        span #{msg}
+        
+    if (err != "")
+      div.col-xs-4.col-xs-offset-4.col-lg-offset-4.alert.alert-danger
+        //button.close(type="button", data-dismiss="alert", aria-hidden="true") ×
+        icon.icon-remove-sign
+        span #{err}
+        
+    if (success != "")
+      div.col-xs-4.col-xs-offset-4.col-lg-offset-4.alert.alert-success
+        //button.close(type="button", data-dismiss="alert", aria-hidden="true") ×
+        icon.icon-ok-sign
+        span #{success}
     
     #navMenu
       .relativeContainer
@@ -33,52 +78,62 @@ html
 
 
     
-    #navContent
+    #navContent.col-xs-3
     
       // SEARCH BAR
-      input.form-control.col-lg-3(type="text", placeholder="Search")
-
-      hr(style="color: white;")
-      
+      .col-xs-12
+        .input-group
+          input.form-control(type="text", placeholder="Search")
+          span.input-group-btn
+            button.btn.btn-default(type="button")
+              icon.icon-search
+              
       // SIGN UP/IN + HOME
       ul.nav.pull-left
         li
           a(href="/")
-            icon.icon-home  Home
+            icon.icon-home
+            span Home
         li
           a(href="/about")  
-            icon.icon-info-sign  How to
+            icon.icon-info-sign  
+            span How to
             
         // Determine if User is logged in and render appropriate content
         if loggedIn
           li
             a(href="/vendors")
-              icon.icon-coffee  Vendors
+              icon.icon-food  
+              span Vendors
 
       ul.nav.pull-left
-        
         li
           a(href="/suggestions")
-            icon.icon-edit  Suggestions
+            icon.icon-bullhorn
+            span Suggestions
         li
           a(href="/customerService")  
-            icon.icon-exclamation-sign   Problems?
+            icon.icon-exclamation-sign   
+            span Problems?
         // Determine if User is logged in and render appropriate content
         if loggedIn
            li
             a(href="/delivery")  
-              icon.icon-truck  Delivery
+              icon.icon-truck  
+              span Delivery
       
       // Determine if User is logged in and render appropriate content
-      ul.nav(style="text-align: center")
+      ul.nav.pull-left.col-xs-11.login
         if !loggedIn
           li
             a(href="#loginModal", id="login", data-toggle="modal")
-              icon.icon-signin  Sign in
+              icon.icon-signin  
+              span Sign in
         else    
           li
             a(href="/logout")
-              icon.icon-signout   Sign out
+              icon.icon-signout
+              span Sign out
       
       #hideNav
         //i.icon-remove-sign.icon-2x
@@ -92,41 +147,38 @@ html
               button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
               h3 Join us
           .modal-body
-            form.form-horizontal(id="myForm", method="post", action="/register")
+            form.form-horizontal(id="registerForm", method="post", action="/register")
               .form-group
-                label.col-lg-2.control-label(for="email") Email
-                .col-lg-10
-                  input.form-control(type="text", id="email", name="email", placeholder="Email")
+                label.col-xs-2.control-label(for="email") Email
+                .col-xs-10
+                  input.form-control.notOkay(type="text", id="email", name="email", placeholder="Email", onkeyup="validateEmail()")
               .form-group
-                label.col-lg-2.control-label(for="username") Username
-                .col-lg-10
+                label.col-xs-2.control-label(for="username") Username
+                .col-xs-10
                   input.form-control(type="text", id="username", name="username", placeholder="Username")
               .form-group
-                label.col-lg-2.control-label(for="password") Password
-                .col-lg-10
+                label.col-xs-2.control-label(for="password") Password
+                .col-xs-10
                   input.form-control(type="password", id="password", name="password",placeholder="Password")
               .form-group
-                label.col-lg-2.control-label(for="confirmPassword") Confirm
-                .col-lg-10
-                  input.form-control(type="password", id="confirmPassword", placeholder="Confirm Password")              
+                label.col-xs-2.control-label(for="confirmPassword") Confirm
+                .col-xs-10
+                  input.form-control.notOkay(type="password", id="confirmPassword", placeholder="Confirm Password", onkeyup="validatePassword()")              
               .form-group.form-inline
-                .col-lg-4
+                .col-xs-4
                   // NEEDS TOOL TIP !!!!!!!!!
                   strong(style="text-align: center") How will you VenFu?
-                .col-lg-8
-                  .checkbox
-                    label Consume-Fu
-                      input(id="chooseCustomer", name="classification", type="checkbox", value="C")
-                  .checkbox
-                    label Vendor-Fu
-                      input(id="chooseVendor", name="classification", type="checkbox", value="V")
-                  .checkbox
-                    label Deliver-Fu
-                      input(id="chooseDelivery", name="classification", type="checkbox", value="D") 
+                .col-xs-8.checkboxes
+                  label.checkbox-inline.pull-right Deliver-Fu
+                    input(id="chooseDelivery", name="classification", type="checkbox", value="D")
+                  label.checkbox-inline.pull-right Sell-Fu
+                    input(id="chooseVendor", name="classification", type="checkbox", value="V")  
+                  label.checkbox-inline.pull-right Consume-Fu
+                    input(id="chooseCustomer", name="classification", type="checkbox", value="C")
               .modal-footer
-                button.btn.btn-primary.pull-left(id='myFormSubmit', type="submit")
-                  icon.icon-lock  Sign Up
-                button.btn.btn-default.pull-right(data-dismiss="modal")
+                button.disabled.btn.btn-success.pull-left(id='registerFormSubmit', type="submit")
+                  icon.icon-ok  Sign Up
+                button.btn.btn-inverse.pull-right(data-dismiss="modal")
                   icon.icon-remove  Cancel
         
     #loginModal.modal.fade
@@ -135,32 +187,32 @@ html
           .modal-header
             button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
             h3 Please sign in
-              a.btn.btn-success.pull-right(style="margin-right: 50px", href="#registerModal", id="register", data-toggle="modal", data-dismiss="modal")
+              a#register.btn.btn-success.pull-right(style="margin-right: 50px", href="#registerModal", data-toggle="modal", data-dismiss="modal")
                 icon.icon-plus  Join us
           .modal-body
-            form.form-horizontal(id="myForm", action="/login", method="post")      
+            form.form-horizontal(id="loginForm", action="/login", method="post")      
               .form-group
-                label.col-lg-2.control-label(for="username") Username
-                .col-lg-10
+                label.col-xs-2.control-label(for="username") Username
+                .col-xs-10
                   input.form-control(type="text", id="username", name="username", placeholder="Username")
               .form-group
-                label.col-lg-2.control-label(for="password") Password
-                .col-lg-10
+                label.col-xs-2.control-label(for="password") Password
+                .col-xs-10
                   input.form-control(type="password", id="password", name="password", placeholder="Password")
               .modal-footer
                 .form-group 
-                  .col-lg-4
-                    button.btn.btn-primary.col-lg-12(id='myFormSubmit', type="submit")
+                  .col-xs-4
+                    button.btn.btn-primary.col-xs-12(id='loginFormSubmit', type="submit")
                       icon.icon-lock  Sign in
-                  .col-lg-4
+                  .col-xs-4
                     .checkbox(style="text-align: left")
                       label Remember me
                         input(type="checkbox", name="classification")
-                  .col-lg-4
+                  .col-xs-4
                     a.btn.btn-link(href="#") Forgot your password?
               //-.modal-footer
                 h5.pull-left Or sign in with
-                .col-lg-12.social
+                .col-xs-12.social
                   a(href="/auth/facebook", title="Facebook")
                     icon.icon-facebook-sign.icon-4x
                   a(href="#", title="Twitter")

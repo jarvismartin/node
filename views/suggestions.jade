@@ -1,4 +1,34 @@
 extends layout
 
 block content
-	
+  .container
+    .suggestions.col-xs-8.col-lg-offset-2.well             
+      // Form
+      legend
+        h3 Thanks for your input!    
+      form#suggestions.form-horizontal(action="/suggestions", name="suggestions", method="post")
+        fieldset
+          h4
+            | Please use the space below for your suggestions. You can use the lower right corner to expand the text box.
+            | If you have an issue needing immediate attention, please go to 
+            a(href="/customerService") Customer Service
+            | .
+          br
+          // Suggestions
+          .form-group
+            label.col-xs-1.control-label(for="email") Email
+            .col-xs-11
+              input.form-control(type="text", id="email", name="email", placeholder="Your Email Address")
+              span.help-block Optional - Only include your email address if you want a response.
+          .col-xs-12
+            .form-group
+              textarea#message.form-control(name="message", rows="10", onkeyup="showSubmit()")
+          .col-xs-12
+            .form-group
+              // Disable the submit button if there is no message to send
+              input#submit.btn.btn-success.disabled(type="submit", name="submit", value="Send", onclick="messageSent()")
+              a.btn.btn-inverse.pull-right(href="/")
+                icon.icon-remove  Cancel
+                          
+                          
+                          

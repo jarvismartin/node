@@ -1,10 +1,49 @@
 Jarvis
 
-* After registering, not signed in, redirected to /
+2. Forgot password
+
+3. Improve email address verification
+
+* Set up automated email responses
+
+* Expand how to sections with content?, then register modal
+
+* AJAX to check if username is already taken, etc.?
+
+* After registering, send role-specific email(s) (e.g. for vendors or delivery)
+
+* Handle inappropriate names, etc.
+
+* Must be signed in to comment
+
+* Comments from scratch or social plug-in?
 
 At some point, I'm going to have to do MOBILE...
 
-In VenFu, there are many paths...
+[THE PATHS OF VENFU] In VenFu, there are many paths...
+
+Fortune cookies???
+
+--------------------------------------------------------------------------------
+                                  DONE
+--------------------------------------------------------------------------------
+
+YES!!!!!!!!!!!!! after registering, be logged in
+<thanks to answer 1 - http://stackoverflow.com/questions/16817800/passport-node-js-automatic-login-after-adding-user>
+
+--Fix suggestion feedback?
+* Validation / feedback on forms with Bootstrap?
+* Add help text under input boxes?
+
+--login error crashes system
+<just needed redirect on error>
+
+--After registering, not signed in, redirected to /
+<Persistent login by passing user & login info to each view via index.js>
+                                  
+DONE -- Search icon/button
+
+DONE -- Fix suggestion logic, specifically if/thens for page and send button
 
 DONE -- Carousel controls in lower right corner?
 
@@ -14,3 +53,12 @@ DONE --  Make windows resize along with window (onChangeEvent?)
 
 DONE -- Make close menu stop gong.mp3
   Won't actually "stop". Have to pause, then set sound time to zero.
+  
+--------------------------------------------------------------------------------
+
+                                  Koans
+                                  
+Which came first, the VenFu, or the egg?
+
+What is the sound of one hand VenFu-ing?
+  

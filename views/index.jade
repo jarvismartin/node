@@ -27,18 +27,12 @@ block content
               span.pull-right.st_sharethis_large(displayText='ShareThis')
             p Equals pure bliss. Come on! It's from the legendary Guy Fieri!
             
-        //- Controls        
-          a.left.carousel-control(href="#foodPorn", data-slide="prev", style="background: none;")
-            span.left-carousel-control.icon-angle-left.icon-4x
-          a.right.carousel-control(href="#foodPorn", data-slide="next", style="background: none;")
-            span.right-carousel-control.icon-angle-right.icon-4x
-      
       // Controls    
       .carousel-controls
         .btn-group.pull-right
-          a.btn.btn-default(href="#foodPorn", data-slide="prev")
+          a.btn.btn-lg(href="#foodPorn", data-slide="prev")
             icon.icon-caret-left
-          a.btn.btn-default(href="#foodPorn", data-slide="next")
+          a.btn.btn-lg(href="#foodPorn", data-slide="next")
             icon.icon-caret-right
     
     
@@ -51,12 +45,16 @@ block content
           p.title VenFu
         // SEARCH BAR
         .col-lg-5
-          input.bigSearch.form-control(type="text", placeholder="So...Whatcha want?")
+          .input-group.bigSearch
+            input.form-control(type="text", placeholder="So...Whatcha want?")
+            span.input-group-btn
+              button.btn.btn-default(type="button")
+                icon.icon-search
         .col-lg-4
           .btn-group.pull-right
-            a.btn.btn-large.btn-danger(href="/about#vendors") 
+            a.btn.btn-lg.btn-danger(href="/about#vendors") 
               icon.icon-usd  Sell-Fu
-            a.btn.btn-large.btn-danger(href="/about#delivery")
+            a.btn.btn-lg.btn-danger(href="/about#delivery")
               icon.icon-usd  Deliver-Fu
           .know.pull-right
             a(href="/about") Do you know VenFu?

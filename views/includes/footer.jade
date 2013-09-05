@@ -11,11 +11,10 @@
   Placed at the end of the document so the pages load faster
 
 
-// jQuery
-script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+
   
 // Latest compiled and minified Bootstrap JavaScript 
-script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js")
+script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")
 
 // TinyMCE
 script(src="//tinymce.cachefly.net/4.0/tinymce.min.js")
@@ -47,12 +46,15 @@ script.
     
   });
     
-// Start carousel cycle, set carousel height, .hello height, center .bigSearch
+
+  
+// Auto-resize
 script.
-  $(document).ready(function(){
-    $("#foodPorn").carousel('cycle');
-    var carouselHeight = 0.75 * window.innerHeight;
-    var helloHeight = 0.21 * window.innerHeight;
+  $(window).resize(function(){
+    var 
+      carouselHeight = 0.75 * window.innerHeight;
+      helloHeight = 0.21 * window.innerHeight;
+      
     $(".item").attr({        
       style: "height: " + carouselHeight + "px"
     });
@@ -61,29 +63,92 @@ script.
       style: "height: " + helloHeight + "px"
     });
     
-    var rowHeight = $(".bigSearch").parent().parent().height();
-    $(".bigSearch").attr({
+    var 
+      bigSearch = $(".bigSearch");
+      rowHeight = $(".bigSearch").parent().parent().height();
+        
+    bigSearch.attr({
       style: "margin-top: " + (0.5 * rowHeight - 20) + "px"
     }); 
     
   });
   
-// Auto-resize
-script
-  $(window).resize(function(){
-    var carouselHeight = 0.75 * window.innerHeight;
-    var helloHeight = 0.21 * window.innerHeight;
-    $(".item").attr({        
-      style: "height: " + carouselHeight + "px"
-    });
+// VALIDATION
+script.
+  function validateEmail(){
     
-    $(".hello").attr({
-      style: "height: " + helloHeight + "px"
-    });
+    var email = $('#email');
     
-    var rowHeight = $(".bigSearch").parent().parent().height();
-    $(".bigSearch").attr({
-      style: "margin-top: " + (0.5 * rowHeight - 20) + "px"
-    }); 
+    //console.log('email = ' + email.val());
+    
+    if (email.val().indexOf("@") >= 0 && email.val().indexOf(".") >= 0) {
+      email.removeClass('notOkay').addClass('okay');
+    }
+    else {
+      email.addClass('notOkay').removeClass('okay');
+    }
+    
+  }
+
+script.
+  function validatePassword(){
+  
+    // Check password validation
+    var 
+      pwd = $('#password');
+      confirmPwd = $('#confirmPassword');
+    
+    //console.log('pwd = ' + pwd.val() + ' confirm = ' + confirmPwd.val());
+
+    if ( confirmPwd.val() == pwd.val() ) {
+      confirmPwd.removeClass('notOkay').addClass('okay');
+    } 
+    else {
+      confirmPwd.removeClass('okay').addClass('notOkay');
+    }
+    
+  }
+  
+script.
+  $('#registerForm').on('change', function() {
+    var 
+      email = $('#email').val();
+      username = $('#username').val();
+      password = $('#password').val();
+      confirmPassword = $('#confirmPassword').val();
+
+    if (email != "" && username != "" && password != "" && confirmPassword != "") {
+      $('#registerFormSubmit').removeClass('disabled');
+    }
+    else {
+      $('#registerFormSubmit').addClass('disabled');
+    }
+    
+    //console.log('email = ' + email);
     
   });
+  
+// If there is a suggestion, enable the submit button
+script.
+  function showSubmit(){
+    var 
+      message = $('#message');
+      submit = $("#submit");
+  
+    if (message.val() != "") {
+      submit.removeClass('disabled');
+    }
+    else {
+      submit.addClass('disabled');
+    }
+    
+    //console.log('message = ' + message.val());
+  }
+  
+// Alerts disappear automatically
+script.
+  $(".alert").slideDown().delay(1500).slideUp('slow');
+
+  
+  
+  

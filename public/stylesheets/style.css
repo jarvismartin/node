@@ -32,7 +32,6 @@ body {
   radial-gradient(circle at 0% 50%, #050505 16%, rgba(24,24,24,0) 17%) 50px 50px;
   background-color:#000;
   background-size:100px 100px;
-  
 }
 
 a,
@@ -40,6 +39,43 @@ a:visited,
 a:active,
 a:focus { 
   outline: none;
+}
+
+.alert {
+  position: absolute;
+  top: -1px;
+  z-index: 999;
+  text-align: center;
+  font-size: 1.5em;
+  background-color: #111; /* Fallback */
+  background-color: rgba(0,0,0, 0.7);
+}
+
+.alert-warning {
+  color: #c09853;
+  box-shadow: 0 0 0 2px #c09853 inset;
+}
+
+.alert-success {
+  color: #99FF99;
+  box-shadow: 0 0 0 2px #99ff99 inset;
+}
+
+.alert-error {
+  color: red;
+  box-shadow: 0 0 0 2px red inset;
+}
+
+.btn-inverse {
+  color: #fff;
+  background-color: #474949;
+  border-color: #474949;
+}
+
+.btn-inverse:hover {
+  color: #fff;
+  background-color: #3a3c3c;
+  border-color: #2e2f2f;
 }
 
 /* Fonts */
@@ -58,6 +94,24 @@ a:focus {
   src: url(/fonts/chowfun.ttf);
 }
 
+/* ICONS */
+icon {
+  margin-right: 10px;
+}
+
+.notOkay:focus {
+  border-color: red;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+}
+
+.okay:focus {
+  border-color: green;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(0,255,0,0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(0,255,0,0.6);
+}
 
 /* CUSTOMIZE THE NAV
 -------------------------------------------------- */
@@ -218,14 +272,18 @@ a:focus {
   #navContent {
     display: none;
     position: fixed;
-    left: 0;
-    top: 0;
+    left: 1px;
+    top: 1px;
     background: #333;
     z-index: 1000;
     color: #141414;
     padding: 15px;
     text-align: left;
     border-radius: 5px;
+  }
+  
+  #navContent .input-group {
+    margin-bottom: 10px;
   }
   
   #navContent ul {
@@ -238,6 +296,10 @@ a:focus {
   
   #navContent a:hover {
     color: #333;
+  }
+  
+  .login {
+    text-align: center;
   }
   
   #hideNav {
@@ -272,6 +334,7 @@ a:focus {
     color: #3366CC;
   }
   
+  
 /* CUSTOMIZE MODALS
 -------------------------------------------------- */
 
@@ -280,8 +343,12 @@ a:focus {
   margin-bottom: 0;
 }
 
-#registerModal .checkbox {
-  margin: 0 11.5px;
+.checkboxes {
+  margin-top: -8px;
+}
+
+#registerModal .checkbox-inline {
+  margin: 0 15px;
 }
 
 .social {
@@ -299,7 +366,7 @@ a:focus {
 /* Carousel base class */
 .carousel {
   margin-top: -19px;
-  box-shadow: 0 2px 5px #DDD;
+  box-shadow: 0 2px 5px #00ff00;
 }
 
 .carousel .inner a {
@@ -312,7 +379,7 @@ a:focus {
   left: 1px;
   bottom: 1px;
   padding: 0 2% 2% 2%;
-  background-color: black; /* Fallback */
+  background-color: #333; /* Fallback */
   background-color: rgba(0,0,0, 0.8);
   color: #DDD;
   text-align: left;
@@ -334,11 +401,26 @@ a:focus {
   height: 500px;
 }
 
-.carousel-controls {
+.carousel-controls .btn-group{
   position: absolute;
   bottom: 1px;
   right: 1px;
   z-index: 1000;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.carousel-controls .btn {
+  background-color: #333; /* Fallback */
+  background-color: rgba(0,0,0, 0.8);
+  color: #DDD;
+  border-color: #333; /* Fallback */
+  border-color: rgba(0,0,0, 0.8);
+}
+
+.carousel-controls .btn:hover {
+  background-color: #111;
+  border: 1px solid black;
 }
 
 /* PAGE CONTENT
@@ -359,6 +441,7 @@ a:focus {
 .title {
   font-family: Wonton; 
   font-size: 80px;
+  text-shadow:2px 2px 2px rgba(0,255,0, 0.8), -1px -1px 1px rgba(100,100,100 0.7);
 }
 
 .bigSearch {
@@ -373,6 +456,13 @@ a:focus {
 .know a {
   color: #DDD;
 }
+
+/* Suggestions */
+.suggestions {
+  margin-top: 65px;
+}
+
+
 
 /* Featurettes
 ------------------------- */

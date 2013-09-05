@@ -1,17 +1,33 @@
 extends layout
 
 block content
-  .container
-    .row-fluid
-      h2 Log In
-        form(action="/login", method="post")
-          div
-            label Username:
-              input(type="text", name="username")
-      
-          div
-            label Password:
-              input(type="password", name="password")
-      
-          div
-            input(type="submit", value="Log In")
+  .container(style="padding-top: 10%")
+    .col-xs-6.col-offset-3
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
+          h3 Please sign in
+            a.btn.btn-success.pull-right(style="margin-right: 50px", href="#registerModal", id="register", data-toggle="modal", data-dismiss="modal")
+              icon.icon-plus  Join us
+        .modal-body
+          form.form-horizontal(id="loginForm", action="/login", method="post")      
+            .form-group
+              label.col-xs-2.control-label(for="username") Username
+              .col-xs-10
+                input.form-control(type="text", id="username", name="username", placeholder="Username")
+            .form-group
+              label.col-xs-2.control-label(for="password") Password
+              .col-xs-10
+                input.form-control(type="password", id="password", name="password", placeholder="Password")
+            .modal-footer
+              .form-group 
+                .col-xs-4
+                  button.btn.btn-primary.col-xs-12(id='loginFormSubmit', type="submit")
+                    icon.icon-lock  Sign in
+                .col-xs-4
+                  .checkbox(style="text-align: left")
+                    label Remember me
+                      input(type="checkbox", name="classification")
+                .col-xs-4
+                  a.btn.btn-link(href="#") Forgot your password?
