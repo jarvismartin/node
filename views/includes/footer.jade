@@ -13,8 +13,7 @@
 
 
   
-// Latest compiled and minified Bootstrap JavaScript 
-script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")
+
 
 // TinyMCE
 script(src="//tinymce.cachefly.net/4.0/tinymce.min.js")
@@ -29,8 +28,7 @@ script(src="//tinymce.cachefly.net/4.0/tinymce.min.js")
 
 // Toggle Nav Menu
 script.
-  $(document).ready(function(){
-  
+  $(function(){
     $("#hideNav").click(function(){
       $("#navContent").hide(200);
       var audio = $("#gong")[0];
@@ -55,66 +53,87 @@ script.
       carouselHeight = 0.75 * window.innerHeight;
       helloHeight = 0.21 * window.innerHeight;
       
-    $(".item").attr({        
-      style: "height: " + carouselHeight + "px"
-    });
+    $(".item").css("height", carouselHeight + "px");
+    // .attr({        
+    //   style: "height: " + carouselHeight + "px"
+    // });
     
-    $(".hello").attr({
-      style: "height: " + helloHeight + "px"
-    });
+    $(".hello").css("height", helloHeight + "px");
+    // .attr({
+    //   style: "height: " + helloHeight + "px"
+    // });
     
     var 
       bigSearch = $(".bigSearch");
-      rowHeight = $(".bigSearch").parent().parent().height();
+      rowHeight = bigSearch.parent().parent().height();
         
-    bigSearch.attr({
-      style: "margin-top: " + (0.5 * rowHeight - 20) + "px"
-    }); 
+    bigSearch.css("margin-top", (0.5 * rowHeight - 20) + "px");
+    // .attr({
+    //   style: "margin-top: " + (0.5 * rowHeight - 20) + "px"
+    // }); 
     
   });
   
 // VALIDATION
-script.
-  function validateEmail(){
-    
-    var email = $('#email');
-    
-    //console.log('email = ' + email.val());
-    
-    if (email.val().indexOf("@") >= 0 && email.val().indexOf(".") >= 0) {
-      email.removeClass('notOkay').addClass('okay');
-    }
-    else {
-      email.addClass('notOkay').removeClass('okay');
-    }
-    
-  }
 
+// Password Feedback
 script.
-  function validatePassword(){
+  var pwd = $('.password');
   
-    // Check password validation
+  // Check password strength
+  pwd.on('input', function(){
+    
     var 
-      pwd = $('#password');
-      confirmPwd = $('#confirmPassword');
+      pwdVal = $(this).val();
+      pwdFeedback = $('.passwordFeedback');
+
+    if (pwdVal.length >= 4) {
+      if (pwdVal.length < 10) {
+      pwdFeedback.html("<span style='color: #663300'>weak</span>");
+      pwd.removeClass('notOkay').addClass('warning');
+      } 
+      else {
+        pwdFeedback.html("<span style='color: green'>strong</span>");
+        pwd.removeClass('warning').addClass('okay');
+      }
+    } 
+    else {
+      pwdFeedback.html("<span style='color: red'>too short</span>");
+      pwd.removeClass('okay').removeClass('warning').addClass('notOkay');
+    }
+    
+  });
+
+//Confirm Password
+script.
+  var confirmPwd = $('.confirmPassword');
+  
+  // Check password validation on registration
+  confirmPwd.on('input', function(){
+    var
+      pwd = $(this).closest('form').find('.password');
+      //pwd = $('.password');
+      confirmPwdFeedback = $('.confirmPasswordFeedback');
     
     //console.log('pwd = ' + pwd.val() + ' confirm = ' + confirmPwd.val());
 
-    if ( confirmPwd.val() == pwd.val() ) {
+    if ( $(this).val() == pwd.val() ) {
+      confirmPwdFeedback.html("<icon class='icon-ok' style='color: green'></icon>");
       confirmPwd.removeClass('notOkay').addClass('okay');
     } 
     else {
+      confirmPwdFeedback.html("<icon class='icon-remove' style='color: red'></icon>");
       confirmPwd.removeClass('okay').addClass('notOkay');
     }
     
-  }
+  });
   
 script.
   $('#registerForm').on('change', function() {
     var 
-      email = $('#email').val();
-      username = $('#username').val();
-      password = $('#password').val();
+      email = $('#registerEmail').val();
+      username = $('#registerUsername').val();
+      password = $('#registerPassword').val();
       confirmPassword = $('#confirmPassword').val();
 
     if (email != "" && username != "" && password != "" && confirmPassword != "") {
@@ -149,6 +168,179 @@ script.
 script.
   $(".alert").slideDown().delay(1500).slideUp('slow');
 
-  
-  
-  
+
+//*** Check for unique EMAIL ***
+script.
+  var emailInput = $(".email"); // $(this)
+      
+  emailInput.on('input', function(){
+    var emailFeedback = $('.emailFeedback');
+    
+    emailFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
+    
+    var emailVal = $(this).val();
+
+    if (emailVal.indexOf("@") >= 0 && emailVal.indexOf(".") >= 0) {
+      $.ajax({
+        type:"post",
+        url:"/checkEmail",
+        data:{email: emailVal},
+        success:function(data){
+          //console.log(data);
+          if(data.unique){
+            emailFeedback.html("<icon class='icon-ok' style='color: green'></icon>");
+            emailInput.removeClass('notOkay');
+          }
+          else{
+            emailFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Email already registered</span>");
+            emailInput.addClass('notOkay');
+          }
+        }
+      });
+    }
+    else {
+      emailFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Invalid Email</span>");
+      emailInput.addClass('notOkay');
+    }
+  });
+
+
+//*** Check for unique USERNAME ***
+script.
+  var usernameInput = $(".username"); // $(this)
+      
+  usernameInput.on('input', function(){
+    var usernameFeedback = $('.usernameFeedback');
+
+    usernameFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
+ 
+    var usernameVal = $(this).val();
+    
+    if (usernameVal.length >= 4) {
+      $.ajax({
+        type:"post",
+        url:"/checkUsername",
+        data:{username: usernameVal},
+        success:function(data){
+          //console.log(data);
+          if(data.unique){
+            usernameFeedback.html("<icon class='icon-ok' style='color: green'></icon>");
+            usernameInput.removeClass('notOkay');
+          }
+          else{
+            usernameFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Username already taken</span>");
+            usernameInput.addClass('notOkay');
+          }
+        }
+      });
+    }
+    else {
+      usernameFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Username must be at least 4 characters</span>");
+      usernameInput.removeClass('notOkay');
+    }
+  });
+
+//*** AJAX validate login username BEFORE Post ***
+script.
+  var loginUsernameInput = $("#loginUsername");
+      
+  loginUsernameInput.on('input', function(){
+    var loginUsernameFeedback = $('#loginUsernameFeedback');
+
+    loginUsernameFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
+    
+    var loginUsernameVal=loginUsernameInput.val();
+    if (loginUsernameVal.length >= 4) {
+      $.ajax({
+        type:"post",
+        url:"/checkUsername",
+        data: {username: loginUsernameVal},
+        success:function(data){
+          if(data.unique){
+            loginUsernameFeedback.html('<icon class="icon-remove red"></icon> <span>Unrecognized Username</span>');
+            loginUsernameInput.addClass('notOkay');
+          }
+          else{
+            loginUsernameFeedback.html('<icon class="icon-ok green"></icon>');
+            loginUsernameInput.removeClass('notOkay');
+            
+          }
+        }
+      });
+    }
+    else {
+      loginUsernameFeedback.html('<icon class="icon-remove red"></icon> <span>Username must be at least 4 characters</span>');
+      loginUsernameInput.addClass('notOkay');
+    }
+  });
+
+//******************************************************
+//                    Login
+//******************************************************
+script.
+  $('#loginForm').submit(function(e) {
+    e.preventDefault();
+    var
+      loginUsername = $('#loginUsername');
+      loginPassword = $("#loginPassword");
+      loginUsernameFeedback = $('#loginUsernameFeedback');
+      loginPasswordFeedback = $('#loginPasswordFeedback');
+      
+    loginPasswordFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
+    $.ajax({
+      type: "POST",
+      url: '/ajaxLogin',
+      data: {username: loginUsername.val(), password: loginPassword.val()},
+      success: function(data){
+      //alert(data);
+        if (data=="[object Object]") {
+          loginPasswordFeedback.html('<icon class="icon-remove red"></icon> <span>Please Try Again</span>');
+        }
+        else {
+          loginUsernameFeedback.html('<icon class="icon-ok green"></icon>');
+          loginPasswordFeedback.html('<icon class="icon-ok green"></icon>');
+          window.location.replace("/loginSuccess");
+        }
+      }
+    });
+  });
+
+// CHECK REGISTERED EMAIL
+script.
+  var check4RegisteredEmail = $('.check4RegisteredEmail');
+    
+  check4RegisteredEmail.on('input', function(){
+    var check4RegisteredEmailFeedback = $('.check4RegisteredEmailFeedback');
+
+    check4RegisteredEmailFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
+    
+    var check4RegisteredEmailVal = check4RegisteredEmail.val();
+    var loginHelpSubmit= $('#loginHelpSubmit');
+
+    if (check4RegisteredEmailVal.indexOf("@") >= 0 && check4RegisteredEmailVal.indexOf(".") >= 0) {
+      $.ajax({
+        type:"post",
+        url:"/checkEmail",
+        data:{email: check4RegisteredEmailVal},
+        success:function(data){
+          //console.log(data);
+          if(data.unique){
+            check4RegisteredEmailFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Unregistered Email</span>");
+            check4RegisteredEmail.addClass('notOkay');
+            loginHelpSubmit.addClass('disabled');
+          }
+          else{
+            check4RegisteredEmailFeedback.html("<icon class='icon-ok' style='color: green'></icon>");
+            check4RegisteredEmail.removeClass('notOkay');
+            loginHelpSubmit.removeClass('disabled');
+          }
+        }
+      });
+    }
+    else {
+      check4RegisteredEmailFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Invalid Email</span>");
+      check4RegisteredEmail.addClass('notOkay');
+      loginHelpSubmit.addClass('disabled');
+    }
+  });
+

@@ -47,24 +47,8 @@ a:focus {
   z-index: 999;
   text-align: center;
   font-size: 1.5em;
-  background-color: #111; /* Fallback */
-  background-color: rgba(0,0,0, 0.7);
 }
 
-.alert-warning {
-  color: #c09853;
-  box-shadow: 0 0 0 2px #c09853 inset;
-}
-
-.alert-success {
-  color: #99FF99;
-  box-shadow: 0 0 0 2px #99ff99 inset;
-}
-
-.alert-error {
-  color: red;
-  box-shadow: 0 0 0 2px red inset;
-}
 
 .btn-inverse {
   color: #fff;
@@ -76,6 +60,27 @@ a:focus {
   color: #fff;
   background-color: #3a3c3c;
   border-color: #2e2f2f;
+}
+
+.notOkay:focus {
+  border-color: red;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+}
+
+.okay:focus {
+  border-color: green;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(0,255,0,0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(0,255,0,0.6);
+}
+
+.warning:focus {
+  border-color: orange;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(251, 238, 213,0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(251, 238, 213,0.6);
 }
 
 /* Fonts */
@@ -94,23 +99,27 @@ a:focus {
   src: url(/fonts/chowfun.ttf);
 }
 
+
+
 /* ICONS */
-icon {
+icon, i {
   margin-right: 10px;
 }
 
-.notOkay:focus {
-  border-color: red;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+.nav-stacked icon, i {
+  margin-right: 0;
 }
 
-.okay:focus {
-  border-color: green;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(0,255,0,0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(0,255,0,0.6);
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.gray {
+  color: gray;
 }
 
 /* CUSTOMIZE THE NAV
@@ -231,7 +240,7 @@ icon {
   width: 60px;
   height: 60px;
   border: 5px solid #333;
-  background-color: #000;
+  background-color: #DDD;
   border-radius: 100%;
 }
 
@@ -286,7 +295,7 @@ icon {
     margin-bottom: 10px;
   }
   
-  #navContent ul {
+  #navContent li {
     margin-left: 20px;
   }
   
@@ -297,6 +306,10 @@ icon {
   #navContent a:hover {
     color: #333;
   }
+  
+  #navContent icon, i {
+  margin-right: 0;
+}
   
   .login {
     text-align: center;
@@ -358,6 +371,20 @@ icon {
 .social a {
   text-decoration: none;
   margin-left: 30px;
+}
+
+#feedback {
+  z-index: 1000;
+}
+
+.popover {
+  -webkit-box-shadow: 0 0 3px rgba(102,175,233, 0.5);
+  box-shadow: 0 0 3px rgba(102,175,233, 0.5);
+  width: 100%;
+}
+
+#loginHelpFeedback {
+  
 }
 
 /* CUSTOMIZE THE CAROUSEL

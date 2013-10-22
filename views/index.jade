@@ -1,6 +1,26 @@
 extends layout
 
 block content
+  // PAGE-SPECIFIC JS. AT THE TOP FOR SMOOTHER LOADING
+  // Start carousel cycle, set carousel height, .hello height, center .bigSearch
+  script.
+    //$(document).ready(function(){
+    $(function() {
+      
+      var 
+        carouselHeight = 0.75 * window.innerHeight;
+        helloHeight = 0.21 * window.innerHeight;
+        rowHeight = $(".bigSearch").parent().parent().height();
+        
+      $("#foodPorn").carousel('cycle');
+      $(".item").css("height", carouselHeight + "px");
+
+      $(".hello").css("height", helloHeight + "px");
+
+      $(".bigSearch").css("margin-top", (0.5 * rowHeight - 20) + "px");
+
+    }); 
+      
   section
     // Carousel
     #foodPorn.carousel.slide
@@ -39,25 +59,26 @@ block content
       
       
     // Simple layout
-    .container.hello
-      .row
-        .col-lg-3
-          p.title VenFu
-        // SEARCH BAR
-        .col-lg-5
-          .input-group.bigSearch
-            input.form-control(type="text", placeholder="So...Whatcha want?")
-            span.input-group-btn
-              button.btn.btn-default(type="button")
-                icon.icon-search
-        .col-lg-4
-          .btn-group.pull-right
-            a.btn.btn-lg.btn-danger(href="/about#vendors") 
-              icon.icon-usd  Sell-Fu
-            a.btn.btn-lg.btn-danger(href="/about#delivery")
-              icon.icon-usd  Deliver-Fu
-          .know.pull-right
-            a(href="/about") Do you know VenFu?
+    .container
+      .hello
+        .row
+          .col-lg-3
+            p.title VenFu
+          // SEARCH BAR
+          .col-lg-5
+            .input-group.bigSearch
+              input.form-control(type="text", placeholder="What do you desire?")
+              span.input-group-btn
+                button.btn.btn-default(type="button")
+                  icon.icon-search
+          .col-lg-4
+            .btn-group.pull-right
+              a.btn.btn-lg.btn-danger(href="/about#vendors") 
+                icon.icon-usd  Sell-Fu
+              a.btn.btn-lg.btn-danger(href="/about#delivery")
+                icon.icon-usd  Deliver-Fu
+            .know.pull-right
+              a(href="/about") Do you know VenFu?
     
   //- Giant Buttons and featurettes
     .container.marketing

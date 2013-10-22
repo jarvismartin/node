@@ -1,0 +1,480 @@
+extends layout
+
+block content
+  div.container
+    div.col-lg-10.col-lg-offset-1.well(style="margin-top: 62px")
+      // mini nav
+      ul#uiTabs.nav.nav-tabs
+        
+        li#settingsUI.active
+          a(href="#", onclick="makeActive(0)") 
+            icon.icon-wrench
+            span Account Info
+        // Only show Vendor tab for Vendors
+        if(user.classification.indexOf("V") != -1)
+          li#vendorUI
+            a(href="#", onclick="makeActive(1)")
+              icon.icon-coffee
+              span Vendor Interface
+        //Only show Delivery tab for delivery people
+        if(user.classification.indexOf("D") != -1)
+          li#deliverUI
+            a(href="#", onclick="makeActive(2)") 
+              icon.icon-truck
+              span Delivery Interface
+        li#notifyUI
+          a(href="#", onclick="makeActive(3)") 
+            icon.icon-comment
+            span Notification Settings
+        li#historyUI
+          a(href="#", onclick="makeActive(4)") 
+            icon.icon-bar-chart
+            span My Orders
+      
+      // Change User Info (n = 0)
+      .material
+        h3(style="text-align: center") Make changes to your account
+        // vertical menu
+        .row(style="margin-top: 30px")
+          .col-xs-4.col-md-2
+            ul.nav.nav-pills.nav-stacked.text-center
+              li.active
+                a(href="#", onclick="makePillActive(0)")
+                  icon.icon-envelope-alt
+                  p Email
+              li 
+                a(href="#", onclick="makePillActive(1)") 
+                  icon.icon-user
+                  p Username
+              li 
+                a(href="#", onclick="makePillActive(2)") 
+                  icon.icon-key
+                  p Password
+              li 
+                a(href="#", onclick="makePillActive(3)") 
+                  icon.icon-phone
+                  p Phone
+              li 
+                a(href="#", onclick="makePillActive(4)") 
+                  icon.icon-tags
+                  p Class
+              
+          .col-xs-8.col-md-10
+            form.form-horizontal.update(id="updateEmail", method="post", action="/updateUserInfo")
+              .col-xs-8.col-md-offset-1
+                .form-group
+                  h5 This will change the email address associated with your account.
+                .form-group
+                  //label.col-xs-4.control-label(for="email") Update Email
+                  .input-group
+                    input.email.form-control(type="email", name="email", placeholder="Update Email")
+                    span.input-group-btn
+                      span.btn.btn-default.disabled(type="button")
+                        .emailFeedback ...
+                .form-group.text-center
+                  span.help-block.well Your current email: 
+                    em !{user.email}
+                .form-group(style="margin-top: 30px") 
+                  button#loginFormSubmit.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="submit")
+                    icon.icon-check 
+                    span Make Changes
+          
+            form.form-horizontal.update.hidden(id="updateUsername", method="post", action="/updateUserInfo")              
+              .col-xs-8.col-md-offset-1
+                .form-group
+                  h5 This is your chance to get a nice new shiny username.
+                .form-group
+                  //label.col-xs-4.control-label(for="username") Change Username
+                  .input-group
+                    input.username.form-control(type="text", name="username", placeholder="Change Username")
+                    span.input-group-btn
+                      span.btn.btn-default.disabled(type="button")
+                        .usernameFeedback ...
+                .form-group.text-center
+                  span.help-block.well Your current username: 
+                    em !{user.username}
+                .form-group(style="margin-top: 30px") 
+                  button#loginFormSubmit.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="submit")
+                    icon.icon-check 
+                    span Make Changes
+            
+            form.form-horizontal.update.hidden(id="updatePassword", method="post", action="/updateUserInfo")            
+              .col-xs-8.col-md-offset-1
+                .form-group
+                  h5 This will change your password.
+                .form-group.pull-right
+                  //label.col-xs-4.control-label(for="password") Change Password
+                  .input-group
+                    input.form-control.notOkay.password(type="password", id="password", name="password", placeholder="Change Password")
+                    span.input-group-btn
+                      span.btn.btn-default.disabled(type="button")
+                        .passwordFeedback ...
+                .form-group.pull-right
+                  //label.col-xs-4.control-label(for="confirmPassword") Confirm New Password
+                  .input-group
+                    input.form-control.notOkay.confirmPassword(type="password", id="confirmPassword", placeholder="Confirm New Password")
+                    span.input-group-btn
+                      span.btn.btn-default.disabled(type="button")
+                        .confirmPasswordFeedback ...
+                .form-group(style="margin-top: 30px") 
+                  button#loginFormSubmit.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="submit")
+                    icon.icon-check 
+                    span Make Changes
+            
+            form.form-horizontal.update.hidden(id="updatePhone", method="post", action="/updateUserInfo")  
+              .col-xs-8.col-md-offset-1
+                .form-group
+                  //label.col-xs-4.control-label(for="tel") Update Phone Number
+                  // .col-xs-2
+                  //   .input-group
+                  //     input#areaCode.form-control(type="tel", name="tel", placeholder="Area Code")
+                .form-group
+                  h5 If you want to add or change the phone number associated with your account, this is the place to do it.
+                  .input-group
+                    input#phone.form-control(type="tel", name="tel", placeholder="Phone Number")
+                    span.input-group-btn
+                      span.btn.btn-default.disabled(type="button") Numbers Only
+                .form-group.text-center
+                  span.help-block.well Your current number: 
+                    em !{user.tel}
+                .form-group(style="margin-top: 30px") 
+                  button#loginFormSubmit.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="submit")
+                    icon.icon-check 
+                    span Make Changes
+            
+            form.form-horizontal.update.hidden(id="updateClass", method="post", action="/updateUserInfo")          
+              .col-xs-10.col-md-offset-1
+                .form-group
+                  h5 How will you VenFu? You can use this section to change your classification in the VenFu system.
+                .form-group
+                  //label.col-xs-4.control-label(for="classification") Change Classification(s):
+                  .input-group.col-xs-12
+                    .col-xs-4
+                      .checkbox
+                        label Vendor
+                          input(id="vendor", name="classification", type="checkbox", value="V")
+                    .col-xs-4
+                      .checkbox 
+                        label Delivery
+                          input(id="delivery", name="classification", type="checkbox", value="D")
+                    .col-xs-4
+                      .checkbox 
+                        label Consumer
+                          input(id="customer", name="classification", type="checkbox", value="C")
+                .form-group.text-center
+                  span.help-block.well Your current class(es): 
+                    em !{user.classification}    
+                .form-group(style="margin-top: 30px") 
+                  button#loginFormSubmit.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="submit")
+                    icon.icon-check 
+                    span Make Changes
+                  
+      // Vendor UI (n = 1)
+      .material.hidden
+        h3(style="text-align: center") Vendor Interface
+        // vertical menu
+        .row(style="margin-top: 30px")
+          .col-xs-4.col-md-2
+            ul.nav.nav-pills.nav-stacked.text-center.vendor-pills
+              li.active
+                a(href="#", onclick="makeVendorPillActive(0)")
+                  icon.icon-ticket
+                  p Orders
+              li 
+                a(href="#", onclick="makeVendorPillActive(1)") 
+                  icon.icon-truck
+                  p Deliveries
+              li 
+                a(href="#", onclick="makeVendorPillActive(2)") 
+                  icon.icon-gift
+                  p Products
+              li 
+                a(href="#", onclick="makeVendorPillActive(3)") 
+                  icon.icon-building
+                  p Venues
+              li 
+                a(href="#", onclick="makeVendorPillActive(4)") 
+                  icon.icon-star
+                  p Feedback
+              
+          .col-xs-8.col-md-10
+            form.form-horizontal.update(id="updateEmail", method="post", action="/register")
+              .col-xs-8.col-md-offset-1
+                .form-group
+                  h5 This will change the email address associated with your account.
+                .form-group
+                  //label.col-xs-4.control-label(for="email") Update Email
+                  .input-group
+                    input.email.form-control(type="email", name="email", placeholder="Update Email")
+                    span.input-group-btn
+                      span.btn.btn-default.disabled(type="button")
+                        .emailFeedback ...
+                .form-group(style="margin-top: 30px") 
+                  button#loginFormSubmit.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="submit")
+                    icon.icon-check 
+                    span Make Changes
+          
+            form.form-horizontal.update.hidden(id="updateUsername", method="post", action="/register")              
+              .col-xs-8.col-md-offset-1
+                .form-group
+                  h5 This is your chance to get a nice new shiny username.
+                .form-group
+                  //label.col-xs-4.control-label(for="username") Change Username
+                  .input-group
+                    input.username.form-control(type="text", name="username", placeholder="Change Username")
+                    span.input-group-btn
+                      span.btn.btn-default.disabled(type="button")
+                        .usernameFeedback ...
+                .form-group(style="margin-top: 30px") 
+                  button#loginFormSubmit.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="submit")
+                    icon.icon-check 
+                    span Make Changes
+            
+            form.form-horizontal.update.hidden(id="updatePassword", method="post", action="/register")            
+              .col-xs-8.col-md-offset-1
+                .form-group
+                  h5 This will change your password.
+                .form-group.pull-right
+                  //label.col-xs-4.control-label(for="password") Change Password
+                  .input-group
+                    input.form-control.notOkay.password(type="password", id="password", name="password", placeholder="Change Password")
+                    span.input-group-btn
+                      span.btn.btn-default.disabled(type="button")
+                        .passwordFeedback ...
+                .form-group.pull-right
+                  //label.col-xs-4.control-label(for="confirmPassword") Confirm New Password
+                  .input-group
+                    input.form-control.notOkay.confirmPassword(type="password", id="confirmPassword", placeholder="Confirm New Password")
+                    span.input-group-btn
+                      span.btn.btn-default.disabled(type="button")
+                        .confirmPasswordFeedback ...
+                .form-group(style="margin-top: 30px") 
+                  button#loginFormSubmit.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="submit")
+                    icon.icon-check 
+                    span Make Changes
+            
+            form.form-horizontal.update.hidden(id="updatePhone", method="post", action="/register")  
+              .col-xs-8.col-md-offset-1
+                .form-group
+                  //label.col-xs-4.control-label(for="phone") Update Phone Number
+                  // .col-xs-2
+                  //   .input-group
+                  //     input#areaCode.form-control(type="tel", name="phone", placeholder="Area Code")
+                .form-group
+                  h5 If you want to add or change the phone number associated with your account, this is the place to do it.
+                  .input-group
+                    input#phone.form-control(type="tel", name="phone", placeholder="Phone Number")
+                    span.input-group-btn
+                      span.btn.btn-default.disabled(type="button") Numbers Only
+                .form-group(style="margin-top: 30px") 
+                  button#loginFormSubmit.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="submit")
+                    icon.icon-check 
+                    span Make Changes
+            
+            form.form-horizontal.update.hidden(id="updateClass", method="post", action="/register")          
+              .col-xs-10.col-md-offset-1
+                .form-group
+                  h5 How will you VenFu? You can use this section to change your classification in the VenFu system.
+                .form-group
+                  //label.col-xs-4.control-label(for="classification") Change Classification(s):
+                  .input-group
+                    .col-xs-12.col-md-4
+                      label.checkbox Vendor
+                        input(id="vendor", name="classification", type="checkbox", value="V")
+                    .col-xs-12.col-md-4
+                      label.checkbox Delivery
+                        input(id="delivery", name="classification", type="checkbox", value="D")
+                    .col-xs-12.col-md-4
+                      label.checkbox Consumer
+                        input(id="customer", name="classification", type="checkbox", value="C")
+                      
+                .form-group(style="margin-top: 30px") 
+                  button#loginFormSubmit.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="submit")
+                    icon.icon-check 
+                    span Make Changes
+        
+      // Delivery UI (n = 2)
+      .material.hidden
+        p This is the delivery interface
+        
+      // Notification UI (n = 3)
+      .material.hidden
+        h3.text-center(style="margin-bottom: 20px") Notification Settings
+        h5.text-center
+          em Which alerts work for you?
+        h4.col-xs-12.col-md-9
+          .col-xs-3.col-md-2.pull-right Email
+          .col-xs-3.col-md-2.pull-right Text
+        form.form-horizontal(id="updateForm", method="post", action="/register", style="margin-top: 30px")
+          .form-group
+            label.col-xs-4.col-md-5.control-label(for="updates") 
+              .col-xs-7.col-md-5.pull-right.text-right Updates
+            .col-xs-8.col-md-4.input-group
+              .col-xs-4.col-md-6.pull-right
+                .col-xs-1.col-md-6.pull-right.label.checkbox
+                  input(id="updateEmail", name="updates", type="checkbox", value="ue")
+              .col-xs-6.pull-right
+                .col-xs-3.pull-right.label.checkbox
+                  input(id="updateText", name="updates", type="checkbox", value="ut")
+                  
+          .form-group
+            label.col-xs-4.col-md-5.control-label(for="updates") 
+              .col-xs-7.pull-right.text-right Invoices
+            .col-xs-8.col-md-4.input-group
+              .col-xs-4.col-md-6.pull-right
+                .col-xs-1.col-md-6.pull-right.label.checkbox
+                  input(id="updateEmail", name="updates", type="checkbox", value="ue")
+              .col-xs-6.pull-right
+                .col-xs-3.pull-right.label.checkbox
+                  input(id="updateText", name="updates", type="checkbox", value="ut")
+                  
+          .form-group
+            label.col-xs-4.col-md-5.control-label(for="updates") 
+              .col-xs-7.pull-right.text-right Order Ready
+            .col-xs-8.col-md-4.input-group
+              .col-xs-4.col-md-6.pull-right
+                .col-xs-1.col-md-6.pull-right.label.checkbox
+                  input(id="updateEmail", name="updates", type="checkbox", value="ue")
+              .col-xs-6.pull-right
+                .col-xs-3.pull-right.label.checkbox
+                  input(id="updateText", name="updates", type="checkbox", value="ut")
+                  
+          .form-group
+            label.col-xs-4.col-md-5.control-label(for="updates") 
+              .col-xs-7.pull-right.text-right Delivery Underway
+            .col-xs-8.col-md-4.input-group
+              .col-xs-4.col-md-6.pull-right
+                .col-xs-1.col-md-6.pull-right.label.checkbox
+                  input(id="updateEmail", name="updates", type="checkbox", value="ue")
+              .col-xs-6.pull-right
+                .col-xs-3.pull-right.label.checkbox
+                  input(id="updateText", name="updates", type="checkbox", value="ut")
+                  
+          .form-group(style="margin-top: 30px") 
+            .col-xs-11
+              button#loginFormSubmit.btn.btn-primary.col-md-3.col-xs-8.pull-right(type="submit")
+                icon.icon-check 
+                span Make Changes
+        
+      // History UI (n = 3)
+      .material.hidden
+        p This is the order history interface
+         
+  
+  //Page-specific JS / jQuery
+  
+  //Make clicked tab active
+  script.
+    function makeActive(n){
+      var
+        tabs = $('#uiTabs').find('li');
+        material = $('.material');
+      
+      // No other tabs should be active
+      tabs.each(function() {
+        $(this).removeClass('active');
+      });
+      // No other material should be visible
+      material.each(function() {
+        $(this).addClass('hidden');
+      });
+      
+      // Make clicked tab active
+      tabs.eq(n).addClass('active');
+      
+      // Make material visible
+      material.eq(n).removeClass('hidden');
+
+    }
+    
+  //Make clicked setting pill active 
+  script.
+    function makePillActive(m){
+      var
+        pills = $('.nav-pills').find('li');
+        update = $('.update');
+      
+      // No other pills should be active
+      pills.each(function() {
+        $(this).removeClass('active');
+      });
+      // No other update section should be visible
+      update.each(function() {
+        $(this).addClass('hidden');
+      });
+      
+      // Make clicked tab active
+      pills.eq(m).addClass('active');
+      
+      // Make material visible
+      update.eq(m).removeClass('hidden');
+
+    }    
+    
+  //Make clicked vendor pill active 
+  script.
+    function makeVendorPillActive(m){
+      var
+        vendorPills = $('.vendor-pills').find('li');
+        update = $('.update');
+      
+      // No other pills should be active
+      vendorPills.each(function() {
+        $(this).removeClass('active');
+      });
+      // No other update section should be visible
+      update.each(function() {
+        $(this).addClass('hidden');
+      });
+      
+      // Make clicked tab active
+      vendorPills.eq(m).addClass('active');
+      
+      // Make material visible
+      update.eq(m).removeClass('hidden');
+
+    }    
+    
+  // AJAX Account Settings changes to DB
+  script.
+    // All the forms have the .update class to hide/show with navs
+    $('.update').submit(function(e) {
+      e.preventDefault();
+
+      var
+        // Get the type of data, e.g. email, username, password, etc.
+        type = $(this).find('input').attr('name');
+        
+        // Get the field input (this = $(.update) from above
+        input = $(this).find('input');
+        // ajax 'data' variable
+        //values = {'type': type, 'data': input.val()};
+        values = input.serialize();
+        
+        // var for feedback update after ajax call
+        feedback = $(this).find('em');
+      //console.log('values = ' + values);
+      
+      // Send the info to the DB
+      // data: JSON.stringify(values),
+      // contentType: 'application/json',
+      $.ajax({
+        type: "POST",
+        url: '/updateUserInfo',
+        data: values,
+        success: function(data){
+        //alert('success');
+          //location.reload(); 
+          console.log('User Info Update Successful');
+          //feedback.html(#{user[type]});
+          feedback.html(data);
+          if(type != 'classification')
+            input.val('');
+          else
+            $('input:checkbox').removeAttr('checked');
+            
+          $('.' + type + 'Feedback').html('...');
+        }
+      });
+    });
+

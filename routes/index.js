@@ -121,16 +121,32 @@ exports.about = function(req, res){
 };
 
 /*
- * GET settings page.
+ * GET user page.
  */
 
-exports.settings = function(req, res){
-  res.render('settings', { 
-    title: 'VenFu - Account Settings', 
-    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
-    user: req.user, loggedIn: req.isAuthenticated()
-  });
+exports.user = function(req, res){
+  if (req.user ){
+    res.render('user', { 
+      title: 'My VenFu', 
+      msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+      user: req.user, loggedIn: req.isAuthenticated()
+    });
+  }
+  else {
+    req.flash('err', ['Please sign in.']);
+    res.redirect('/');
+  }
 };
 
+/*
+ * GET forgot password page.
+ */
 
+exports.forgotPassword = function(req, res){
+  // res.render('user', { 
+  //   title: 'My VenFu', 
+  //   msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+  //   user: req.user, loggedIn: req.isAuthenticated()
+  // });
+};
 

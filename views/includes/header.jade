@@ -4,20 +4,24 @@ html
     title= title
     
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    <meta name="description" content="">
-    <meta name="author" content="">
+    meta(name="description", content="")
+    meta(name="authors", content="Jarvis Martin and Max Franks")
     // Latest compiled and minified CSS 
     link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css")
     // Font Awesome icons
     link(href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css", rel="stylesheet")
     link(rel='stylesheet', href='/stylesheets/style.css')
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    
+    // HTML5 shim, for IE6-8 support of HTML5 elements
     <!--[if lt IE 9]>
     <script src="public/javascripts/aFarkas-html5shiv-67bff28/dist/html5shiv.js"></script>
     <![endif]-->
     
     // jQuery
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    
+    // Latest compiled and minified Bootstrap JavaScript 
+    script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")
     
     // Start carousel cycle, set carousel height, .hello height, center .bigSearch
     script.
@@ -30,253 +34,313 @@ html
           rowHeight = $(".bigSearch").parent().parent().height();
           
         $("#foodPorn").carousel('cycle');
-        $(".item").attr({        
-          style: "height: " + carouselHeight + "px"
-        });
-        
-        $(".hello").attr({
-          style: "height: " + helloHeight + "px"
-        });
+        $(".item").css("height", carouselHeight + "px");
 
-        $(".bigSearch").attr({
-          style: "margin-top: " + (0.5 * rowHeight - 20) + "px"
-        }); 
-        
+        $(".hello").css("height", helloHeight + "px");
+
+        $(".bigSearch").css("margin-top", (0.5 * rowHeight - 20) + "px");
+ 
       }); 
     
   body
+    .container
+      // Alerts
+      if (msg != "")
+        div.col-xs-12.col-md-4.col-md-offset-3.alert.alert-info.text-center
+          button.close(type="button", data-dismiss="alert", aria-hidden="true") ×
+          icon.icon-info-sign
+          span #{msg}
+          
+      if (err != "")
+        div.col-xs-12.col-md-4.col-md-offset-3.alert.alert-danger.text-center
+          button.close(type="button", data-dismiss="alert", aria-hidden="true") ×
+          icon.icon-remove-sign
+          span #{err}
+          
+      if (success != "")
+        div.col-xs-12.col-md-4.col-md-offset-3.alert.alert-success.text-center
+          button.close(type="button", data-dismiss="alert", aria-hidden="true") ×
+          icon.icon-ok-sign
+          span #{success}
+      
+      #navMenu
+        .relativeContainer
+          img(src="images/egg.png")
+      
+      // Sound
+      audio#gong
+        source(src="audio/gong.mp3")
   
-    // Alerts
-    if (msg != "")
-      div.col-xs-4.col-xs-offset-4.col-lg-offset-4.alert.alert-warning
-        // button.close(type="button", data-dismiss="alert", aria-hidden="true")
-        //   icon.icon-remove
-        icon.icon-info-sign
-        span #{msg}
-        
-    if (err != "")
-      div.col-xs-4.col-xs-offset-4.col-lg-offset-4.alert.alert-danger
-        //button.close(type="button", data-dismiss="alert", aria-hidden="true") ×
-        icon.icon-remove-sign
-        span #{err}
-        
-    if (success != "")
-      div.col-xs-4.col-xs-offset-4.col-lg-offset-4.alert.alert-success
-        //button.close(type="button", data-dismiss="alert", aria-hidden="true") ×
-        icon.icon-ok-sign
-        span #{success}
-    
-    #navMenu
-      .relativeContainer
-        img(src="images/egg.png")
-    // #navMenu.foldtl
-    // #menu.rotate menu
-    
-    // Sound
-    audio#gong
-      source(src="audio/gong.mp3")
-
-
-    
-    #navContent.col-xs-3
-    
-      // SEARCH BAR
-      .col-xs-12
-        .input-group
-          input.form-control(type="text", placeholder="Search")
-          span.input-group-btn
-            button.btn.btn-default(type="button")
-              icon.icon-search
+      // NAV CONTENT
+      #navContent.col-md-3.col-xs-11
+        // SEARCH BAR
+        .col-xs-12
+          .input-group
+            input.form-control(type="text", placeholder="Search")
+            span.input-group-btn
+              button.btn.btn-default(type="button")
+                icon.icon-search
+                
+        // SIGN UP/IN + HOME
+        ul.nav.pull-left.col-xs-6.text-center
+          li
+            a(href="/")
+              icon.icon-home
+              p Home
+          li
+            a(href="/about")  
+              icon.icon-info-sign  
+              p How to
               
-      // SIGN UP/IN + HOME
-      ul.nav.pull-left
-        li
-          a(href="/")
-            icon.icon-home
-            span Home
-        li
-          a(href="/about")  
-            icon.icon-info-sign  
-            span How to
-            
-        // Determine if User is logged in and render appropriate content
-        if loggedIn
+          // Determine if User is logged in and render appropriate content
+          if loggedIn
+            li
+              a(href="/user")
+                icon.icon-dashboard
+                // If username 4 chars or less, render name. Otherwise, "my-fu" default.
+                if(user.username.length <= 7)
+                  p #{user.username}-fu
+                else
+                  p My Fu
+  
+        ul.nav.pull-left.col-xs-6.text-center
+          
           li
-            a(href="/vendors")
-              icon.icon-food  
-              span Vendors
-
-      ul.nav.pull-left
-        li
-          a(href="/suggestions")
-            icon.icon-bullhorn
-            span Suggestions
-        li
-          a(href="/customerService")  
-            icon.icon-exclamation-sign   
-            span Problems?
-        // Determine if User is logged in and render appropriate content
-        if loggedIn
-           li
-            a(href="/delivery")  
-              icon.icon-truck  
-              span Delivery
-      
-      // Determine if User is logged in and render appropriate content
-      ul.nav.pull-left.col-xs-11.login
-        if !loggedIn
+            a(href="/customerService")  
+              icon.icon-warning-sign
+              p Help
+              
           li
-            a(href="#loginModal", id="login", data-toggle="modal")
-              icon.icon-signin  
-              span Sign in
-        else    
-          li
-            a(href="/logout")
-              icon.icon-signout
-              span Sign out
-      
-      #hideNav
-        //i.icon-remove-sign.icon-2x
-        img(src="images/egg.png")
- 
-    // Modals
-    #registerModal.modal.fade
-      .modal-dialog
-        .modal-content
-          .modal-header
-              button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
-              h3 Join us
-          .modal-body
-            form.form-horizontal(id="registerForm", method="post", action="/register")
-              .form-group
-                label.col-xs-2.control-label(for="email") Email
-                .col-xs-10
-                  input.form-control.notOkay(type="text", id="email", name="email", placeholder="Email", onkeyup="validateEmail()")
-              .form-group
-                label.col-xs-2.control-label(for="username") Username
-                .col-xs-10
-                  input.form-control(type="text", id="username", name="username", placeholder="Username")
-              .form-group
-                label.col-xs-2.control-label(for="password") Password
-                .col-xs-10
-                  input.form-control(type="password", id="password", name="password",placeholder="Password")
-              .form-group
-                label.col-xs-2.control-label(for="confirmPassword") Confirm
-                .col-xs-10
-                  input.form-control.notOkay(type="password", id="confirmPassword", placeholder="Confirm Password", onkeyup="validatePassword()")              
-              .form-group.form-inline
-                .col-xs-4
-                  // NEEDS TOOL TIP !!!!!!!!!
-                  strong(style="text-align: center") How will you VenFu?
-                .col-xs-8.checkboxes
-                  label.checkbox-inline.pull-right Deliver-Fu
-                    input(id="chooseDelivery", name="classification", type="checkbox", value="D")
-                  label.checkbox-inline.pull-right Sell-Fu
-                    input(id="chooseVendor", name="classification", type="checkbox", value="V")  
-                  label.checkbox-inline.pull-right Consume-Fu
-                    input(id="chooseCustomer", name="classification", type="checkbox", value="C")
-              .modal-footer
-                button.disabled.btn.btn-success.pull-left(id='registerFormSubmit', type="submit")
-                  icon.icon-ok  Sign Up
-                button.btn.btn-inverse.pull-right(data-dismiss="modal")
-                  icon.icon-remove  Cancel
+            a(href="/suggestions")
+              icon.icon-lightbulb
+              p Ideas?
+              
+          // Determine if User is logged in and render appropriate content
+          if loggedIn
+            li
+              a(href="/logout")
+                icon.icon-signout
+                p Sign out
         
-    #loginModal.modal.fade
-      .modal-dialog
-        .modal-content
-          .modal-header
-            button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
-            h3 Please sign in
-              a#register.btn.btn-success.pull-right(style="margin-right: 50px", href="#registerModal", data-toggle="modal", data-dismiss="modal")
-                icon.icon-plus  Join us
-          .modal-body
-            form.form-horizontal(id="loginForm", action="/login", method="post")      
-              .form-group
-                label.col-xs-2.control-label(for="username") Username
-                .col-xs-10
-                  input.form-control(type="text", id="username", name="username", placeholder="Username")
-              .form-group
-                label.col-xs-2.control-label(for="password") Password
-                .col-xs-10
-                  input.form-control(type="password", id="password", name="password", placeholder="Password")
-              .modal-footer
-                .form-group 
-                  .col-xs-4
-                    button.btn.btn-primary.col-xs-12(id='loginFormSubmit', type="submit")
-                      icon.icon-lock  Sign in
-                  .col-xs-4
-                    .checkbox(style="text-align: left")
-                      label Remember me
-                        input(type="checkbox", name="classification")
-                  .col-xs-4
-                    a.btn.btn-link(href="#") Forgot your password?
-              //-.modal-footer
-                h5.pull-left Or sign in with
-                .col-xs-12.social
-                  a(href="/auth/facebook", title="Facebook")
-                    icon.icon-facebook-sign.icon-4x
-                  a(href="#", title="Twitter")
-                    icon.icon-twitter-sign.icon-4x
-                  a(href="#", title="Google+")
-                    icon.icon-google-plus-sign.icon-4x
-                  a(href="#", title="Pinterest")
-                    icon.icon-pinterest-sign.icon-4x
-                  a(href="#", title="Instagram")
-                    icon.icon-instagram.icon-4x
-                  a(href="#", title="Tumblr")
-                    icon.icon-tumblr-sign.icon-4x
-            
-
-
-  //- NAVBAR 
-    div.navbar.navbar-fixed-top
-        div.navbar-inner
-            div.container-fluid
-                button.btn.btn-navbar(type="button", data-toggle="collapse", data-target=".nav-collapse")
-                    span.icon-bar
-                    span.icon-bar
-                    span.icon-bar
-                a.brand(href="/") VenFu
-                ul.nav
-                    li.dropdown
-                        a(href="#", class="dropdown-toggle", data-toggle="dropdown") 
-                            strong.caret
-                        ul.dropdown-menu
-                            li.nav-header You are a
-                            li
-                                a(href="/customers") Customer
-                            li
-                                a(href="/vendors") Vendor
-                            li
-                                a(href="/delivery") Delivery Person
-                            li.divider
-                            li.nav-header Other Stuff...
-                            li
-                                a(href="#") About Us
-                            li
-                                a(href="/suggestions") Suggestions
-                            li
-                                a(href="/customerService") Problems?
-                    li.divider-vertical
-                    // SEARCH BAR
-                    form.navbar-search(action="")
-                        input.search-query.span6(type="text", placeholder="Search")
-                 
-                // SIGN UP/IN will collapse
-                div.nav-collapse.collapse
-                    ul.nav.pull-right
-                        li 
+        // Determine if User is logged in and render appropriate content
+        ul.nav.pull-left.col-xs-11.login.text-center
+          if !loggedIn
+            li
+              a(href="#loginModal", id="login", data-toggle="modal")
+                icon.icon-signin  
+                p Sign in
+        
+        #hideNav
+          //i.icon-remove-sign.icon-2x
+          img(src="images/egg.png")
+   
+      // Modals
+      #registerModal.modal.fade
+        .modal-dialog
+          .modal-content
+            .modal-header
+                button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
+                h3 Registration
+            .modal-body
+              form.form-horizontal(id="registerForm", method="post", action="/register")
+                .form-group
+                  label.col-xs-2.control-label(for="email") Email
+                  .col-xs-10
+                    .input-group
+                      input.email.form-control(type="text", name="email", placeholder="Email")
+                      span.input-group-btn
+                        span.btn.btn-default.disabled(type="button")
+                          .emailFeedback ...
+  
+                .form-group
+                  label.col-xs-2.control-label(for="username") Username
+                  .col-xs-10
+                    .input-group
+                      input.username.form-control(type="text", name="username", placeholder="Username")
+                      span.input-group-btn
+                        span.btn.btn-default.disabled(type="button")
+                          .usernameFeedback ...
+  
+                .form-group
+                  label.col-xs-2.control-label(for="password") Password
+                  .col-xs-10
+                    .input-group
+                      input.form-control.notOkay.password(type="password", id="registerPassword", name="password", placeholder="Password")
+                      span.input-group-btn
+                        span.btn.btn-default.disabled(type="button")
+                          .passwordFeedback ...
+                          
+                .form-group
+                  label.col-xs-2.control-label(for="confirmPassword") Confirm
+                  .col-xs-10
+                    .input-group
+                      input.form-control.notOkay.confirmPassword(type="password", id="confirmPassword", placeholder="Confirm Password")
+                      span.input-group-btn
+                        span.btn.btn-default.disabled(type="button")
+                          .confirmPasswordFeedback ...
+                
+                .form-group
+                  label.col-xs-2.control-label(for="tel") Phone
+                  .col-xs-10
+                    .input-group
+                      input#phone.form-control(type="tel", name="tel", placeholder="Phone Number (optional)")
+                      span.input-group-btn
+                        span.btn.btn-default.disabled(type="button") Numbers Only (e.g. 123456789)
+                                  
+                .form-group
+                  label.col-xs-3.control-label(for="classification") VenFu Style:
+                  .col-xs-9.input-group
+                    .col-xs-3
+                      label.checkbox Sell-Fu
+                        input(id="vendor", name="classification", type="checkbox", value="V")
+                    .col-xs-4
+                      label.checkbox Deliver-Fu
+                        input(id="delivery", name="classification", type="checkbox", value="D")
+                    .col-xs-5
+                      label.checkbox Consume-Fu
+                        input(id="customer", name="classification", type="checkbox", value="C")
+                .modal-footer
+                  button.disabled.btn.btn-success.pull-left(id='registerFormSubmit', type="submit")
+                    icon.icon-ok
+                    span Sign Up
+                  button.btn.btn-inverse.pull-right(data-dismiss="modal")
+                    icon.icon-remove  
+                    span Cancel
+          
+      #loginModal.modal.fade
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
+              h3 Please sign in
+                a#register.btn.btn-success.pull-right(style="margin-right: 50px", href="#registerModal", data-toggle="modal", data-dismiss="modal")
+                  icon.icon-plus
+                  span Join us
+            .modal-body
+              form#loginForm.form-horizontal(action="/login", method="post")      
+                .form-group
+                  //label.col-xs-2.control-label(for="username") Username
+                  .col-xs-12
+                    .input-group
+                      input#loginUsername.form-control(type="text", name="username", placeholder="Username")
+                      span.input-group-btn
+                        span.btn.btn-default.disabled(type="button")
+                          #loginUsernameFeedback ...
+  
+                .form-group
+                  //label.col-xs-2.control-label(for="password") Password
+                  .col-xs-12
+                    .input-group
+                      input#loginPassword.form-control(type="password", name="password", placeholder="Password")
+                      span.input-group-btn
+                        span.btn.btn-default.disabled(type="button")
+                          #loginPasswordFeedback ...
+  
+                .modal-footer
+                  .form-group 
+                    .col-xs-4
+                      button#loginFormSubmit.btn.btn-primary.col-xs-12(type="submit")
+                        icon.icon-signin 
+                        span Sign in
+                    .col-xs-4
+                      //-.checkbox(style="text-align: left")
+                        label Remember me
+                          input(type="checkbox", name="classification")
+                    .col-xs-4
+                      button.btn.btn-link(type="button", href="#loginHelpModal", data-toggle="modal", data-dismiss="modal") Can't remember?
+  
+                  .form-group
+                    .col-xs-12
+                      #loginHelpFeedback
+                      
+                //-.modal-footer
+                  h5.pull-left Or sign in with
+                  .col-xs-12.social
+                    a(href="/auth/facebook", title="Facebook")
+                      icon.icon-facebook-sign.icon-4x
+                    a(href="#", title="Twitter")
+                      icon.icon-twitter-sign.icon-4x
+                    a(href="#", title="Google+")
+                      icon.icon-google-plus-sign.icon-4x
+                    a(href="#", title="Pinterest")
+                      icon.icon-pinterest-sign.icon-4x
+                    a(href="#", title="Instagram")
+                      icon.icon-instagram.icon-4x
+                    a(href="#", title="Tumblr")
+                      icon.icon-tumblr-sign.icon-4x
+              
+      #loginHelpModal.modal.fade
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
+              h3 Sign-in Help
+            .modal-body
+              h4 Enter the email address you registered with.
+              br
+              form#loginForm.form-horizontal(action="/loginHelp", method="post")      
+                .form-group
+                  label.col-xs-2.control-label(for="loginHelpEmail") Email
+                  .col-xs-10
+                    .input-group
+                      input#loginHelpEmail.form-control.check4RegisteredEmail(type="text", name="email", placeholder="Email")
+                      span.input-group-btn
+                        span.btn.btn-default.disabled(type="button")
+                          .check4RegisteredEmailFeedback ...
+                br
+                .form-group
+                  .col-xs-12
+                    button#loginHelpSubmit.btn.btn-success.pull-right.disabled(type="submit", name="submit", onclick="loginHelpSubmit()") Send me a new password
+  
+    //- NAVBAR 
+      div.navbar.navbar-fixed-top
+          div.navbar-inner
+              div.container-fluid
+                  button.btn.btn-navbar(type="button", data-toggle="collapse", data-target=".nav-collapse")
+                      span.icon-bar
+                      span.icon-bar
+                      span.icon-bar
+                  a.brand(href="/") VenFu
+                  ul.nav
+                      li.dropdown
+                          a(href="#", class="dropdown-toggle", data-toggle="dropdown") 
+                              strong.caret
+                          ul.dropdown-menu
+                              li.nav-header You are a
+                              li
+                                  a(href="/customers") Customer
+                              li
+                                  a(href="/vendors") Vendor
+                              li
+                                  a(href="/delivery") Delivery Person
+                              li.divider
+                              li.nav-header Other Stuff...
+                              li
+                                  a(href="#") About Us
+                              li
+                                  a(href="/suggestions") Suggestions
+                              li
+                                  a(href="/customerService") Problems?
+                      li.divider-vertical
+                      // SEARCH BAR
+                      form.navbar-search(action="")
+                          input.search-query.span6(type="text", placeholder="Search")
+                   
+                  // SIGN UP/IN will collapse
+                  div.nav-collapse.collapse
+                      ul.nav.pull-right
+                          li 
                             a(href="#") Sign Up
-                        li.divider-vertical
-                        li.dropdown
-                            a(href="#", class="dropdown-toggle", data-toggle="dropdown") Sign In 
-                                strong.caret
-                            div.dropdown-menu(style="padding: 15px; padding-bottom: 0px;")
-                                form.form-signin
-                                    h2.form-signin-heading Please sign in
-                                    input.input-block-level(type="text", name="username", placeholder="ID")
-                                    input.input-block-level(type="password", name="password", placeholder="Password")
-                                    label.checkbox Remember me
-                                        input(type="checkbox", value="remember-me") 
-                                    button.btn.btn-large.btn-primary(type="submit") Sign in
-                                    hr
+                          li.divider-vertical
+                          li.dropdown
+                              a(href="#", class="dropdown-toggle", data-toggle="dropdown") Sign In 
+                                  strong.caret
+                              div.dropdown-menu(style="padding: 15px; padding-bottom: 0px;")
+                                  form.form-signin
+                                      h2.form-signin-heading Please sign in
+                                      input.input-block-level(type="text", name="username", placeholder="ID")
+                                      input.input-block-level(type="password", name="password", placeholder="Password")
+                                      label.checkbox Remember me
+                                          input(type="checkbox", value="remember-me") 
+                                      button.btn.btn-large.btn-primary(type="submit") Sign in
+                                      hr

@@ -1,14 +1,24 @@
 Jarvis
 
-2. Forgot password
+TEXT alert costs???
 
-3. Improve email address verification
+SOMETIMES getting error cannot blah blah username of undefined...
 
-* Set up automated email responses
+Center user.jade content with jQuery
+
+How can I consolidate email, password, etc. validations???
+
+FOOTER line 292
+
+
+
+"You should not have jade tags with multiple attributes."
+
+1. Only allow usernames with numbers, letters, and underscore? + throttle + request by time
+
+
 
 * Expand how to sections with content?, then register modal
-
-* AJAX to check if username is already taken, etc.?
 
 * After registering, send role-specific email(s) (e.g. for vendors or delivery)
 
@@ -27,6 +37,20 @@ Fortune cookies???
 --------------------------------------------------------------------------------
                                   DONE
 --------------------------------------------------------------------------------
+
+ Real spinner/progress bar!
+ 
+ Forgot password
+
+ Failed login = blank screen with "Unauthorized"
+
+ Improve email address verification
+
+* Set up automated email responses
+
+AJAX login submit
+
+AJAX to check if username is already taken, etc.?
 
 YES!!!!!!!!!!!!! after registering, be logged in
 <thanks to answer 1 - http://stackoverflow.com/questions/16817800/passport-node-js-automatic-login-after-adding-user>
