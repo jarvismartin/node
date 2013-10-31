@@ -42,7 +42,7 @@ var UserSchema = Schema({
 UserSchema.statics.getVendors = function (callback) {
   return this.find({vendor: true}, function(err, users) {
       if( err || !users) {
-          callback({error: "No vendors found"});
+          callback({error: "No users found"});
       }
       else {
           callback(users);

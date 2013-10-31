@@ -51,34 +51,34 @@ block content
       .carousel-controls
         .btn-group.pull-right
           a.btn.btn-lg(href="#foodPorn", data-slide="prev")
-            icon.icon-caret-left
+            i.fa.fa-caret-left
           a.btn.btn-lg(href="#foodPorn", data-slide="next")
-            icon.icon-caret-right
-    
-    
-      
-      
-    // Simple layout
-    .container
-      .hello
-        .row
-          .col-lg-3
-            p.title VenFu
-          // SEARCH BAR
-          .col-lg-5
-            .input-group.bigSearch
-              input.form-control(type="text", placeholder="What do you desire?")
-              span.input-group-btn
-                button.btn.btn-default(type="button")
-                  icon.icon-search
-          .col-lg-4
-            .btn-group.pull-right
-              a.btn.btn-lg.btn-danger(href="/about#vendors") 
-                icon.icon-usd  Sell-Fu
-              a.btn.btn-lg.btn-danger(href="/about#delivery")
-                icon.icon-usd  Deliver-Fu
-            .know.pull-right
-              a(href="/about") Do you know VenFu?
+            i.fa.fa-caret-right
+   
+  section
+    .hello
+      // Simple layout
+      .col-xs-12.col-md-4
+        p.title VenFu
+      // SEARCH BAR
+      .col-xs-12.col-md-4
+        .input-group.absolute-center
+          input.form-control(type="text", placeholder="What do you desire?")
+          span.input-group-btn
+            button.btn.btn-default(type="button")
+              i.fa.fa-search
+      .col-xs-12.col-md-4
+        .col-xs-12
+          .btn-group
+            a.btn.btn-lg.btn-danger(href="/about#vendors") 
+              icon.fa.fa-usd  
+              span Sell-Fu
+            a.btn.btn-lg.btn-danger(href="/about#delivery")
+              icon.fa.fa-usd  
+              span Deliver-Fu
+        .col-xs-12
+          .know
+            a(href="/about") Do you know VenFu?
     
   //- Giant Buttons and featurettes
     .container.marketing

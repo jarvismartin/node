@@ -54,20 +54,14 @@ script.
       helloHeight = 0.21 * window.innerHeight;
       
     $(".item").css("height", carouselHeight + "px");
-    // .attr({        
-    //   style: "height: " + carouselHeight + "px"
-    // });
     
     $(".hello").css("height", helloHeight + "px");
-    // .attr({
-    //   style: "height: " + helloHeight + "px"
-    // });
     
-    var 
-      bigSearch = $(".bigSearch");
-      rowHeight = bigSearch.parent().parent().height();
+    // var 
+    //   bigSearch = $(".bigSearch");
+    //   rowHeight = bigSearch.parent().parent().height();
         
-    bigSearch.css("margin-top", (0.5 * rowHeight - 20) + "px");
+    // bigSearch.css("margin-top", (0.5 * rowHeight - 20) + "px");
     // .attr({
     //   style: "margin-top: " + (0.5 * rowHeight - 20) + "px"
     // }); 
@@ -118,11 +112,11 @@ script.
     //console.log('pwd = ' + pwd.val() + ' confirm = ' + confirmPwd.val());
 
     if ( $(this).val() == pwd.val() ) {
-      confirmPwdFeedback.html("<icon class='icon-ok' style='color: green'></icon>");
+      confirmPwdFeedback.html("<i class='fa fa-check' style='color: green'></i>");
       confirmPwd.removeClass('notOkay').addClass('okay');
     } 
     else {
-      confirmPwdFeedback.html("<icon class='icon-remove' style='color: red'></icon>");
+      confirmPwdFeedback.html("<i class='fa fa-times' style='color: red'></i>");
       confirmPwd.removeClass('okay').addClass('notOkay');
     }
     
@@ -188,18 +182,18 @@ script.
         success:function(data){
           //console.log(data);
           if(data.unique){
-            emailFeedback.html("<icon class='icon-ok' style='color: green'></icon>");
+            emailFeedback.html("<i class='fa fa-check' style='color: green'></i>");
             emailInput.removeClass('notOkay');
           }
           else{
-            emailFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Email already registered</span>");
+            emailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Email already registered</span>");
             emailInput.addClass('notOkay');
           }
         }
       });
     }
     else {
-      emailFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Invalid Email</span>");
+      emailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Invalid Email</span>");
       emailInput.addClass('notOkay');
     }
   });
@@ -224,18 +218,18 @@ script.
         success:function(data){
           //console.log(data);
           if(data.unique){
-            usernameFeedback.html("<icon class='icon-ok' style='color: green'></icon>");
+            usernameFeedback.html("<i class='fa fa-check' style='color: green'></i>");
             usernameInput.removeClass('notOkay');
           }
           else{
-            usernameFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Username already taken</span>");
+            usernameFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Username already taken</span>");
             usernameInput.addClass('notOkay');
           }
         }
       });
     }
     else {
-      usernameFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Username must be at least 4 characters</span>");
+      usernameFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Username must be at least 4 characters</span>");
       usernameInput.removeClass('notOkay');
     }
   });
@@ -257,11 +251,11 @@ script.
         data: {username: loginUsernameVal},
         success:function(data){
           if(data.unique){
-            loginUsernameFeedback.html('<icon class="icon-remove red"></icon> <span>Unrecognized Username</span>');
+            loginUsernameFeedback.html('<i class="fa fa-times red"></i> <span>Unrecognized Username</span>');
             loginUsernameInput.addClass('notOkay');
           }
           else{
-            loginUsernameFeedback.html('<icon class="icon-ok green"></icon>');
+            loginUsernameFeedback.html('<i class="fa fa-check green"></i>');
             loginUsernameInput.removeClass('notOkay');
             
           }
@@ -269,7 +263,7 @@ script.
       });
     }
     else {
-      loginUsernameFeedback.html('<icon class="icon-remove red"></icon> <span>Username must be at least 4 characters</span>');
+      loginUsernameFeedback.html('<i class="fa fa-times red"></i> <span>Username must be at least 4 characters</span>');
       loginUsernameInput.addClass('notOkay');
     }
   });
@@ -294,11 +288,11 @@ script.
       success: function(data){
       //alert(data);
         if (data=="[object Object]") {
-          loginPasswordFeedback.html('<icon class="icon-remove red"></icon> <span>Please Try Again</span>');
+          loginPasswordFeedback.html('<i class="fa fa-times red"></i> <span>Please Try Again</span>');
         }
         else {
-          loginUsernameFeedback.html('<icon class="icon-ok green"></icon>');
-          loginPasswordFeedback.html('<icon class="icon-ok green"></icon>');
+          loginUsernameFeedback.html('<i class="fa fa-check green"></i>');
+          loginPasswordFeedback.html('<i class="fa fa-check green"></i>');
           window.location.replace("/loginSuccess");
         }
       }
@@ -325,12 +319,12 @@ script.
         success:function(data){
           //console.log(data);
           if(data.unique){
-            check4RegisteredEmailFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Unregistered Email</span>");
+            check4RegisteredEmailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Unregistered Email</span>");
             check4RegisteredEmail.addClass('notOkay');
             loginHelpSubmit.addClass('disabled');
           }
           else{
-            check4RegisteredEmailFeedback.html("<icon class='icon-ok' style='color: green'></icon>");
+            check4RegisteredEmailFeedback.html("<i class='fa fa-check' style='color: green'></i>");
             check4RegisteredEmail.removeClass('notOkay');
             loginHelpSubmit.removeClass('disabled');
           }
@@ -338,7 +332,7 @@ script.
       });
     }
     else {
-      check4RegisteredEmailFeedback.html("<icon class='icon-remove' style='color: red'></icon> <span>Invalid Email</span>");
+      check4RegisteredEmailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Invalid Email</span>");
       check4RegisteredEmail.addClass('notOkay');
       loginHelpSubmit.addClass('disabled');
     }

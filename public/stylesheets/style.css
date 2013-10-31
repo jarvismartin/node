@@ -41,12 +41,18 @@ a:focus {
   outline: none;
 }
 
-.alert {
+.absolute-center {
+  margin: auto;
   position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.mainAlert {
+  position: fixed;
   top: -1px;
   z-index: 999;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 
@@ -106,7 +112,7 @@ icon, i {
   margin-right: 10px;
 }
 
-.nav-stacked icon, i {
+#navContent i, .carousel-controls i, .bigSearch i, .nav-pills i {
   margin-right: 0;
 }
 
@@ -295,7 +301,7 @@ icon, i {
     margin-bottom: 10px;
   }
   
-  #navContent li {
+  #navContent>li {
     margin-left: 20px;
   }
   
@@ -306,10 +312,6 @@ icon, i {
   #navContent a:hover {
     color: #333;
   }
-  
-  #navContent icon, i {
-  margin-right: 0;
-}
   
   .login {
     text-align: center;
@@ -471,13 +473,9 @@ icon, i {
   text-shadow:2px 2px 2px rgba(0,255,0, 0.8), -1px -1px 1px rgba(100,100,100 0.7);
 }
 
-.bigSearch {
-  width: 100%;
-}
-
 .know {
   font-family: Chowfun;
-  margin: 40px 10px 0 0;
+  margin-top: 50px;
 }
 
 .know a {
@@ -489,7 +487,10 @@ icon, i {
   margin-top: 65px;
 }
 
-
+.ui {
+/*  background-image: url('/images/squairy_light.png'); */
+color: white;
+}
 
 /* Featurettes
 ------------------------- */
@@ -585,6 +586,10 @@ icon, i {
 
   #myCarousel {
       display: none;
+  }
+  
+  .carousel-caption p {
+    display: none;
   }
 
   .marketing .span4 + .span4 {
