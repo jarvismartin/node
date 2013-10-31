@@ -220,7 +220,7 @@ html
             .modal-body
               form#loginForm.form-horizontal(action="/login", method="post")      
                 .form-group
-                  //label.col-xs-2.control-label(for="username") Username
+                  label.control-label.sr-only(for="username") Username
                   .col-xs-12
                     .input-group
                       input#loginUsername.form-control(type="text", name="username", placeholder="Username")
@@ -229,7 +229,7 @@ html
                           #loginUsernameFeedback ...
   
                 .form-group
-                  //label.col-xs-2.control-label(for="password") Password
+                  label.control-label.sr-only(for="password") Password
                   .col-xs-12
                     .input-group
                       input#loginPassword.form-control(type="password", name="password", placeholder="Password")

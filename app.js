@@ -95,7 +95,7 @@ var User = mongoose.model('User', UserSchema);
 //var databaseUrl = "venfu:ufnev@dharma.mongohq.com:10057/app16932282";
 //var collections = ["users"];
 //var userProvider = new UserProvider(databaseUrl, collections);
-mongoose.connect('venfu:ufnev@dharma.mongohq.com:10057/app16932282');
+mongoose.connect('venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
