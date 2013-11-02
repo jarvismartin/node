@@ -44,7 +44,7 @@ a:focus {
 .absolute-center {
   margin: auto;
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+  top: 0; left: 4%; bottom: 0; right: 0;
 }
 
 .mainAlert {
@@ -475,7 +475,7 @@ icon, i {
 
 .know {
   font-family: Chowfun;
-  margin-top: 50px;
+  margin-top: 15%;
 }
 
 .know a {
@@ -542,7 +542,7 @@ color: white;
 -------------------------------------------------- */
 
 @media (max-width: 979px) {
-  
+
   .navbar-wrapper {
       margin-top: 0;
   }
@@ -558,8 +558,6 @@ color: white;
   .content {
       margin-top: -19px;
   }
-  
-  
 
   .featurette {
     height: auto;

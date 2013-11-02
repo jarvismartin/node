@@ -60,7 +60,7 @@ block content
                   p Class
               
           .col-xs-8.col-md-10
-            form.form-horizontal.pillContent(id="updateEmail", method="post", action="/updateUserInfo", role="form")
+            form.form-horizontal.pillContent.update(id="updateEmail", method="post", action="/updateUserInfo", role="form")
               .col-xs-8.col-md-offset-1
                 .form-group
                   h5 This will change the email address associated with your account.
@@ -79,10 +79,10 @@ block content
                     i.fa.fa-check 
                     span Make Changes
           
-            form.form-horizontal.pillContent.hidden(id="updateUsername", method="post", action="/updateUserInfo", role="form")              
+            form.form-horizontal.pillContent.update.hidden(id="updateUsername", method="post", action="/updateUserInfo", role="form")              
               .col-xs-8.col-md-offset-1
                 .form-group
-                  h5 This is your chance to get a nice new shiny username.
+                  h5 This is your chance to get a nice, shiny new username.
                 .form-group
                   //label.col-xs-4.control-label(for="username") Change Username
                   .input-group
@@ -98,7 +98,7 @@ block content
                     i.fa.fa-check 
                     span Make Changes
             
-            form.form-horizontal.pillContent.hidden(id="updatePassword", method="post", action="/updateUserInfo", role="form")            
+            form.form-horizontal.pillContent.update.hidden(id="updatePassword", method="post", action="/updateUserInfo", role="form")            
               .col-xs-8.col-md-offset-1
                 .form-group
                   h5 This will change your password.
@@ -121,15 +121,16 @@ block content
                     i.fa.fa-check 
                     span Make Changes
             
-            form.form-horizontal.pillContent.hidden(id="updatePhone", method="post", action="/updateUserInfo", role="form")  
+            form.form-horizontal.pillContent.update.hidden(id="updatePhone", method="post", action="/updateUserInfo", role="form")  
               .col-xs-8.col-md-offset-1
+                //- .form-group
+                  label.col-xs-4.control-label(for="tel") Update Phone Number
+                  .col-xs-2
+                    .input-group
+                      input#areaCode.form-control(type="tel", name="tel", placeholder="Area Code")
                 .form-group
-                  //label.col-xs-4.control-label(for="tel") Update Phone Number
-                  // .col-xs-2
-                  //   .input-group
-                  //     input#areaCode.form-control(type="tel", name="tel", placeholder="Area Code")
+                  h5 This will change the phone number associated with your account.
                 .form-group
-                  h5 If you want to add or change the phone number associated with your account, this is the place to do it.
                   .input-group
                     input#phone.form-control(type="tel", name="tel", placeholder="Phone Number")
                     span.input-group-btn
@@ -142,10 +143,11 @@ block content
                     i.fa.fa-check 
                     span Make Changes
             
-            form.form-horizontal.pillContent.hidden(id="updateClass", method="post", action="/updateUserInfo", role="form")          
+            form.form-horizontal.pillContent.update.hidden(id="updateClass", method="post", action="/updateUserInfo", role="form")          
               .col-xs-10.col-md-offset-1
                 .form-group
-                  h5 How will you VenFu? You can use this section to change your classification in the VenFu system.
+                  h4 How will you VenFu?
+                  h5 You can use this section to change your classification in the VenFu system.
                 .form-group
                   //label.col-xs-4.control-label(for="classification") Change Classification(s):
                   .input-group.col-xs-12
@@ -208,33 +210,38 @@ block content
             
             // Products
             .pillContent.hidden
-              a#register.btn.btn-success.pull-right(href="#", onclick="addProduct()")
-                i.fa.fa-plus
-                span Add Product
-              .col-md-3.pull-right
-                select.form-control
-                  option sort
-                  option
-                  option top-selling
-                  option most recent
-                  option low-selling
-              .col-xs-12
-                p Your products will be displayed here.        
+              #products
+                .col-xs-12
+                  a#register.btn.btn-success.pull-right(href="#", onclick="addProduct()")
+                    i.fa.fa-plus
+                    span Add Product
+                  .col-md-3.pull-right
+                    select.form-control
+                      option sort
+                      option
+                      option top-selling
+                      option most recent
+                      option low-selling
+                .col-xs-12(style="clear: both; margin-top: 50px")
+                  p Your products will be displayed here.        
               
               // Add Product 
-              form.form-horizontal(id="addProduct", method="post", role="form", style="display: none;")
-                .form-group
-                  input.form-control(type="text", name="productName", placeholder="Product Name")
-                  
-                // Add product button
-                .form-group(style="margin-top: 30px") 
-                  button.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="button", onclick="addProduct()")
-                    i.fa.fa-plus
-                    span Add
+              #addProduct(style="display: none")
                 // Back to Products button
-                button.btn.btn-inverse.pull-right(onclick="addProduct")
+                button.btn.btn-inverse.pull-right(onclick="addProduct()", style="margin-bottom: 20px")
                   i.fa.fa-times  
                   span Cancel
+                  
+                form.form-horizontal(id="addProductForm", method="post", role="form")
+                  .form-group
+                    input.form-control(type="text", name="productName", placeholder="Product Name")
+                    
+                  // Add product button
+                  .form-group(style="margin-top: 30px") 
+                    button.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="button", onclick="addProduct()")
+                      i.fa.fa-plus
+                      span Add
+                
                   
             // Venues
             p.pillContent.hidden Venue information will populate here.
@@ -384,7 +391,7 @@ block content
         well = $(this).find('.well');
         
         // var for the submit button
-        submitButton = $(this).find('.submit');
+        //submitButton = $(this).find('.submit');
         
       
       // Send the info to the DB
@@ -399,7 +406,7 @@ block content
           //location.reload(); 
           console.log('User Info Update Successful');
           //feedback.html(#{user[type]});
-          well.addClass('alert alert-success').removeClass('well');
+          well.addClass('alert alert-info').removeClass('well');
           feedback.html(data);
           if(type != 'classification')
             input.val('');
@@ -414,7 +421,6 @@ block content
   // ADD PRODUCT
   script.
     function addProduct() {
-      
       $('#addProduct').toggle();
       $('#products').toggle();
     }

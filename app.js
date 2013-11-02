@@ -491,7 +491,7 @@ app.post('/loginHelp', function (req, res) {
 });
 
 // Update User Info
-//app.get('/updateUserInfo', routes.suggestions);
+//app.get('/updateUserInfo', routes.updateUserInfo);
 app.post('/updateUserInfo', function (req, res) {
   // Get the info from the db
   var UserProvider = res.getUserProvider();
