@@ -1,0 +1,612 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+
+
+html, body {
+    width:100%;
+    height:100%;
+}
+
+body {
+  /* background: #FFF url('/images/squairy_light.png') repeat fixed center; */
+  
+  /* Seigaiha 
+  background-image: 
+  radial-gradient(circle at 100% 150%, #111 24%, #141414 25%, #141414 28%, #111 29%, #111 36%, #141414 36%, #141414 40%, transparent 40%, transparent),
+  radial-gradient(circle at 0    150%, #111 24%, #141414 25%, #141414 28%, #111 29%, #111 36%, #141414 36%, #141414 40%, transparent 40%, transparent),
+  radial-gradient(circle at 50%  100%, #141414 10%, #111 11%, #111 23%, #141414 24%, #141414 30%, #111 31%, #111 43%, #141414 44%, #141414 50%, #111 51%, #111 63%, #141414 64%, #141414 71%, transparent 71%, transparent),
+  radial-gradient(circle at 100% 50%, #141414 5%, #111 6%, #111 15%, #141414 16%, #141414 20%, #111 21%, #111 30%, #141414 31%, #141414 35%, #111 36%, #111 45%, #141414 46%, #141414 49%, transparent 50%, transparent),
+  radial-gradient(circle at 0    50%, #141414 5%, #111 6%, #111 15%, #141414 16%, #141414 20%, #111 21%, #111 30%, #141414 31%, #141414 35%, #111 36%, #111 45%, #141414 46%, #141414 49%, transparent 50%, transparent);
+  background-size:100px 50px; 
+  background-color: #111; */
+  
+  /* Yin Yang */
+  background: 
+  radial-gradient(circle at 50% 59%, #080808 3%, #050505 4%, #050505 11%, rgba(24,24,24,0) 12%, rgba(24,24,24,0)) 50px 0,
+  radial-gradient(circle at 50% 41%, #050505 3%, #080808 4%, #080808 11%, rgba(28,28,28,0) 12%, rgba(28,28,28,0)) 50px 0,
+  radial-gradient(circle at 50% 59%, #080808 3%, #050505 4%, #050505 11%, rgba(24,24,24,0) 12%, rgba(24,24,24,0)) 0 50px,
+  radial-gradient(circle at 50% 41%, #050505 3%, #080808 4%, #080808 11%, rgba(28,28,28,0) 12%, rgba(28,28,28,0)) 0 50px,
+  radial-gradient(circle at 100% 50%, #080808 16%, rgba(28,28,28,0) 17%),
+  radial-gradient(circle at 0% 50%, #050505 16%, rgba(24,24,24,0) 17%),
+  radial-gradient(circle at 100% 50%, #080808 16%, rgba(28,28,28,0) 17%) 50px 50px,
+  radial-gradient(circle at 0% 50%, #050505 16%, rgba(24,24,24,0) 17%) 50px 50px;
+  background-color:#000;
+  background-size:100px 100px;
+}
+
+a,
+a:visited,
+a:active,
+a:focus { 
+  outline: none;
+}
+
+.absolute-center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 4%; bottom: 0; right: 0;
+}
+
+.mainAlert {
+  position: fixed;
+  top: -1px;
+  z-index: 999;
+  text-align: center;
+  font-size: 2em;
+}
+
+
+.btn-inverse {
+  color: #fff;
+  background-color: #474949;
+  border-color: #474949;
+}
+
+.btn-inverse:hover {
+  color: #fff;
+  background-color: #3a3c3c;
+  border-color: #2e2f2f;
+}
+
+.notOkay:focus {
+  border-color: red;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+}
+
+.okay:focus {
+  border-color: green;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(0,255,0,0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(0,255,0,0.6);
+}
+
+.warning:focus {
+  border-color: orange;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(251, 238, 213,0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(251, 238, 213,0.6);
+}
+
+/* Fonts */
+@font-face {
+  font-family: Wonton;
+  src: url(/fonts/wonton.ttf);
+} 
+
+@font-face {
+  font-family: Bushido;
+  src: url(/fonts/bushido/bushido.ttf);
+}
+
+@font-face {
+  font-family: Chowfun;
+  src: url(/fonts/chowfun.ttf);
+}
+
+
+
+/* ICONS */
+icon, i {
+  margin-right: 10px;
+}
+
+#navContent i, .carousel-controls i, .bigSearch i, .nav-pills i, .input-group i {
+  margin-right: 0;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.gray {
+  color: gray;
+}
+
+/* CUSTOMIZE THE NAV
+-------------------------------------------------- */
+#navMenu {  
+  position: fixed;
+  left: 2px;
+  top: 2px;
+  z-index: 999;
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  filter: alpha(opacity=100); /* For IE8 and earlier */
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  box-shadow: 0 0 25px #000;
+  background-color: #333;
+  border-radius: 100%;
+  color: #DDD;
+  
+  /* FOR THE FOLDED PAGE LOOK
+  width: 0;
+  height: 0;
+  border-top: 50px solid #333;
+  border-right: 50px solid #DDD; */
+  
+}
+
+/*  Makes the menu picture glow */
+@keyframes glow { /* IE 9 */
+  0%   {
+/*    -ms-transform:rotate(-0deg); 
+    transform:rotate(-0deg); */
+    box-shadow: 0 0 25px #f00;
+  }
+  10%  {
+   box-shadow: 0 0 100px #f00; 
+  }
+  20%  {
+    box-shadow: 0 0 25px #f00; 
+  }
+  30%  {
+    box-shadow: 0 0 100px #f00; 
+  }
+  40% {
+    box-shadow: 0 0 25px #f00; 
+  }
+  50% {
+    box-shadow: 0 0 100px #f00;
+  }
+  60% {
+    box-shadow: 0 0 25px #f00; 
+  }
+  70% {
+    box-shadow: 0 0 100px #f00; 
+  }
+  80% {
+    box-shadow: 0 0 25px #f00; 
+  }
+  90% {
+    box-shadow: 0 0 100px #f00; 
+  }
+  100% {
+    box-shadow: 0 0 50px #f00; 
+  }
+}
+
+@-webkit-keyframes glow /* Safari and Chrome */ {
+  0%   {
+    -webkit-transform:rotate(-0deg);
+    box-shadow: 0 0 25px #000;
+  }
+  10%  {
+   box-shadow: 0 0 100px #f00; 
+  }
+  20%  {
+    box-shadow: 0 0 25px #000; 
+  }
+  30%  {
+    box-shadow: 0 0 25px #000; 
+  }
+  40% {
+    box-shadow: 0 0 25px #000;
+  }
+  50% {
+    box-shadow: 0 0 25px #000;
+  }
+  60% {
+    box-shadow: 0 0 25px #000;
+  }
+  70% {
+    box-shadow: 0 0 25px #000;
+  }
+  80% {
+    box-shadow: 0 0 25px #000;
+  }
+  90% {
+    box-shadow: 0 0 25px #000;
+  }
+  100% {
+    box-shadow: 0 0 25px #000;
+    -webkit-transform:rotate(-360deg);
+  }
+}
+
+/* Needed for rotation */
+.relativeContainer {
+  position: relative;
+}
+
+#navMenu {
+  animation: glow 3s infinite 2s ;
+  -webkit-animation: glow 5s infinite 10s; /* Safari and Chrome */
+}
+
+#navMenu img {
+  width: 60px;
+  height: 60px;
+  border: 5px solid #333;
+  background-color: #DDD;
+  border-radius: 100%;
+}
+
+/* Puts the shadow under the folded edge */
+.foldtl {
+  position: relative; 
+  -webkit-box-shadow: 5px 5px 5px rgba(0,0,0,0.8); 
+  -moz-box-shadow: 5px 5px 5px rgba(0,0,0,0.8); 
+  box-shadow: 5px 5px 5px rgba(0,0,0,0.8);
+}
+  
+/* Move "menu" into position */
+#menu {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  left: 4px;
+  top: 4px;
+  z-index: 1000;
+  line-height: 4em;
+  text-align: center;
+  opacity: 0.5;
+  filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+ 
+#menu:hover {
+  opacity: 1;
+  filter: alpha(opacity=100); /* For IE8 and earlier */
+}
+ 
+/* rotates the element */
+.rotate {
+  -ms-transform:rotate(-45deg); /* IE 9 */
+  -webkit-transform:rotate(-45deg); /* Safari and Chrome */
+  transform:rotate(-45deg);
+  cursor: pointer;
+}
+
+  #navMenu:hover,
+  #navMenu:active {
+    opacity: 1.0;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
+  }
+  
+  #navContent {
+    display: none;
+    position: fixed;
+    left: 1px;
+    top: 1px;
+    background: #333;
+    z-index: 1000;
+    color: #141414;
+    padding: 15px;
+    text-align: left;
+    border-radius: 5px;
+  }
+  
+  #navContent .input-group {
+    margin-bottom: 10px;
+  }
+  
+  #navContent>li {
+    margin-left: 20px;
+  }
+  
+  #navContent a {
+    color: #DDD;
+  }
+  
+  #navContent a:hover {
+    color: #333;
+  }
+  
+  .login {
+    text-align: center;
+  }
+  
+  #hideNav {
+    padding: 0;
+    cursor: pointer;
+    position: absolute;
+    right: -5px;
+    bottom: -9px;
+    color: #DDD;
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+  }
+  
+  #hideNav:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
+  }
+  
+  #hideNav img {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    border: 5px solid #333;
+    background-color: #DDD;
+  }
+  
+  .navbar-search {
+    width: 100%;
+  }
+
+  .form-signin {
+    color: #3366CC;
+  }
+  
+  
+/* CUSTOMIZE MODALS
+-------------------------------------------------- */
+
+#registerModal .form-inline {
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+
+.checkboxes {
+  margin-top: -8px;
+}
+
+#registerModal .checkbox-inline {
+  margin: 0 15px;
+}
+
+.social {
+  text-align: center;
+}
+
+.social a {
+  text-decoration: none;
+  margin-left: 30px;
+}
+
+#feedback {
+  z-index: 1000;
+}
+
+.popover {
+  -webkit-box-shadow: 0 0 3px rgba(102,175,233, 0.5);
+  box-shadow: 0 0 3px rgba(102,175,233, 0.5);
+  width: 100%;
+}
+
+#loginHelpFeedback {
+  
+}
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  margin-top: -19px;
+  box-shadow: 0 2px 5px #00ff00;
+}
+
+.carousel .inner a {
+ text-decoration: none;
+ color: #DDD;
+}
+
+.carousel-caption {
+  position: absolute;
+  left: 1px;
+  bottom: 1px;
+  padding: 0 2% 2% 2%;
+  background-color: #333; /* Fallback */
+  background-color: rgba(0,0,0, 0.8);
+  color: #DDD;
+  text-align: left;
+  display: table;
+}
+
+.carousel-caption p {
+  font-size: 1em;
+  line-height: 2em;
+  display: table;
+  margin: 20px 0;
+}
+
+.carousel img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 500px;
+}
+
+.carousel-controls .btn-group{
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  z-index: 1000;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.carousel-controls .btn {
+  background-color: #333; /* Fallback */
+  background-color: rgba(0,0,0, 0.8);
+  color: #DDD;
+  border-color: #333; /* Fallback */
+  border-color: rgba(0,0,0, 0.8);
+}
+
+.carousel-controls .btn:hover {
+  background-color: #111;
+  border: 1px solid black;
+}
+
+/* PAGE CONTENT
+-------------------------------------------------- */
+
+.hello {
+  position: relative;
+  color: #EEE;
+  margin-top: 40px;
+  text-align: center;
+  text-shadow:2px 2px 2px rgba(0,0,0, 0.8), -1px -1px 1px rgba(100,100,100 0.7);
+}
+
+.fu-button {
+  border: 1px solid #DDD;
+}
+
+.title {
+  font-family: Wonton; 
+  font-size: 80px;
+  text-shadow:2px 2px 2px rgba(0,255,0, 0.8), -1px -1px 1px rgba(100,100,100 0.7);
+}
+
+.know {
+  font-family: Chowfun;
+  margin-top: 15%;
+}
+
+.know a {
+  color: #DDD;
+}
+
+/* Suggestions */
+.suggestions {
+  margin-top: 65px;
+}
+
+.ui {
+/*  background-image: url('/images/squairy_light.png'); */
+color: white;
+}
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 60px 0; /* Space out the Bootstrap <hr> more */
+}
+.featurette {
+  padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+  overflow: hidden; /* Vertically center images part 2: clear their floats. */
+}
+.featurette-image {
+  margin-top: -100px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+  width: 300px; 
+  height: 300px;
+  border: 5px solid #ccc;
+  border-radius: 5%;
+}
+
+.featurette .btn {
+  margin: 5px;
+}
+
+/* Give some space on the sides of the floated elements so text doesn't run right into it. */
+.featurette-image.pull-left {
+  margin-right: 40px;
+}
+.featurette-image.pull-right {
+  margin-left: 40px;
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-size: 50px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+  margin-top: -40px;
+  text-shadow:1px 1px 1px rgba(255, 255, 255, 0.7), -1px -1px 1px rgba(0, 0, 0, 0.7);
+}
+
+.muted {
+  color: #666;
+}
+
+
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (max-width: 979px) {
+
+  .navbar-wrapper {
+      margin-top: 0;
+  }
+  .container .navbar-wrapper {
+    margin-bottom: 0;
+    width: auto;
+  }
+  .navbar-inner {
+    border-radius: 0;
+    margin: 0;
+  }
+  
+  .content {
+      margin-top: -19px;
+  }
+
+  .featurette {
+    height: auto;
+    padding: 0;
+  }
+  .featurette-image.pull-left,
+  .featurette-image.pull-right {
+    display: block;
+    float: none;
+    max-width: 40%;
+    margin: 0 auto 20px;
+  }
+  .featurette-heading {
+      margin: 0;
+  }
+}
+
+
+@media (max-width: 767px) {
+
+  .navbar-inner {
+    margin: 0;
+  }
+
+  #foodPorn {
+      height: 50%;
+  }
+  
+  .carousel-caption p {
+    display: none;
+  }
+
+  .marketing .span4 + .span4 {
+    margin-top: 40px;
+  }
+
+  .featurette-heading {
+    font-size: 30px;
+  }
+  .featurette .lead {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+}

@@ -26,9 +26,12 @@ block content
           .col-xs-12
             .form-group
               // Disable the submit button if there is no message to send
-              input#submit.btn.btn-success.disabled(type="submit", name="submit", value="Send")
+              button#submit.btn.btn-success.disabled(type="submit", name="submit")
+                i.fa.fa-check-square-o
+                span Send
               a.btn.btn-inverse.pull-right(href="/")
-                icon.fa-remove  Cancel
+                i.fa.fa-times  
+                span Cancel
                           
                           
                           

@@ -17,7 +17,7 @@ var express = require('express')
   , mongoose = require('mongoose')
   , Schema = mongoose.Schema
   , nodemailer = require('nodemailer')
-  ,flash = require('connect-flash')
+  , flash = require('connect-flash')
   ;
 //  , mongooseAuth = require('mongoose-auth');
 //  , UserProvider = require('./db').UserProvider
@@ -31,6 +31,7 @@ var UserSchema = Schema({
     tel: {type: String, required: false},
     email: { type: String, required: true, index: { unique: true } },
     username: { type: String, required: true, index: { unique: true } },
+    products: [],
     password: { type: String, required: true },
     salt: { type: String, required: true }
     
@@ -154,7 +155,6 @@ passport.deserializeUser(function(id, done) {
 //   function(accessToken, refreshToken, profile, done) {
 //     console.log(profile);
 //     done(null, false);
-
     
     // User.findOne({ username: username }, function(err, user) {
     //   if (err) { 
@@ -215,15 +215,37 @@ app.use(express.methodOverride());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(app.router);
+//app.use(express.static('public'));
+//app.use('/public', express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+   app.use(express.errorHandler());
 }
 
+// app.use(function(req, res, next){
+//   res.send(404, 'Sorry cant find that!');
+// });
+
+// Error Handling
+// app.use(function(err, req, res, next){
+//   console.error(err.stack);
+//   res.send(500, 'Something broke!');
+// });
+
+// Handler for internal server errors
+// function errorHandler(err, req, res, next) {
+//   console.error(err.message);
+  //console.error(err.stack);
+//   res.status(500);
+//   res.render('error_template', { error: err });
+// }
+
+//app.use(errorHandler);
+
 app.get('/', routes.index);
-app.get('/users', user.list);
+//app.get('/users', user.list);
 app.get('/customers', routes.customers);
 app.get('/vendors', routes.vendors);
 app.get('/delivery', routes.delivery);
@@ -631,6 +653,11 @@ app.post('/checkUsername', function(req, res){
 //         res.json({error: null, unique: false});
 //       }
 //     });
+// });
+
+//In case GET fails
+// app.get('*', function(req, res){
+//   res.send('Page not found', 404);
 // });
 
 http.createServer(app).listen(app.get('port'), function(){

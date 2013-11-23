@@ -2,7 +2,7 @@ extends layout
 
 block content
   div.container
-    div.col-lg-10.col-lg-offset-1.ui(style="margin-top: 62px")
+    div.col-xs-12.ui(style="margin-top: 62px")
       // mini nav
       ul#uiTabs.nav.nav-tabs
         
@@ -234,11 +234,60 @@ block content
                   
                 form.form-horizontal(id="addProductForm", method="post", role="form")
                   .form-group
-                    input.form-control(type="text", name="productName", placeholder="Product Name")
-                    
+                    label.sr-only.control-label(for="productName") Product Name
+                    .col-xs-10
+                      input.form-control(type="text", name="productName", placeholder="Product Name")
+                  .form-group
+                    label.sr-only.control-label(for="price") Price
+                    .col-xs-3
+                      .input-group
+                        span.input-group-btn
+                          span.btn.btn-default.disabled(type="button")
+                            i.fa.fa-usd
+                        input.email.form-control(type="text", name="price", placeholder="Price")
+                    label.sr-only.control-label(for="productCategory") Product Category
+                    .col-xs-3
+                      select.form-control
+                        option Category
+                        option
+                        option Main Dish
+                        option Side Dish
+                        option Dessert
+                        option Beverage
+                        option Appetizer
+                        option Kids' Menu 
+                    .col-xs-6  
+                      .form-group.pull-right
+                        label(for="productPic") Add a Picture
+                        input(type="file", name="productPic")
+                        
+                  .form-group
+                    label.sr-only.control-label(for="productDescription") Product Description
+                    .col-xs-10
+                      input.form-control(type="text", name="productDescription", placeholder="Product Description")
+                  .form-group
+                    label.sr-only.control-label(for="productIngredients") Product Ingredients
+                    .col-xs-10
+                      input.form-control(type="text", name="productIngredients", placeholder="Ingredients")
+                  .form-group
+                    label.sr-only.control-label(for="productInstructions") Special Instructions
+                    .col-xs-10
+                      input.form-control(type="text", name="productInstructions", placeholder="Special Instructions")
+                  .form-group
+                    label.sr-only.control-label(for="productTags") Search Tags
+                    .col-xs-10
+                      input.form-control(type="text", name="productTags", placeholder="Search Tags")
+                  .form-group
+                    label.col-xs-6.control-label(for="productTime") How long does it take to make?
+                    .col-xs-4
+                      .input-group
+                        input.form-control(type="number", name="productTime", placeholder="Production Time")    
+                        span.input-group-btn
+                          span.btn.btn-default.disabled(type="button") min
+                            
                   // Add product button
                   .form-group(style="margin-top: 30px") 
-                    button.btn.btn-primary.col-md-4.col-xs-8.pull-right(type="button", onclick="addProduct()")
+                    button.btn.btn-success.pull-right(type="button", onclick="addProduct()")
                       i.fa.fa-plus
                       span Add
                 

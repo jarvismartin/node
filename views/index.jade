@@ -10,14 +10,13 @@ block content
       var 
         carouselHeight = 0.75 * window.innerHeight;
         helloHeight = 0.21 * window.innerHeight;
-        rowHeight = $(".bigSearch").parent().parent().height();
         
       $("#foodPorn").carousel('cycle');
       $(".item").css("height", carouselHeight + "px");
 
       $(".hello").css("height", helloHeight + "px");
 
-      $(".bigSearch").css("margin-top", (0.5 * rowHeight - 20) + "px");
+      $(".bigSearch").css("margin-top", (0.5 * helloHeight - 25) + "px");
 
     }); 
       
@@ -61,18 +60,19 @@ block content
       .col-xs-12.col-md-4
         p.title VenFu
       // SEARCH BAR
-      .col-xs-12.col-md-4
-        .input-group.absolute-center
+      .col-xs-12.col-md-4.bigSearch
+        .input-group
           input.form-control(type="text", placeholder="What do you desire?")
           span.input-group-btn
             button.btn.btn-default(type="button")
               i.fa.fa-search
       .col-xs-12.col-md-4
         .col-xs-12
-          .btn-group
+          .btnSellFu
             a.btn.btn-lg.btn-danger(href="/about#vendors") 
               icon.fa.fa-usd  
               span Sell-Fu
+          .btnDeliverFu
             a.btn.btn-lg.btn-danger(href="/about#delivery")
               icon.fa.fa-usd  
               span Deliver-Fu
