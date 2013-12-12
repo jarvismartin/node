@@ -5,7 +5,6 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
@@ -18,6 +17,9 @@ var express = require('express')
   , Schema = mongoose.Schema
   , nodemailer = require('nodemailer')
   , flash = require('connect-flash')
+  , MongoClient = require('mongodb').MongoClient
+  , fs = require('fs') // file system
+  , util = require("util")
   ;
 //  , mongooseAuth = require('mongoose-auth');
 //  , UserProvider = require('./db').UserProvider
@@ -26,30 +28,41 @@ var app = express();
 
 // MONGO DB
 
-var UserSchema = Schema({
+// Connect to the db
+//MongoClient.connect("mongodb://127.4.192.1:27017", function(err, db) {
+// MongoClient.connect("mongodb://venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282", function(err, db) {
+//   if(err) {
+//     throw err;
+//   }
+//   else {
+//     console.log("Mongo is connected");
+//   }
+// });
+
+var UserSchema = new Schema({
     classification: { type: String, required: true },
     tel: {type: String, required: false},
     email: { type: String, required: true, index: { unique: true } },
     username: { type: String, required: true, index: { unique: true } },
-    products: [],
     password: { type: String, required: true },
     salt: { type: String, required: true }
-    
 });
+UserSchema.add({ products: [{type: Schema.Types.ObjectId, ref: 'Product'}] });
 
-/*
- *
- */
-UserSchema.statics.getVendors = function (callback) {
-  return this.find({vendor: true}, function(err, users) {
-      if( err || !users) {
-          callback({error: "No users found"});
-      }
-      else {
-          callback(users);
-      }
-    });
-};
+// Should probably add numerical validation to price and time instead of using strings
+var ProductSchema = new Schema({
+    userID: {type: Schema.Types.ObjectId, ref: 'users'}, 
+    username: String,
+    name: String,
+    price: Number,
+    category: String,
+    description: String,
+    ingredients: String,
+    instructions: String,
+    tags: [String],
+    time: Number,
+    format: String,
+});
 
 var SALT_WORK_FACTOR = 10;
 UserSchema.pre('save', function(next) {
@@ -91,6 +104,11 @@ UserSchema.methods.validatePassword = function(candidatePassword) {
 };
 
 var User = mongoose.model('User', UserSchema);
+var Product = mongoose.model('Product', ProductSchema);
+
+// this must be after the mongoose.model call.
+// http://stackoverflow.com/questions/18420920/missingschemaerror-schema-hasnt-been-registered-for-model
+var routes = require('./routes');
 
 // Needs to be up top in order to setup database middleware (ie. app.use())
 //var databaseUrl = "venfu:ufnev@dharma.mongohq.com:10057/app16932282";
@@ -107,7 +125,7 @@ passport.use(new LocalStrategy({
     passwordField: 'password'
   },
   function(username, password, done) {
-    User.findOne({ username: username }, function(err, user) {
+    User.findOne({ username: username }).populate('products').exec(function(err, user) {
       if (err) { 
         console.log(err);
         return done(err); 
@@ -133,7 +151,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findOne({_id: id}, function(err, user) {
+  User.findOne({_id: id}).populate('products').exec(function(err, user) {
     done(err, user);
   });
 });
@@ -203,8 +221,12 @@ app.use(function(req, res, next) {
     res.getUserProvider = function() {
         return User;
     };
+    res.getProductProvider = function() {
+        return Product;
+    };
     next();
 });
+
 app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -224,27 +246,39 @@ if ('development' == app.get('env')) {
    app.use(express.errorHandler());
 }
 
-// app.use(function(req, res, next){
-//   res.send(404, 'Sorry cant find that!');
-// });
+//app.get('/', routes.index);
 
-// Error Handling
-// app.use(function(err, req, res, next){
-//   console.error(err.stack);
-//   res.send(500, 'Something broke!');
-// });
+app.get('/',function(req, res){
+  
+  MongoClient.connect("mongodb://venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282", function(err, mc) {
+    if(err) {
+      throw err;
+    }
+    else {
+      console.log("MongoClient connected");
+      
+      var query = ({});
+      
+      mc.collection('products').find(query).toArray(function(err, products){
 
-// Handler for internal server errors
-// function errorHandler(err, req, res, next) {
-//   console.error(err.message);
-  //console.error(err.stack);
-//   res.status(500);
-//   res.render('error_template', { error: err });
-// }
+        if(err) throw err;
 
-//app.use(errorHandler);
+        //console.dir(products);
+        
+        res.render('index', { 
+          title: 'VenFu', 
+          msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+          user: req.user, loggedIn: req.isAuthenticated(), products: products //products: JSON.stringify(products)
+        });
+        
+      });
+    }
+  });
+  
+  
+  
+});
 
-app.get('/', routes.index);
 //app.get('/users', user.list);
 app.get('/customers', routes.customers);
 app.get('/vendors', routes.vendors);
@@ -331,7 +365,7 @@ app.post('/register',
           res.redirect('back');
         });
       }
-  });
+    });
 });
 
 // ********** LOG IN ***********
@@ -356,7 +390,7 @@ app.post('/ajaxLogin', function(req, res, next) {
   if((password === undefined || password === "") || (username === undefined  || username === "")) {
     res.json({error: 'Please enter a Username and Password'});
   }
-  User.findOne({ 'username': username }, function(err, user) {
+  User.findOne({ 'username': username }).populate('products').exec(function(err, user) {
       // error with query (return error and false for unique)
       if (err) { 
         console.log(err);
@@ -378,7 +412,9 @@ app.post('/ajaxLogin', function(req, res, next) {
             }
             console.log({error: null, success: true});
             res.json({error: null});
+            // console.log(req.user);
             req.flash('success', ['Welcome, ' + req.user.username]);
+            // req.flash('success', ['Welcome']);
             res.redirect('back');
             return req.user;
           });
@@ -386,37 +422,6 @@ app.post('/ajaxLogin', function(req, res, next) {
       }
     });
 });
-
-app.get('/loginSuccess', function(req, res) {
-  req.flash('success', ['Welcome, ' + req.user.username]);
-  res.redirect('back');
-});
-
-// app.post('/login', passport.authenticate('local', {
-//   successReturnToOrRedirect: 'back', failureRedirect: 'back'
-// }));
-
-// app.post('/login',
-//   passport.authenticate('local'),
-//   function(req, res, err) {
-//     if (err){
-//       req.flash('err', [err]);
-//       res.redirect('back');
-//     }
-//     else {
-//       // If this function gets called, authentication was successful.
-//       req.flash('success', ['Welcome, ' + req.user.username]);
-//       res.redirect('back');
-//     }
-//   });
-
-
-// user
-//app.get('/user',
-//  ensureLoggedIn('/login'),
-  // function(req, res) {
-  //   res.render('user', { user: req.user });
-  // });
 
 // Suggestions
 app.get('/suggestions', routes.suggestions);
@@ -572,6 +577,85 @@ app.post('/updateUserInfo', function (req, res) {
   });
   //console.log('user = ' + user);
   
+});
+
+// **********************************************
+//                Add Product 
+//***********************************************
+//app.get('/addProduct', routes.register);
+app.post('/addProduct', 
+  function(req, res) {
+    var query = { 
+      userID: req.user._id,
+      username: req.user.username,
+      name: req.body.productName, 
+      price: req.body.price, 
+      category: req.body.productCategory,
+      description: req.body.productDescription,
+      ingredients: req.body.productIngredients, 
+      instructions: req.body.productInstructions,
+      tags: req.body.productTags,
+      time: req.body.productTime,
+      format: req.files.productImg.name.slice(-3)};
+    
+    var product = new Product(query);
+    req.user.products.push(product._id);
+    
+    req.user.save(function(err, user) {
+      if(err) throw err;
+
+    });
+    
+    product.save(function(err, user, next) {
+      if(err) throw err;
+      
+      // After successfully inserting product into user document
+      next;
+    });
+    
+    req.flash('success', ['Product Added']);
+    
+    //------------------------------
+    //  Handle PRODUCT IMAGES
+    //------------------------------
+    
+    // Get product ID
+    var id = product._id;
+
+    // Get image info
+    var img = req.files.productImg;
+    //console.dir(img);
+    
+    // Get image format
+    var format = img.name.slice(-3);
+    //console.log(format);
+    
+    // tmp_path
+    var tmp_path = 'tmp' + img.path.slice(4);
+    //console.log(tmp_path);
+
+    // target_path
+    var target_path = 'public/productImages/' + id + '.' + format;
+    
+    // Put the image into the proper folder
+    fs.readFile(req.files.productImg.path, function (err, data) {
+      //var newPath = __dirname + "/uploads/uploadedFileName";
+      fs.writeFile(target_path, data, function (err) {
+        res.redirect("back");
+      });
+    });
+    
+  });
+
+//******************************************
+//          GET PRODUCT PAGE
+//******************************************
+app.get('/product:id', function(req, res) {
+  // Then you can use the value of the id with req.params.id
+  // So you use it to get the data from your database:
+  req.flash('msg', ['Soon this will take you to a product page.']);
+  res.redirect("back");
+
 });
 
 // CHECK EMAIL IN REGISTRATION FORM

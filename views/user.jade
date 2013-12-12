@@ -6,61 +6,61 @@ block content
       // mini nav
       ul#uiTabs.nav.nav-tabs
         
-        li#settingsUI.active
-          a(href="#", onclick="makeActive(0)") 
+        li#settingsUItab.active
+          a(href="#", onclick="makeActive('settings')") 
             i.fa.fa-wrench
             span Account Info
         // Only show Vendor tab for Vendors
         if(user.classification.indexOf("V") != -1)
-          li#vendorUI
-            a(href="#", onclick="makeActive(1)")
+          li#vendorUItab
+            a(href="#", onclick="makeActive('vendor')")
               i.fa.fa-coffee
               span Vendor Interface
         //Only show Delivery tab for delivery people
         if(user.classification.indexOf("D") != -1)
-          li#deliverUI
-            a(href="#", onclick="makeActive(2)") 
+          li#deliverUItab
+            a(href="#", onclick="makeActive('deliver')") 
               i.fa.fa-truck
               span Delivery Interface
-        li#notifyUI
-          a(href="#", onclick="makeActive(3)") 
+        li#notifyUItab
+          a(href="#", onclick="makeActive('notify')") 
             i.fa.fa-comment
             span Notification Settings
-        li#historyUI
-          a(href="#", onclick="makeActive(4)") 
+        li#historyUItab
+          a(href="#", onclick="makeActive('history')") 
             i.fa.fa-bar-chart-o
             span My Orders
       
-      // Change User Info (n = 0)
-      .material
+      // Change User Info
+      #settingsUI.material
         h3(style="text-align: center") Make changes to your account
         // vertical menu
         .row(style="margin-top: 30px")
           .col-xs-4.col-md-2
             ul.nav.nav-pills.nav-stacked.text-center
-              li.active
-                a(href="#", onclick="makePillActive(0)")
+              li#emailPill.active
+                a(href="#", onclick="makePillActive('email')")
                   i.fa.fa-envelope
                   p Email
-              li 
-                a(href="#", onclick="makePillActive(1)") 
+              li#usernamePill 
+                a(href="#", onclick="makePillActive('username')") 
                   i.fa.fa-user
                   p Username
-              li 
-                a(href="#", onclick="makePillActive(2)") 
+              li#passwordPill 
+                a(href="#", onclick="makePillActive('password')") 
                   i.fa.fa-key
                   p Password
-              li 
-                a(href="#", onclick="makePillActive(3)") 
+              li#phonePill 
+                a(href="#", onclick="makePillActive('phone')") 
                   i.fa.fa-phone
                   p Phone
-              li 
-                a(href="#", onclick="makePillActive(4)") 
+              li#classPill 
+                a(href="#", onclick="makePillActive('class')") 
                   i.fa.fa-tags
                   p Class
               
           .col-xs-8.col-md-10
-            form.form-horizontal.pillContent.update(id="updateEmail", method="post", action="/updateUserInfo", role="form")
+            form.form-horizontal.pillContent.update(id="emailUpdate", method="post", action="/updateUserInfo", role="form")
               .col-xs-8.col-md-offset-1
                 .form-group
                   h5 This will change the email address associated with your account.
@@ -79,7 +79,7 @@ block content
                     i.fa.fa-check 
                     span Make Changes
           
-            form.form-horizontal.pillContent.update.hidden(id="updateUsername", method="post", action="/updateUserInfo", role="form")              
+            form.form-horizontal.pillContent.update.hidden(id="usernameUpdate", method="post", action="/updateUserInfo", role="form")              
               .col-xs-8.col-md-offset-1
                 .form-group
                   h5 This is your chance to get a nice, shiny new username.
@@ -98,21 +98,21 @@ block content
                     i.fa.fa-check 
                     span Make Changes
             
-            form.form-horizontal.pillContent.update.hidden(id="updatePassword", method="post", action="/updateUserInfo", role="form")            
+            form.form-horizontal.pillContent.update.hidden(id="passwordUpdate", method="post", action="/updateUserInfo", role="form")            
               .col-xs-8.col-md-offset-1
                 .form-group
                   h5 This will change your password.
-                .form-group.pull-right
+                .form-group
                   //label.col-xs-4.control-label(for="password") Change Password
                   .input-group
                     input.form-control.notOkay.password(type="password", id="password", name="password", placeholder="Change Password")
                     span.input-group-btn
                       span.btn.btn-default.disabled(type="button")
                         .passwordFeedback ...
-                .form-group.pull-right
+                .form-group
                   //label.col-xs-4.control-label(for="confirmPassword") Confirm New Password
                   .input-group
-                    input.form-control.notOkay.confirmPassword(type="password", id="confirmPassword", placeholder="Confirm New Password")
+                    input.form-control.notOkay.confirmPassword(type="password", id="passwordConfirm", placeholder="Confirm New Password")
                     span.input-group-btn
                       span.btn.btn-default.disabled(type="button")
                         .confirmPasswordFeedback ...
@@ -121,7 +121,7 @@ block content
                     i.fa.fa-check 
                     span Make Changes
             
-            form.form-horizontal.pillContent.update.hidden(id="updatePhone", method="post", action="/updateUserInfo", role="form")  
+            form.form-horizontal.pillContent.update.hidden(id="phoneUpdate", method="post", action="/updateUserInfo", role="form")  
               .col-xs-8.col-md-offset-1
                 //- .form-group
                   label.col-xs-4.control-label(for="tel") Update Phone Number
@@ -143,7 +143,7 @@ block content
                     i.fa.fa-check 
                     span Make Changes
             
-            form.form-horizontal.pillContent.update.hidden(id="updateClass", method="post", action="/updateUserInfo", role="form")          
+            form.form-horizontal.pillContent.update.hidden(id="classUpdate", method="post", action="/updateUserInfo", role="form")          
               .col-xs-10.col-md-offset-1
                 .form-group
                   h4 How will you VenFu?
@@ -171,31 +171,31 @@ block content
                     i.fa.fa-check 
                     span Make Changes
                   
-      // Vendor UI (n = 1)
-      .material.hidden
+      // Vendor UI
+      #vendorUI.material.hidden
         h3(style="text-align: center") Vendor Interface
         // vertical menu
         .row(style="margin-top: 30px")
           .col-xs-4.col-md-2
             ul.nav.nav-pills.nav-stacked.text-center.vendor-pills
-              li.active
-                a(href="#", onclick="makePillActive(0)")
+              li#ordersPill.active
+                a(href="#", onclick="makePillActive('orders')")
                   i.fa.fa-ticket
                   p Orders
-              li 
-                a(href="#", onclick="makePillActive(1)") 
+              li#deliveriesPill 
+                a(href="#", onclick="makePillActive('deliveries')") 
                   i.fa.fa-truck
                   p Deliveries
-              li 
-                a(href="#", onclick="makePillActive(2)") 
+              li#productsPill 
+                a(href="#", onclick="makePillActive('products')") 
                   i.fa.fa-gift
                   p Products
-              li 
-                a(href="#", onclick="makePillActive(3)") 
+              li#venuesPill 
+                a(href="#", onclick="makePillActive('venues')") 
                   i.fa.fa-building
                   p Venues
-              li 
-                a(href="#", onclick="makePillActive(4)") 
+              li#feedbackPill 
+                a(href="#", onclick="makePillActive('feedback')") 
                   i.fa.fa-star
                   p Feedback
               
@@ -203,16 +203,16 @@ block content
           .col-xs-8.col-md-8.col-md-offset-1.ui
           
             // Orders
-            p.pillContent Active orders will populate here.
+            p#ordersUpdate.pillContent Active orders will populate here.
           
             // Deliveries
-            p.pillContent.hidden Active deliveries will populate here.
+            p#deliveriesUpdate.pillContent.hidden Active deliveries will populate here.
             
             // Products
-            .pillContent.hidden
+            #productsUpdate.pillContent.hidden
               #products
                 .col-xs-12
-                  a#register.btn.btn-success.pull-right(href="#", onclick="addProduct()")
+                  a#register.btn.btn-success.pull-right(href="#", onclick="toggleAddProduct()")
                     i.fa.fa-plus
                     span Add Product
                   .col-md-3.pull-right
@@ -222,17 +222,31 @@ block content
                       option top-selling
                       option most recent
                       option low-selling
-                .col-xs-12(style="clear: both; margin-top: 50px")
-                  p Your products will be displayed here.        
+                #productWindow.col-xs-12(style="clear: both; margin-top: 50px")
+                  if(user.products != "")
+                    // p User products: #{user.products}
+                    
+                    mixin products(products)
+                      .products
+                        - each product in products
+                          .col-xs-12.col-md-5.product
+                            a(href="#")= product.name
+                              | <br>
+                              img.productImage(src="productImages/" + product._id + "." + product.format)
+                            
+                    +products(user.products)
               
+                  else
+                    p !{user.username}, your products will be displayed here. Use the green button to add products.
+
               // Add Product 
               #addProduct(style="display: none")
                 // Back to Products button
-                button.btn.btn-inverse.pull-right(onclick="addProduct()", style="margin-bottom: 20px")
+                button.btn.btn-inverse.pull-right(onclick="toggleAddProduct()", style="margin-bottom: 20px")
                   i.fa.fa-times  
                   span Cancel
                   
-                form.form-horizontal(id="addProductForm", method="post", role="form")
+                form.form-horizontal(id="addProductForm", method="post", role="form", enctype="multipart/form-data", action="/addProduct")
                   .form-group
                     label.sr-only.control-label(for="productName") Product Name
                     .col-xs-10
@@ -244,10 +258,10 @@ block content
                         span.input-group-btn
                           span.btn.btn-default.disabled(type="button")
                             i.fa.fa-usd
-                        input.email.form-control(type="text", name="price", placeholder="Price")
+                        input.form-control(type="text", name="price", placeholder="Price")
                     label.sr-only.control-label(for="productCategory") Product Category
                     .col-xs-3
-                      select.form-control
+                      select.form-control(name="productCategory")
                         option Category
                         option
                         option Main Dish
@@ -258,8 +272,8 @@ block content
                         option Kids' Menu 
                     .col-xs-6  
                       .form-group.pull-right
-                        label(for="productPic") Add a Picture
-                        input(type="file", name="productPic")
+                        label(for="productImg") Add a Picture
+                        input(type="file", name="productImg", accept="image/*")
                         
                   .form-group
                     label.sr-only.control-label(for="productDescription") Product Description
@@ -287,23 +301,23 @@ block content
                             
                   // Add product button
                   .form-group(style="margin-top: 30px") 
-                    button.btn.btn-success.pull-right(type="button", onclick="addProduct()")
+                    button.btn.btn-success.pull-right(type="submit")
                       i.fa.fa-plus
                       span Add
                 
                   
             // Venues
-            p.pillContent.hidden Venue information will populate here.
+            p#venuesUpdate.pillContent.hidden Venue information will populate here.
             
             // Feedback
-            p.pillContent.hidden Vendor feedback will populate here.
+            p#feedbackUpdate.pillContent.hidden Vendor feedback will populate here.
         
       // Delivery UI (n = 2)
-      .material.hidden
+      #deliverUI.material.hidden
         p This is the delivery interface
         
       // Notification UI (n = 3)
-      .material.hidden
+      #notifyUI.material.hidden
         h3.text-center(style="margin-bottom: 20px") Notification Settings
         h5.text-center
           em Which alerts work for you?
@@ -362,7 +376,7 @@ block content
                 span Make Changes
         
       // History UI (n = 3)
-      .material.hidden
+      #historyUI.material.hidden
         p This is the order history interface
          
   
@@ -370,7 +384,29 @@ block content
   
   //Make clicked tab active
   script.
-    function makeActive(n){
+    // function makeActive(n){
+    //   var
+    //     tabs = $('#uiTabs').find('li');
+    //     material = $('.material');
+      
+    //   // No other tabs should be active
+    //   tabs.each(function() {
+    //     $(this).removeClass('active');
+    //   });
+    //   // No other material should be visible
+    //   material.each(function() {
+    //     $(this).addClass('hidden');
+    //   });
+      
+    //   // Make clicked tab active
+    //   tabs.eq(n).addClass('active');
+      
+    //   // Make material visible
+    //   material.eq(n).removeClass('hidden');
+
+    // }
+    
+    function makeActive(section) {
       var
         tabs = $('#uiTabs').find('li');
         material = $('.material');
@@ -384,20 +420,18 @@ block content
         $(this).addClass('hidden');
       });
       
-      // Make clicked tab active
-      tabs.eq(n).addClass('active');
-      
-      // Make material visible
-      material.eq(n).removeClass('hidden');
-
+      $('#'+section+'UI').removeClass('hidden');
+      $('#'+section+'UItab').addClass('active');
     }
     
   //Make clicked pill active
   script.
-    function makePillActive(m){
+    function makePillActive(area){
       var
-        pills = $(event.target).parents('.nav-pills').find('li');
-        pillContent = $(event.target).parents('.material').find('.pillContent');
+        // Where am I?  Rather than using event target.
+        loc = $('#'+area+'Pill');
+        pills = loc.parents('.nav-pills').find('li');
+        pillContent = loc.parents('.material').find('.pillContent');
       
       // No other pills should be active
       pills.each(function() {
@@ -408,11 +442,11 @@ block content
         $(this).addClass('hidden');
       });
       
-      // Make clicked tab active
-      pills.eq(m).addClass('active');
+      // Make clicked pill active
+      loc.addClass('active');
       
-      // Make material visible
-      pillContent.eq(m).removeClass('hidden');
+      // Make pill content visible
+      $('#'+area+'Update').removeClass('hidden');
     }    
     
     
@@ -467,11 +501,10 @@ block content
       });
     });
 
-  // ADD PRODUCT
+  // Show ADD PRODUCT material
   script.
-    function addProduct() {
+    function toggleAddProduct() {
       $('#addProduct').toggle();
       $('#products').toggle();
     }
-  
   

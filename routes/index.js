@@ -4,12 +4,10 @@
  */
 
 exports.index = function(req, res){
-  // console.log(req);
-  // res.json(req.user);
   res.render('index', { 
     title: 'VenFu', 
     msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
-    user: req.user, loggedIn: req.isAuthenticated()
+    user: req.user, loggedIn: req.isAuthenticated(), products: req.products
   });
 };
 
@@ -129,7 +127,7 @@ exports.user = function(req, res){
     res.render('user', { 
       title: 'My VenFu', 
       msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
-      user: req.user, loggedIn: req.isAuthenticated()
+      user: req.user, loggedIn: req.isAuthenticated(), products: req.products
     });
   }
   else {

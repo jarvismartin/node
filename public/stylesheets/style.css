@@ -5,6 +5,10 @@
 html, body {
     width:100%;
     height:100%;
+    
+    /*Dane, we can use this later, if you don't mind. */
+    /*For now, I need to be able to scroll products.*/
+    /*overflow:hidden;*/
 }
 
 body {
@@ -21,7 +25,7 @@ body {
   background-color: #111; */
   
   /* Yin Yang */
-  background: 
+  /*background:
   radial-gradient(circle at 50% 59%, #080808 3%, #050505 4%, #050505 11%, rgba(24,24,24,0) 12%, rgba(24,24,24,0)) 50px 0,
   radial-gradient(circle at 50% 41%, #050505 3%, #080808 4%, #080808 11%, rgba(28,28,28,0) 12%, rgba(28,28,28,0)) 50px 0,
   radial-gradient(circle at 50% 59%, #080808 3%, #050505 4%, #050505 11%, rgba(24,24,24,0) 12%, rgba(24,24,24,0)) 0 50px,
@@ -30,8 +34,10 @@ body {
   radial-gradient(circle at 0% 50%, #050505 16%, rgba(24,24,24,0) 17%),
   radial-gradient(circle at 100% 50%, #080808 16%, rgba(28,28,28,0) 17%) 50px 50px,
   radial-gradient(circle at 0% 50%, #050505 16%, rgba(24,24,24,0) 17%) 50px 50px;
-  background-color:#000;
-  background-size:100px 100px;
+  background-size:100px 100px;*/
+  /*background-image:url(/backgrounds/darkwood/darkwood.png);*/
+  /*background-image:url('/backgrounds/board.png');*/
+  background-color:#f4f3ef;
 }
 
 a,
@@ -44,7 +50,7 @@ a:focus {
 .absolute-center {
   margin: auto;
   position: absolute;
-  top: 0; left: 4%; bottom: 0; right: 0;
+  top: 0; left: 0; bottom: 0; right: 0;
 }
 
 .mainAlert {
@@ -298,7 +304,7 @@ icon, i {
     left: 1px;
     top: 1px;
     background: #333;
-    z-index: 1000;
+    z-index: 9999;
     color: #141414;
     padding: 15px;
     text-align: left;
@@ -329,8 +335,8 @@ icon, i {
     padding: 0;
     cursor: pointer;
     position: absolute;
-    right: -5px;
-    bottom: -9px;
+    right: 1px;
+    bottom: -3px;
     color: #DDD;
     opacity: 0.5;
     filter: alpha(opacity=50); /* For IE8 and earlier */
@@ -393,17 +399,16 @@ icon, i {
   width: 100%;
 }
 
-#loginHelpFeedback {
-  
-}
+
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
 /* Carousel base class */
 .carousel {
-  margin-top: -19px;
+  margin-top:-20px;
   box-shadow: 0 2px 5px #00ff00;
+  min-width:700px;
 }
 
 .carousel .inner a {
@@ -434,8 +439,8 @@ icon, i {
   position: absolute;
   top: 0;
   left: 0;
-  min-width: 100%;
-  height: 500px;
+  min-width:100%;
+  max-height:100%;
 }
 
 .carousel-controls .btn-group{
@@ -460,15 +465,16 @@ icon, i {
   border: 1px solid black;
 }
 
-/* PAGE CONTENT
+/* LANDING PAGE CONTENT
 -------------------------------------------------- */
 
 .hello {
   position: relative;
-  color: #EEE;
-  margin-top: 40px;
   text-align: center;
-  text-shadow:2px 2px 2px rgba(0,0,0, 0.8), -1px -1px 1px rgba(100,100,100 0.7);
+  /*text-shadow:2px 2px 2px rgba(0,0,0, 0.8), -1px -1px 1px rgba(100,100,100 0.7);*/
+  border-top-style:solid;
+  border-top-width:3px;
+  border-top-color:white;
 }
 
 .fu-button {
@@ -476,18 +482,51 @@ icon, i {
 }
 
 .title {
-  font-family: Wonton; 
-  font-size: 80px;
-  text-shadow:2px 2px 2px rgba(0,255,0, 0.8), -1px -1px 1px rgba(100,100,100 0.7);
+  /*font-family: Wonton; */
+  /*font-size: 80px;*/
+  /*text-shadow:2px 2px 2px rgba(0,255,0, 0.8), -1px -1px 1px rgba(100,100,100 0.7);*/
+  font-family: Wonton;
+  font-size: 36px;
+  color: #2f4f4f;
 }
 
 .know {
   font-family: Chowfun;
-  margin-top: 5%;
+  margin-top: 6px;
+  color: #2f4f4f;
 }
 
 .know a {
-  color: #DDD;
+  color: #2f4f4f;
+}
+
+.btnSellFu {
+  padding:5px;
+}
+
+.btnDeliverFu{
+  padding:5px;
+}
+
+/* CUSTOMIZE USER UI
+-------------------------------------------------- */
+
+.ui {
+/*  background-image: url('/images/squairy_light.png'); */
+color: #333;
+}
+
+.product {
+  margin: 20px;
+}
+
+.product img {
+  width: 100px;
+  height: 100px;
+}
+
+#productWindow {
+  overflow: auto;
 }
 
 /* Suggestions */
@@ -495,13 +534,7 @@ icon, i {
   margin-top: 65px;
 }
 
-.ui {
-/*  background-image: url('/images/squairy_light.png'); */
-color: white;
-}
-
-/* Featurettes
-------------------------- */
+/* Featurettes */
 
 .featurette-divider {
   margin: 60px 0; /* Space out the Bootstrap <hr> more */
@@ -592,6 +625,13 @@ color: white;
 
   #foodPorn {
       height: 50%;
+  }
+  
+  .carousel {
+    min-height:60%;
+  }
+  
+  .carousel img {
   }
   
   .carousel-caption p {

@@ -1,11 +1,201 @@
 extends layout
 
 block content
-	.content
-		.container
-		//-h1 #{title}
-			h2 #{vendors}
-			div
-				for vendor in vendors
-					span #{vendor.name}
-					br
+  div.container
+    div.col-xs-12.ui(style="margin-top: 62px")
+      // mini nav
+      ul#uiTabs.nav.nav-tabs
+        
+        li#settingsUI
+          a(href="/user", onclick="makeActive(0)") 
+            i.fa.fa-wrench
+            span Account Info
+        // Only show Vendor tab for Vendors
+        if(user.classification.indexOf("V") != -1)
+          li#vendorUI.active
+            a(href="#", onclick="makeActive(1)")
+              i.fa.fa-coffee
+              span Vendor Interface
+        //Only show Delivery tab for delivery people
+        if(user.classification.indexOf("D") != -1)
+          li#deliverUI
+            a(href="/user", onclick="makeActive(2)") 
+              i.fa.fa-truck
+              span Delivery Interface
+        li#notifyUI
+          a(href="/user", onclick="makeActive(3)") 
+            i.fa.fa-comment
+            span Notification Settings
+        li#historyUI
+          a(href="#", onclick="makeActive(4)") 
+            i.fa.fa-bar-chart-o
+            span My Orders
+                  
+      // Vendor UI (n = 1)
+      .material
+        h3(style="text-align: center") Vendor Interface
+        // vertical menu
+        .row(style="margin-top: 30px")
+          .col-xs-4.col-md-2
+            ul.nav.nav-pills.nav-stacked.text-center.vendor-pills
+              li.active
+                a(href="#", onclick="makePillActive(0)")
+                  i.fa.fa-ticket
+                  p Orders
+              li 
+                a(href="#", onclick="makePillActive(1)") 
+                  i.fa.fa-truck
+                  p Deliveries
+              li 
+                a(href="#", onclick="makePillActive(2)") 
+                  i.fa.fa-gift
+                  p Products
+              li 
+                a(href="#", onclick="makePillActive(3)") 
+                  i.fa.fa-building
+                  p Venues
+              li 
+                a(href="#", onclick="makePillActive(4)") 
+                  i.fa.fa-star
+                  p Feedback
+              
+          // Content
+          .col-xs-8.col-md-8.col-md-offset-1.ui
+          
+            // Orders
+            p.pillContent Active orders will populate here.
+          
+            // Deliveries
+            p.pillContent.hidden Active deliveries will populate here.
+            
+            // Products
+            .pillContent.hidden
+              #products
+                .col-xs-12
+                  a#register.btn.btn-success.pull-right(href="#", onclick="toggleAddProduct()")
+                    i.fa.fa-plus
+                    span Add Product
+                  .col-md-3.pull-right
+                    select.form-control
+                      option sort
+                      option
+                      option top-selling
+                      option most recent
+                      option low-selling
+                #productWindow.col-xs-12(style="clear: both; margin-top: 50px")
+                  if(user.products != "")
+                    //p User products: #{user.products[0].name}
+                    
+                    mixin products(products)
+                      .products
+                        - each product in products
+                          .col-xs-12.col-md-5.product
+                            a(href="#")= product.productName
+                              | <br>
+                              img.productImage(src="productImages/" + product._id + ".jpg")
+                            
+                    +products(user.products)
+              
+                  else
+                    p !{user.username}, your products will be displayed here. Use the green button to add products.
+
+              // Add Product 
+              #addProduct(style="display: none")
+                // Back to Products button
+                button.btn.btn-inverse.pull-right(onclick="toggleAddProduct()", style="margin-bottom: 20px")
+                  i.fa.fa-times  
+                  span Cancel
+                  
+                form.form-horizontal(id="addProductForm", method="post", role="form", enctype="multipart/form-data", action="/addProduct")
+                  .form-group
+                    label.sr-only.control-label(for="productName") Product Name
+                    .col-xs-10
+                      input.form-control(type="text", name="productName", placeholder="Product Name")
+                  .form-group
+                    label.sr-only.control-label(for="price") Price
+                    .col-xs-3
+                      .input-group
+                        span.input-group-btn
+                          span.btn.btn-default.disabled(type="button")
+                            i.fa.fa-usd
+                        input.form-control(type="text", name="price", placeholder="Price")
+                    label.sr-only.control-label(for="productCategory") Product Category
+                    .col-xs-3
+                      select.form-control(name="productCategory")
+                        option Category
+                        option
+                        option Main Dish
+                        option Side Dish
+                        option Dessert
+                        option Beverage
+                        option Appetizer
+                        option Kids' Menu 
+                    .col-xs-6  
+                      .form-group.pull-right
+                        label(for="productImg") Add a Picture
+                        input(type="file", name="productImg", accept="image/*")
+                        
+                  .form-group
+                    label.sr-only.control-label(for="productDescription") Product Description
+                    .col-xs-10
+                      input.form-control(type="text", name="productDescription", placeholder="Product Description")
+                  .form-group
+                    label.sr-only.control-label(for="productIngredients") Product Ingredients
+                    .col-xs-10
+                      input.form-control(type="text", name="productIngredients", placeholder="Ingredients")
+                  .form-group
+                    label.sr-only.control-label(for="productInstructions") Special Instructions
+                    .col-xs-10
+                      input.form-control(type="text", name="productInstructions", placeholder="Special Instructions")
+                  .form-group
+                    label.sr-only.control-label(for="productTags") Search Tags
+                    .col-xs-10
+                      input.form-control(type="text", name="productTags", placeholder="Search Tags")
+                  .form-group
+                    label.col-xs-6.control-label(for="productTime") How long does it take to make?
+                    .col-xs-4
+                      .input-group
+                        input.form-control(type="number", name="productTime", placeholder="Production Time")    
+                        span.input-group-btn
+                          span.btn.btn-default.disabled(type="button") min
+                            
+                  // Add product button
+                  .form-group(style="margin-top: 30px") 
+                    button.btn.btn-success.pull-right(type="submit")
+                      i.fa.fa-plus
+                      span Add
+
+  //Page-specific JS / jQuery
+    
+  //Make clicked pill active
+  script.
+    function makePillActive(m, e){
+      if(!e) e = window.event;  // DOES NOT WORK ON FIREFOX!!!
+      var
+        x = e.target||event.srcElement;
+        pills = $(x).parents('.nav-pills').find('li');
+        pillContent = $(x).parents('.material').find('.pillContent');
+      
+      // No other pills should be active
+      pills.each(function() {
+        $(this).removeClass('active');
+      });
+      // No other update section should be visible
+      pillContent.each(function() {
+        $(this).addClass('hidden');
+      });
+      
+      // Make clicked tab active
+      pills.eq(m).addClass('active');
+      
+      // Make material visible
+      pillContent.eq(m).removeClass('hidden');
+    }    
+
+  // Show ADD PRODUCT material
+  script.
+    function toggleAddProduct() {
+      $('#addProduct').toggle();
+      $('#products').toggle();
+    }
+  

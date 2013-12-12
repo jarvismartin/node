@@ -5,7 +5,7 @@ html
     
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(name="description", content="")
-    meta(name="authors", content="Jarvis Martin and Max Franks")
+    meta(name="authors", content="Jarvis Martin, Max Franks, and Dane Schoonover")
     // Bootstrap 
     link(rel="stylesheet", href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css")
     // Font Awesome icons
@@ -71,7 +71,7 @@ html
            img(src="images/egg.png")
       
       #menu
-        i.fa.fa-align-justify.fa-4x(title="menu")
+        i.fa.fa-align-justify.fa-3x(title="menu")
       
       // Sound
       // audio#gong
@@ -101,13 +101,9 @@ html
           // Determine if User is logged in and render appropriate content
           if loggedIn
             li
-              a(href="/user")
-                i.fa.fa-dashboard
-                // If username 4 chars or less, render name. Otherwise, "my-fu" default.
-                if(user.username.length <= 7)
-                  p #{user.username}-fu
-                else
-                  p My Fu
+              a(href="/logout")
+                i.fa.fa-sign-out
+                p Sign out
   
         ul.nav.pull-left.col-xs-6.text-center
           
@@ -124,9 +120,14 @@ html
           // Determine if User is logged in and render appropriate content
           if loggedIn
             li
-              a(href="/logout")
-                i.fa.fa-sign-out
-                p Sign out
+              a(href="/user")
+                i.fa.fa-dashboard
+                // If username 4 chars or less, render name. Otherwise, "my-fu" default.
+                if(user.username.length <= 7)
+                  p #{user.username}-fu
+                else
+                  p My Fu
+          
         
         // Determine if User is logged in and render appropriate content
         ul.nav.pull-left.col-xs-11.login.text-center
@@ -137,7 +138,7 @@ html
                 p Sign in
         
         #hideNav
-          i.fa.fa-toggle-left.fa-3x(title="close")
+          i.fa.fa-align-justify.fa-2x(title="close")
           // img(src="images/egg.png")
    
       // Modals
@@ -213,7 +214,7 @@ html
                     i.fa.fa-times  
                     span Cancel
           
-      #loginModal.modal.fade
+      #loginModal.modal.fade.centerVert
         .modal-dialog
           .modal-content
             .modal-header
@@ -223,7 +224,7 @@ html
                   i.fa.fa-plus
                   span Join us
             .modal-body
-              form#loginForm.form-horizontal(action="/login", method="post")      
+              form#loginForm.form-horizontal(action="/ajaxLogin", method="post")
                 .form-group
                   label.control-label.sr-only(for="username") Username
                   .col-xs-12
@@ -244,15 +245,15 @@ html
   
                 .modal-footer
                   .form-group 
-                    .col-xs-4
+                    .col-xs-12.col-md-4
                       button#loginFormSubmit.btn.btn-primary.col-xs-12(type="submit")
                         i.fa.fa-sign-in 
                         span Sign in
-                    .col-xs-4
+                    .col-xs-12.col-md-4
                       //-.checkbox(style="text-align: left")
                         label Remember me
                           input(type="checkbox", name="classification")
-                    .col-xs-4
+                    .col-xs-12.col-md-4
                       button.btn.btn-link(type="button", href="#loginHelpModal", data-toggle="modal", data-dismiss="modal") Can't remember?
   
                   .form-group
