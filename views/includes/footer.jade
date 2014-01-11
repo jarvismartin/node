@@ -1,21 +1,21 @@
-//- .container.well	 
-	FOOTER
-	footer
-		p.pull-right
-			a(href="#") Back to top
-		p &copy; 2012, 2013 VenFu
-			a(href="#", style="margin-left: 2%;") Privacy &middot; 
-			a(href="#") Terms
+//- .container.well   
+  FOOTER
+  footer
+    p.pull-right
+      a(href="#") Back to top
+    p &copy; 2012, 2013 VenFu
+      a(href="#", style="margin-left: 2%;") Privacy &middot; 
+      a(href="#") Terms
 
 //- Le javascript
-	Placed at the end of the document so the pages load faster
+  Placed at the end of the document so the pages load faster
   
 
 // TinyMCE
 script(src="//tinymce.cachefly.net/4.0/tinymce.min.js")
 
 //- Bootstrap JS
-	script(src="/javascripts/bootstrap.min.js")
+  script(src="/javascripts/bootstrap.min.js")
   
 
 
@@ -26,294 +26,299 @@ script(src="//tinymce.cachefly.net/4.0/tinymce.min.js")
 
 // Toggle Nav Menu
 script.
-	$(function(){
-		$("#hideNav").click(function(){
-			$("#navContent").hide(200);
-			// var audio = $("#gong")[0];
-			// audio.pause();
-			// audio.currentTime = 0;
-		});
-		
-		$("#menu").click(function(){
-			$("#navContent").show(200);
-			// var audio = $("#gong")[0];
-			// audio.play();
-		});
-		
-	});
-		
+  $(function(){
+    $("#hideNav").click(function(){
+      $("#navContent").hide(200);
+      // var audio = $("#gong")[0];
+      // audio.pause();
+      // audio.currentTime = 0;
+    });
+    
+    $("#menu").click(function(){
+      $("#navContent").show(200);
+      // var audio = $("#gong")[0];
+      // audio.play();
+    });
+    
+    // $("#navContent").blur(function(){
+    //   //$("#navContent").hide(200);
+    //   alert('blur');
+    // });
+    
+  });
+    
 // VALIDATION
 
 // Password Feedback
 script.
-	var pwd = $('.password');
-	
-	// Check password strength
-	pwd.on('input', function(){
-		
-		var 
-			pwdVal = $(this).val();
-			pwdFeedback = $('.passwordFeedback');
+  var pwd = $('.password');
+  
+  // Check password strength
+  pwd.on('input', function(){
+    
+    var 
+      pwdVal = $(this).val();
+      pwdFeedback = $('.passwordFeedback');
 
-		if (pwdVal.length >= 4) {
-			if (pwdVal.length < 10) {
-			pwdFeedback.html("<span style='color: #663300'>weak</span>");
-			pwd.removeClass('notOkay').addClass('warning');
-			} 
-			else {
-				pwdFeedback.html("<span style='color: green'>strong</span>");
-				pwd.removeClass('warning').addClass('okay');
-			}
-		} 
-		else {
-			pwdFeedback.html("<span style='color: red'>too short</span>");
-			pwd.removeClass('okay').removeClass('warning').addClass('notOkay');
-		}
-		
-	});
+    if (pwdVal.length >= 4) {
+      if (pwdVal.length < 10) {
+      pwdFeedback.html("<span style='color: #663300'>weak</span>");
+      pwd.removeClass('notOkay').addClass('warning');
+      } 
+      else {
+        pwdFeedback.html("<span style='color: green'>strong</span>");
+        pwd.removeClass('warning').addClass('okay');
+      }
+    } 
+    else {
+      pwdFeedback.html("<span style='color: red'>too short</span>");
+      pwd.removeClass('okay').removeClass('warning').addClass('notOkay');
+    }
+    
+  });
 
 //Confirm Password
 script.
-	var confirmPwd = $('.confirmPassword');
-	
-	// Check password validation on registration
-	confirmPwd.on('input', function(){
-		var
-			pwd = $(this).closest('form').find('.password');
-			//pwd = $('.password');
-			confirmPwdFeedback = $('.confirmPasswordFeedback');
-		
-		//console.log('pwd = ' + pwd.val() + ' confirm = ' + confirmPwd.val());
+  var confirmPwd = $('.confirmPassword');
+  
+  // Check password validation on registration
+  confirmPwd.on('input', function(){
+    var
+      pwd = $(this).closest('form').find('.password');
+      //pwd = $('.password');
+      confirmPwdFeedback = $('.confirmPasswordFeedback');
+    
+    //console.log('pwd = ' + pwd.val() + ' confirm = ' + confirmPwd.val());
 
-		if ( $(this).val() == pwd.val() ) {
-			confirmPwdFeedback.html("<i class='fa fa-check' style='color: green'></i>");
-			confirmPwd.removeClass('notOkay').addClass('okay');
-		} 
-		else {
-			confirmPwdFeedback.html("<i class='fa fa-times' style='color: red'></i>");
-			confirmPwd.removeClass('okay').addClass('notOkay');
-		}
-		
-	});
+    if ( $(this).val() == pwd.val() ) {
+      confirmPwdFeedback.html("<i class='fa fa-check' style='color: green'></i>");
+      confirmPwd.removeClass('notOkay').addClass('okay');
+    } 
+    else {
+      confirmPwdFeedback.html("<i class='fa fa-times' style='color: red'></i>");
+      confirmPwd.removeClass('okay').addClass('notOkay');
+    }
+    
+  });
 
 // Disable registration submit unless form is filled out
 script.
-	$('#registerForm').on('change', function() {
-		var 
-			email = $('#registerEmail').val();
-			username = $('#registerUsername').val();
-			password = $('#registerPassword').val();
-			confirmPassword = $('#confirmPassword').val();
+  $('#registerForm').on('change', function() {
+    var 
+      email = $('#registerEmail').val();
+      username = $('#registerUsername').val();
+      password = $('#registerPassword').val();
+      confirmPassword = $('#confirmPassword').val();
 
-		if (email != "" && username != "" && password != "" && confirmPassword != "") {
-			$('#registerFormSubmit').removeClass('disabled');
-		}
-		else {
-			$('#registerFormSubmit').addClass('disabled');
-		}
-		
-		//console.log('email = ' + email);
-		
-	});
-	
+    if (email != "" && username != "" && password != "" && confirmPassword != "") {
+      $('#registerFormSubmit').removeClass('disabled');
+    }
+    else {
+      $('#registerFormSubmit').addClass('disabled');
+    }
+    
+    //console.log('email = ' + email);
+    
+  });
+  
 // If there is a suggestion, enable the submit button
 script.
-	function showSubmit(){
-		var 
-			message = $('#message');
-			submit = $("#submit");
-	
-		if (message.val() != "") {
-			submit.removeClass('disabled');
-		}
-		else {
-			submit.addClass('disabled');
-		}
-		
-		//console.log('message = ' + message.val());
-	}
-	
+  function showSubmit(){
+    var 
+      message = $('#message');
+      submit = $("#submit");
+  
+    if (message.val() != "") {
+      submit.removeClass('disabled');
+    }
+    else {
+      submit.addClass('disabled');
+    }
+    
+    //console.log('message = ' + message.val());
+  }
+  
 // Alerts disappear automatically
 script.
-	$(".alert").slideDown().delay(1500).slideUp('slow');
+  $(".alert").slideDown().delay(1500).slideUp('slow');
 
 
 //*** Check for unique EMAIL ***
 script.
-	var emailInput = $(".email"); // $(this)
-			
-	emailInput.on('input', function(){
-		var emailFeedback = $('.emailFeedback');
-		
-		emailFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
-		
-		var emailVal = $(this).val();
+  var emailInput = $(".email"); // $(this)
+      
+  emailInput.on('input', function(){
+    var emailFeedback = $('.emailFeedback');
+    
+    emailFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
+    
+    var emailVal = $(this).val();
 
-		if (emailVal.indexOf("@") >= 0 && emailVal.indexOf(".") >= 0) {
-			$.ajax({
-				type:"post",
-				url:"/checkEmail",
-				data:{email: emailVal},
-				success:function(data){
-					//console.log(data);
-					if(data.unique){
-						emailFeedback.html("<i class='fa fa-check' style='color: green'></i>");
-						emailInput.removeClass('notOkay');
-					}
-					else{
-						emailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Email already registered</span>");
-						emailInput.addClass('notOkay');
-					}
-				}
-			});
-		}
-		else {
-			emailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Invalid Email</span>");
-			emailInput.addClass('notOkay');
-		}
-	});
+    if (emailVal.indexOf("@") >= 0 && emailVal.indexOf(".") >= 0) {
+      $.ajax({
+        type:"post",
+        url:"/checkEmail",
+        data:{email: emailVal},
+        success:function(data){
+          //console.log(data);
+          if(data.unique){
+            emailFeedback.html("<i class='fa fa-check' style='color: green'></i>");
+            emailInput.removeClass('notOkay');
+          }
+          else{
+            emailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Email already registered</span>");
+            emailInput.addClass('notOkay');
+          }
+        }
+      });
+    }
+    else {
+      emailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Invalid Email</span>");
+      emailInput.addClass('notOkay');
+    }
+  });
 
 
 //*** Check for unique USERNAME ***
 script.
-	var usernameInput = $(".username"); // $(this)
-			
-	usernameInput.on('input', function(){
-		var usernameFeedback = $('.usernameFeedback');
+  var usernameInput = $(".username"); // $(this)
+      
+  usernameInput.on('input', function(){
+    var usernameFeedback = $('.usernameFeedback');
 
-		usernameFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
+    usernameFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
  
-		var usernameVal = $(this).val();
-		
-		if (usernameVal.length >= 4) {
-			$.ajax({
-				type:"post",
-				url:"/checkUsername",
-				data:{username: usernameVal},
-				success:function(data){
-					//console.log(data);
-					if(data.unique){
-						usernameFeedback.html("<i class='fa fa-check' style='color: green'></i>");
-						usernameInput.removeClass('notOkay');
-					}
-					else{
-						usernameFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Username already taken</span>");
-						usernameInput.addClass('notOkay');
-					}
-				}
-			});
-		}
-		else {
-			usernameFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Username must be at least 4 characters</span>");
-			usernameInput.removeClass('notOkay');
-		}
-	});
+    var usernameVal = $(this).val();
+    
+    if (usernameVal.length >= 4) {
+      $.ajax({
+        type:"post",
+        url:"/checkUsername",
+        data:{username: usernameVal},
+        success:function(data){
+          //console.log(data);
+          if(data.unique){
+            usernameFeedback.html("<i class='fa fa-check' style='color: green'></i>");
+            usernameInput.removeClass('notOkay');
+          }
+          else{
+            usernameFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Username already taken</span>");
+            usernameInput.addClass('notOkay');
+          }
+        }
+      });
+    }
+    else {
+      usernameFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Username must be at least 4 characters</span>");
+      usernameInput.removeClass('notOkay');
+    }
+  });
 
 //*** AJAX validate login username BEFORE Post ***
 script.
-	var loginUsernameInput = $("#loginUsername");
-			
-	loginUsernameInput.on('input', function(){
-		var loginUsernameFeedback = $('#loginUsernameFeedback');
+  var loginUsernameInput = $("#loginUsername");
+      
+  loginUsernameInput.on('input', function(){
+    var loginUsernameFeedback = $('#loginUsernameFeedback');
 
-		loginUsernameFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
-		
-		var loginUsernameVal=loginUsernameInput.val();
-		if (loginUsernameVal.length >= 4) {
-			$.ajax({
-				type:"post",
-				url:"/checkUsername",
-				data: {username: loginUsernameVal},
-				success:function(data){
-					if(data.unique){
-						loginUsernameFeedback.html('<i class="fa fa-times red"></i> <span>Unrecognized Username</span>');
-						loginUsernameInput.addClass('notOkay');
-					}
-					else{
-						loginUsernameFeedback.html('<i class="fa fa-check green"></i>');
-						loginUsernameInput.removeClass('notOkay');
-						
-					}
-				}
-			});
-		}
-		else {
-			loginUsernameFeedback.html('<i class="fa fa-times red"></i> <span>Username must be at least 4 characters</span>');
-			loginUsernameInput.addClass('notOkay');
-		}
-	});
+    loginUsernameFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
+    
+    var loginUsernameVal=loginUsernameInput.val();
+    if (loginUsernameVal.length >= 4) {
+      $.ajax({
+        type:"post",
+        url:"/checkUsername",
+        data: {username: loginUsernameVal},
+        success:function(data){
+          if(data.unique){
+            loginUsernameFeedback.html('<i class="fa fa-times red"></i> <span>Unrecognized Username</span>');
+            loginUsernameInput.addClass('notOkay');
+          }
+          else{
+            loginUsernameFeedback.html('<i class="fa fa-check green"></i>');
+            loginUsernameInput.removeClass('notOkay');
+            
+          }
+        }
+      });
+    }
+    else {
+      loginUsernameFeedback.html('<i class="fa fa-times red"></i> <span>Username must be at least 4 characters</span>');
+      loginUsernameInput.addClass('notOkay');
+    }
+  });
 
 //******************************************************
-//										Login
+//                    Login
 //******************************************************
 script.
-	$('#loginForm').submit(function(e) {
-		e.preventDefault();
-		var
-			loginUsername = $('#loginUsername');
-			loginPassword = $("#loginPassword");
-			loginUsernameFeedback = $('#loginUsernameFeedback');
-			loginPasswordFeedback = $('#loginPasswordFeedback');
-			
-		loginPasswordFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
-		$.ajax({
-			type: "POST",
-			url: '/ajaxLogin',
-			data: {username: loginUsername.val(), password: loginPassword.val()},
-			success: function(data){
-			//alert(data);
-				if (data=="[object Object]") {
-					loginPasswordFeedback.html('<i class="fa fa-times red"></i> <span>Please Try Again</span>');
-				}
-				else {
-					loginUsernameFeedback.html('<i class="fa fa-check green"></i>');
-					loginPasswordFeedback.html('<i class="fa fa-check green"></i>');
-				// 	$.load('/loginSuccess', {username: loginUsername.val(), password: loginPassword.val()})
+  $('#loginForm').submit(function(e) {
+    e.preventDefault();
+    var
+      loginUsername = $('#loginUsername');
+      loginPassword = $("#loginPassword");
+      loginUsernameFeedback = $('#loginUsernameFeedback');
+      loginPasswordFeedback = $('#loginPasswordFeedback');
+      
+    loginPasswordFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
+    $.ajax({
+      type: "POST",
+      url: '/ajaxLogin',
+      data: {username: loginUsername.val(), password: loginPassword.val()},
+      success: function(data){
+      //alert(data);
+        if (data=="[object Object]") {
+          loginPasswordFeedback.html('<i class="fa fa-times red"></i> <span>Please Try Again</span>');
+        }
+        else {
+          loginUsernameFeedback.html('<i class="fa fa-check green"></i>');
+          loginPasswordFeedback.html('<i class="fa fa-check green"></i>');
+        //   $.load('/loginSuccess', {username: loginUsername.val(), password: loginPassword.val()})
 
-				//  Necessary for user products
-				window.location.reload();
+        //  Necessary for user products
+        window.location.reload();
 
-				}
-			}
-		});
-	});
+        }
+      }
+    });
+  });
 
 // CHECK REGISTERED EMAIL
 script.
-	var check4RegisteredEmail = $('.check4RegisteredEmail');
-		
-	check4RegisteredEmail.on('input', function(){
-		var check4RegisteredEmailFeedback = $('.check4RegisteredEmailFeedback');
+  var check4RegisteredEmail = $('.check4RegisteredEmail');
+    
+  check4RegisteredEmail.on('input', function(){
+    var check4RegisteredEmailFeedback = $('.check4RegisteredEmailFeedback');
 
-		check4RegisteredEmailFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
-		
-		var check4RegisteredEmailVal = check4RegisteredEmail.val();
-		var loginHelpSubmit= $('#loginHelpSubmit');
+    check4RegisteredEmailFeedback.html('<img src="images/spinner.gif" height="18" width="20">');
+    
+    var check4RegisteredEmailVal = check4RegisteredEmail.val();
+    var loginHelpSubmit= $('#loginHelpSubmit');
 
-		if (check4RegisteredEmailVal.indexOf("@") >= 0 && check4RegisteredEmailVal.indexOf(".") >= 0) {
-			$.ajax({
-				type:"post",
-				url:"/checkEmail",
-				data:{email: check4RegisteredEmailVal},
-				success:function(data){
-					//console.log(data);
-					if(data.unique){
-						check4RegisteredEmailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Unregistered Email</span>");
-						check4RegisteredEmail.addClass('notOkay');
-						loginHelpSubmit.addClass('disabled');
-					}
-					else{
-						check4RegisteredEmailFeedback.html("<i class='fa fa-check' style='color: green'></i>");
-						check4RegisteredEmail.removeClass('notOkay');
-						loginHelpSubmit.removeClass('disabled');
-					}
-				}
-			});
-		}
-		else {
-			check4RegisteredEmailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Invalid Email</span>");
-			check4RegisteredEmail.addClass('notOkay');
-			loginHelpSubmit.addClass('disabled');
-		}
-	});
+    if (check4RegisteredEmailVal.indexOf("@") >= 0 && check4RegisteredEmailVal.indexOf(".") >= 0) {
+      $.ajax({
+        type:"post",
+        url:"/checkEmail",
+        data:{email: check4RegisteredEmailVal},
+        success:function(data){
+          //console.log(data);
+          if(data.unique){
+            check4RegisteredEmailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Unregistered Email</span>");
+            check4RegisteredEmail.addClass('notOkay');
+            loginHelpSubmit.addClass('disabled');
+          }
+          else{
+            check4RegisteredEmailFeedback.html("<i class='fa fa-check' style='color: green'></i>");
+            check4RegisteredEmail.removeClass('notOkay');
+            loginHelpSubmit.removeClass('disabled');
+          }
+        }
+      });
+    }
+    else {
+      check4RegisteredEmailFeedback.html("<i class='fa fa-times' style='color: red'></i> <span>Invalid Email</span>");
+      check4RegisteredEmail.addClass('notOkay');
+      loginHelpSubmit.addClass('disabled');
+    }
+  });
 

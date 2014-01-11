@@ -230,9 +230,9 @@ block content
                       .products
                         - each product in products
                           .col-xs-12.col-md-5.product
-                            a(href="#")= product.name
+                            a(href="/product:"+product._id)= product.name
                               | <br>
-                              img.productImage(src="productImages/" + product._id + "." + product.format)
+                              img.img-thumbnail.productImage(src="productImages/" + product._id + "." + product.format)
                             
                     +products(user.products)
               
@@ -274,11 +274,15 @@ block content
                       .form-group.pull-right
                         label(for="productImg") Add a Picture
                         input(type="file", name="productImg", accept="image/*")
-                        
+                  
+                  .form-group
+                    label.sr-only.control-label(for="productCaption") Display Caption
+                    .col-xs-10
+                      input.form-control(type="text", name="productCaption", placeholder="Display Caption")
                   .form-group
                     label.sr-only.control-label(for="productDescription") Product Description
                     .col-xs-10
-                      input.form-control(type="text", name="productDescription", placeholder="Product Description")
+                      textarea.form-control(type="text", name="productDescription", placeholder="Product Description")
                   .form-group
                     label.sr-only.control-label(for="productIngredients") Product Ingredients
                     .col-xs-10

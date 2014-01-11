@@ -1,4 +1,6 @@
-Jarvis
+Jarvis 
+
+kill $(ps ax | grep '[j]s' | awk '{ print $1 }')
 
 *** Vendor db schema with folder for images?
 

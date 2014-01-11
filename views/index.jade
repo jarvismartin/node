@@ -1,6 +1,7 @@
 extends layout
 
 block content
+
   // PAGE-SPECIFIC JS. AT THE TOP FOR SMOOTHER LOADING
   // Start carousel cycle, set carousel height, .hello height, center .bigSearch
   script.
@@ -8,13 +9,13 @@ block content
     $(function() {
       
       var 
-        carouselHeight = 0.83 * window.innerHeight;
-        helloHeight = 0.17 * window.innerHeight;
+        carouselHeight = 1.0 * window.innerHeight;
+        // helloHeight = 0.17 * window.innerHeight;
         
       $("#foodPorn").carousel('cycle');
       
       $(".item").css("height", carouselHeight + "px");
-      $(".hello").css("height", helloHeight + "px");
+      //$(".hello").css("height", helloHeight + "px");
       // $(".bigSearch").css("margin-top", (0.5 * helloHeight - 25) + "px");
 
     }); 
@@ -47,12 +48,12 @@ block content
         
         mixin products(products)
           - each product in products
-            a.item(href="/product"+product._id)
-              img.img-responsive(src="productImages/" + product._id + "." + product.format, alt="")
+            a.item(href="/product:"+product._id)
+              img(src="productImages/" + product._id + "." + product.format, alt=product.description)
               .carousel-caption
                 h3 !{product.name}
                   span.pull-right.st_sharethis_large(displayText='ShareThis')
-                p !{product.description}
+                p !{product.caption}
         
         +products(products)
             
@@ -64,27 +65,27 @@ block content
           a.btn.btn-lg(href="#foodPorn", data-slide="next")
             i.fa.fa-caret-right
    
-  section
-    .hello
+  //section
+    //.hello
       // Simple layout
-      .div  
-        .col-xs-12.col-md-3.col-md-offset-1
-          p.title Search VenFu
-          .input-group
-            input.form-control(type="text", placeholder="What do you desire?")
-            span.input-group-btn
-              button.btn.btn-default(type="button")
-                i.fa.fa-search
-          .know
-            a(href="about") Do you know VenFu?
-        .col-xs-12.col-md-2.col-md-offset-4
-          .col-xs-12
-            .btnSellFu
-              a.btn.btn-lg.btn-block.btn-default(href="/about#vendors") 
-                span Sell-Fu
-            .btnDeliverFu
-              a.btn.btn-lg.btn-block.btn-default(href="/about#delivery")
-                span Deliver-Fu
+      //.div  
+        //.col-xs-12.col-md-3.col-md-offset-1
+          //p.title Search VenFu
+          //.input-group
+            //input.form-control(type="text", placeholder="What do you desire?")
+            //span.input-group-btn
+              //button.btn.btn-default(type="button")
+                //i.fa.fa-search
+          //.know
+            //a(href="about") Do you know VenFu?
+        //.col-xs-12.col-md-2.col-md-offset-4
+          //.col-xs-12
+            //.btnSellFu
+              //a.btn.btn-lg.btn-block.btn-default(href="/about#vendors") 
+                //span Sell-Fu
+            //.btnDeliverFu
+              //a.btn.btn-lg.btn-block.btn-default(href="/about#delivery")
+                //span Deliver-Fu
           
   // Auto-resize
   script.

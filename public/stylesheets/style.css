@@ -3,15 +3,14 @@
 
 
 html, body {
-    width:100%;
-    height:100%;
-    
-    /*Dane, we can use this later, if you don't mind. */
-    /*For now, I need to be able to scroll products.*/
-    /*overflow:hidden;*/
+  width:100%;
+  height:100%;
 }
 
 body {
+  /* To offset for nav bar 
+  padding-top: 50px;
+  */
   /* background: #FFF url('/images/squairy_light.png') repeat fixed center; */
   
   /* Seigaiha 
@@ -136,6 +135,24 @@ icon, i {
 
 /* CUSTOMIZE THE NAV
 -------------------------------------------------- */
+.navbar {
+  opacity: 0.8;
+  filter: alpha(opacity=80); /* For IE8 and earlier */
+}
+
+.navbar li:hover{
+  opacity: 1;
+  filter: alpha(opacity=100); /* For IE8 and earlier */
+  background-color: #EEE;
+  color: #111;
+}
+
+.navbar-brand {
+  position: relative;
+  font-family: Wonton;
+  font-size: 50px;
+}
+
 #navMenu {  
   position: fixed;
   left: 2px;
@@ -327,10 +344,6 @@ icon, i {
     color: #333;
   }
   
-  .login {
-    text-align: center;
-  }
-  
   #hideNav {
     padding: 0;
     cursor: pointer;
@@ -355,9 +368,7 @@ icon, i {
     background-color: #DDD;
   }
   
-  .navbar-search {
-    width: 100%;
-  }
+
 
   .form-signin {
     color: #3366CC;
@@ -405,15 +416,15 @@ icon, i {
 -------------------------------------------------- */
 
 /* Carousel base class */
-.carousel {
+/*.carousel {
   margin-top:-20px;
   box-shadow: 0 2px 5px #00ff00;
-  min-width:700px;
-}
+}*/
 
 .carousel .inner a {
  text-decoration: none;
  color: #DDD;
+ overflow:hidden;
 }
 
 .carousel-caption {
@@ -439,8 +450,8 @@ icon, i {
   position: absolute;
   top: 0;
   left: 0;
-  min-width:100%;
-  max-height:100%;
+  width:100%;
+  height:auto;
 }
 
 .carousel-controls .btn-group{
@@ -529,6 +540,35 @@ color: #333;
   overflow: auto;
 }
 
+/* PAGE CONTENTS
+-------------------------------------------------- */
+
+/* Product Page */
+.productPage {
+  padding-top: 60px;
+}
+
+.productPageThumb {
+  height: 200px;
+  width: 200px;
+} 
+
+.productImgWrapper {
+  overflow:hidden;
+}
+
+.productImgWrapper img {
+  position: relative;
+  top: 0;
+  left: 0;
+  min-width:100%;
+}
+
+.productModalImg{
+  max-width: 100%;
+  max-height: 100%;
+}
+
 /* Suggestions */
 .suggestions {
   margin-top: 65px;
@@ -594,6 +634,10 @@ color: #333;
   .navbar-inner {
     border-radius: 0;
     margin: 0;
+  }
+  
+  #navSearch {
+    display: none;
   }
   
   .content {

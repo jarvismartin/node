@@ -20,24 +20,26 @@ var express = require('express')
   , MongoClient = require('mongodb').MongoClient
   , fs = require('fs') // file system
   , util = require("util")
+  , BSON = require('mongodb').BSONPure
   ;
 //  , mongooseAuth = require('mongoose-auth');
 //  , UserProvider = require('./db').UserProvider
 
-var app = express();
-
 // MONGO DB
-
 // Connect to the db
 //MongoClient.connect("mongodb://127.4.192.1:27017", function(err, db) {
-// MongoClient.connect("mongodb://venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282", function(err, db) {
-//   if(err) {
-//     throw err;
-//   }
-//   else {
-//     console.log("Mongo is connected");
-//   }
-// });
+var DB;
+MongoClient.connect("mongodb://venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282", function(err, db) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log("Mongo connected");
+    DB = db;
+  }
+});
+
+var app = express();
 
 var UserSchema = new Schema({
     classification: { type: String, required: true },
@@ -49,13 +51,14 @@ var UserSchema = new Schema({
 });
 UserSchema.add({ products: [{type: Schema.Types.ObjectId, ref: 'Product'}] });
 
-// Should probably add numerical validation to price and time instead of using strings
+// Should probably add numerical validation to price and time instead of using strings -- DONE
 var ProductSchema = new Schema({
     userID: {type: Schema.Types.ObjectId, ref: 'users'}, 
     username: String,
     name: String,
     price: Number,
     category: String,
+    caption: String,
     description: String,
     ingredients: String,
     instructions: String,
@@ -66,37 +69,37 @@ var ProductSchema = new Schema({
 
 var SALT_WORK_FACTOR = 10;
 UserSchema.pre('save', function(next) {
-    var user = this;
-    console.log('pre-save');
+  var user = this;
+  console.log('pre-save');
 
-    // only hash the password if it has been modified (or is new)
-    if (!user.isModified('password')) {
-      console.log('password not modified');
-      return next();
+  // only hash the password if it has been modified (or is new)
+  if (!user.isModified('password')) {
+    console.log('password not modified');
+    return next();
+  }
+
+  // generate a salt
+  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    if (err) {
+      console.log('salt error: ' + err);
+      return next(err);
     }
 
-    // generate a salt
-    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-        if (err) {
-          console.log('salt error: ' + err);
-          return next(err);
-        }
+    // hash the password using our new salt
+    bcrypt.hash(user.password, salt, function (err, hash) {
+      if (err) {
+        console.log('hash error: ' + err);
+        return next(err);
+      }
 
-        // hash the password using our new salt
-        bcrypt.hash(user.password, salt, function (err, hash) {
-          if (err) {
-            console.log('hash error: ' + err);
-            return next(err);
-          }
-
-            // set the hashed password back on our user document
-            user.password = hash;
-            user.salt = salt;
-            
-            console.log('post-salt');
-            next();
-        });
+      // set the hashed password back on our user document
+      user.password = hash;
+      user.salt = salt;
+      
+      console.log('post-salt');
+      next();
     });
+  });
 });
 
 UserSchema.methods.validatePassword = function(candidatePassword) {
@@ -114,9 +117,12 @@ var routes = require('./routes');
 //var databaseUrl = "venfu:ufnev@dharma.mongohq.com:10057/app16932282";
 //var collections = ["users"];
 //var userProvider = new UserProvider(databaseUrl, collections);
-mongoose.connect('venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282');
+// mongoose.connect('venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282');
 
-var db = mongoose.connection;
+// var db = mongoose.connection;
+
+var uri = 'venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282';
+global.db = mongoose.createConnection(uri);
 db.on('error', console.error.bind(console, 'connection error:'));
 
 // Passport
@@ -250,36 +256,23 @@ if ('development' == app.get('env')) {
 
 app.get('/',function(req, res){
   
-  MongoClient.connect("mongodb://venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282", function(err, mc) {
-    if(err) {
-      throw err;
-    }
-    else {
-      console.log("MongoClient connected");
-      
-      var query = ({});
-      
-      mc.collection('products').find(query).toArray(function(err, products){
-
-        if(err) throw err;
-
-        //console.dir(products);
-        
-        res.render('index', { 
-          title: 'VenFu', 
-          msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
-          user: req.user, loggedIn: req.isAuthenticated(), products: products //products: JSON.stringify(products)
-        });
-        
-      });
-    }
+  var query = ({});
+  DB.collection('products').find(query).toArray(function(err, products){
+    if(err) throw err;
+    //console.dir(products);
+    
+    res.render('index', { 
+      title: 'VenFu', 
+      msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+      user: req.user, loggedIn: req.isAuthenticated(), products: products
+    });
   });
-  
-  
-  
 });
 
 //app.get('/users', user.list);
+
+
+
 app.get('/customers', routes.customers);
 app.get('/vendors', routes.vendors);
 app.get('/delivery', routes.delivery);
@@ -591,6 +584,7 @@ app.post('/addProduct',
       name: req.body.productName, 
       price: req.body.price, 
       category: req.body.productCategory,
+      caption: req.body.productCaption,
       description: req.body.productDescription,
       ingredients: req.body.productIngredients, 
       instructions: req.body.productInstructions,
@@ -652,11 +646,65 @@ app.post('/addProduct',
 //******************************************
 app.get('/product:id', function(req, res) {
   // Then you can use the value of the id with req.params.id
-  // So you use it to get the data from your database:
-  req.flash('msg', ['Soon this will take you to a product page.']);
-  res.redirect("back");
-
+  // So you use it to get the data from your database
+  var id = req.params.id.slice(1);
+  var obj_id = BSON.ObjectID.createFromHexString(id);
+  var query = {'_id' : obj_id};
+  //console.dir(query);
+  DB.collection('products').findOne( query, function(err, doc){
+    if (err) {
+      console.log('No product found');
+      throw err;
+    }
+    // console.log('doc: ');
+    // console.dir(doc);
+    res.render('product', { 
+    title: 'VenFu - Product',
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, product: doc, loggedIn: req.isAuthenticated(), products: req.products
+    });
+    
+  });
+  
 });
+
+//******************************************
+//          SEARCH RESULTS PAGE
+//******************************************
+app.get('/searchresults',function(req, res){
+  
+  var query = ({});
+  DB.collection('products').find(query).toArray(function(err, products){
+    if(err) throw err;
+    //console.dir(products);
+    
+    res.render('searchresults', { 
+      title: 'VenFu - Search Results', 
+      msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+      user: req.user, loggedIn: req.isAuthenticated(), products: products
+    });
+  });
+});
+
+// For AngularJS to connect to MongoDB
+app.get('/products', function(req,res){
+  
+  var query = ({});
+  DB.collection('products').find(query).toArray(function(err, products){
+    if(err){ 
+      console.log("ERROR:  APP.JS LINE 691");
+      throw err;
+    }
+    console.log('/products connected');
+    //console.dir(products);
+    
+    res.render('searchresults', { 
+      title: 'VenFu - Search Results', 
+      msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+      user: req.user, loggedIn: req.isAuthenticated(), products: products
+    });
+  });
+}); 
 
 // CHECK EMAIL IN REGISTRATION FORM
 app.post('/checkEmail', function(req, res){

@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  .row(ng-app)
+    .col-xs-12.col-md-2
+      <!--Sidebar content-->
+
+      .form-group(style="margin: 80px 0 0 60px")
+        label(for="resultsSearch") Filter Results:
+        input.form-control(type="text", id="resultsSearch", ng-model="query")
+
+    .col-xs-12.col-md-10
+      <!--Body content-->
+
+      div(ng-controller="productCtrl", style="margin-top: 60px")
+        ul.unstyled
+          li(ng-repeat="product in products | filter:query")
+            {{product.name}}
+            p {{product.caption}}
+      
+        mixin products(products)
+          .products
+            - each product in products
+              .col-xs-12.col-md-3.product
+                a(href="/product:"+product._id)= product.name
+                  | <br>
+                  img.img-thumbnail.productImage(src="productImages/" + product._id + "." + product.format)
+        
+        +products(products)

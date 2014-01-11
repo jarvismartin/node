@@ -137,6 +137,30 @@ exports.user = function(req, res){
 };
 
 /*
+ * GET product page.
+ */
+
+exports.product = function(req, res){
+  res.render('product', { 
+    title: 'VenFu - Product',
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user,  id: req.params.id, products: req.products
+  });
+};
+
+/*
+ * GET search results page.
+ */
+
+exports.searchresults= function(req, res){
+  res.render('searchresults', { 
+    title: 'VenFu - Product',
+    msg: req.flash('info'), err: req.flash('err'), success: req.flash('success'),
+    user: req.user, products: req.products
+  });
+};
+
+/*
  * GET forgot password page.
  */
 

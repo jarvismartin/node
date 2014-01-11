@@ -1,7 +1,7 @@
-doctype 5
-html
+doctype html
+html(lang="en", ng-app="venfu")
   head
-    title = title
+    title #{title}
     
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(name="description", content="")
@@ -25,6 +25,10 @@ html
     
     // Latest compiled and minified Bootstrap JavaScript 
     script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")
+    
+    // AngularJS
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js")
+    script(src="javascripts/controllers.js")
     
     // // Start carousel cycle, set carousel height, .hello height, center .bigSearch
     // script.
@@ -70,77 +74,142 @@ html
          .relativeContainer
            img(src="images/egg.png")
       
-      #menu
-        i.fa.fa-align-justify.fa-3x(title="menu")
+      // #menu
+      //   i.fa.fa-align-justify.fa-3x(title="menu")
       
-      // Sound
-      // audio#gong
-      //   source(src="audio/gong.mp3")
+      // // Sound
+      // // audio#gong
+      // //   source(src="audio/gong.mp3")
   
-      // NAV CONTENT
-      #navContent.col-md-3.col-xs-11
-        // SEARCH BAR
-        .col-xs-12
-          .input-group
-            input.form-control(type="text", placeholder="Search")
-            span.input-group-btn
-              button.btn.btn-default(type="button")
-                i.fa.fa-search
+      // // NAV CONTENT
+      // #navContent.col-md-3.col-xs-11
+      //   // SEARCH BAR
+      //   .col-xs-12
+      //     .input-group
+      //       input.form-control(type="text", placeholder="Search")
+      //       span.input-group-btn
+      //         button.btn.btn-default(type="button")
+      //           i.fa.fa-search
                 
-        // SIGN UP/IN + HOME
-        ul.nav.pull-left.col-xs-6.text-center
-          li
-            a(href="/")
-              i.fa.fa-home
-              p Home
-          li
-            a(href="/about")  
-              i.fa.fa-info-circle
-              p How to
+      //   // SIGN UP/IN + HOME
+      //   ul.nav.pull-left.col-xs-6.text-center
+      //     li
+      //       a(href="/")
+      //         i.fa.fa-home
+      //         p Home
+      //     li
+      //       a(href="/about")  
+      //         i.fa.fa-info-circle
+      //         p How to
               
-          // Determine if User is logged in and render appropriate content
-          if loggedIn
-            li
-              a(href="/logout")
-                i.fa.fa-sign-out
-                p Sign out
+      //     // Determine if User is logged in and render appropriate content
+      //     if loggedIn
+      //       li
+      //         a(href="/logout")
+      //           i.fa.fa-sign-out
+      //           p Sign out
   
-        ul.nav.pull-left.col-xs-6.text-center
+      //   ul.nav.pull-left.col-xs-6.text-center
           
-          li
-            a(href="/customerService")  
-              i.fa.fa-warning
-              p Help
+      //     li
+      //       a(href="/customerService")  
+      //         i.fa.fa-warning
+      //         p Help
               
-          li
-            a(href="/suggestions")
-              i.fa.fa-lightbulb-o
-              p Ideas?
+      //     li
+      //       a(href="/suggestions")
+      //         i.fa.fa-lightbulb-o
+      //         p Ideas?
               
+      //     // Determine if User is logged in and render appropriate content
+      //     if loggedIn
+      //       li
+      //         a(href="/user")
+      //           i.fa.fa-dashboard
+      //           // If username 4 chars or less, render name. Otherwise, "my-fu" default.
+      //           if(user.username.length <= 7)
+      //             p #{user.username}-fu
+      //           else
+      //             p My Fu
+          
+        
+      //   // Determine if User is logged in and render appropriate content
+      //   ul.nav.pull-left.col-xs-11.login.text-center
+      //     if !loggedIn
+      //       li
+      //         a(href="#loginModal", id="login", data-toggle="modal")
+      //           i.fa.fa-sign-in  
+      //           p Sign in
+        
+      //   #hideNav
+      //     i.fa.fa-align-justify.fa-2x(title="close")
+      //     // img(src="images/egg.png")
+      
+      // Nav Bar
+      nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
+        <!-- Brand and toggle get grouped for better mobile display -->
+        .navbar-header
+          button(type="button", class="navbar-toggle", data-toggle="collapse", data-target="navbar-collapse")
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          ul.nav.navbar-nav
+            li
+              a.navbar-brand(href="/", title="home") VenFu
+          form.navbar-form.navbar-left(role="search")
+            .form-group
+              input(type="text", class="form-control", placeholder="New Search")
+            button#navSearch.btn.btn-default(type="submit")
+              i.fa.fa-search(style="margin: 0")
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        .collapse.navbar-collapse(id="navbar-collapse")
+          ul.nav.navbar-nav
+            li.dropdown
+              a(href="#", class="dropdown-toggle", data-toggle="dropdown") 
+                i.fa.fa-folder-open
+                span 
+                  b.caret
+              ul.dropdown-menu
+                li
+                  a(href="/about")  
+                    i.fa.fa-info-circle
+                    span How to VenFu
+                li
+                  a(href="/customerService")  
+                    i.fa.fa-warning
+                    span Get Help
+                    
+                li
+                  a(href="/suggestions")
+                    i.fa.fa-lightbulb-o
+                    span Got Ideas?
+                
           // Determine if User is logged in and render appropriate content
-          if loggedIn
-            li
-              a(href="/user")
-                i.fa.fa-dashboard
-                // If username 4 chars or less, render name. Otherwise, "my-fu" default.
-                if(user.username.length <= 7)
-                  p #{user.username}-fu
-                else
-                  p My Fu
-          
-        
-        // Determine if User is logged in and render appropriate content
-        ul.nav.pull-left.col-xs-11.login.text-center
-          if !loggedIn
-            li
-              a(href="#loginModal", id="login", data-toggle="modal")
-                i.fa.fa-sign-in  
-                p Sign in
-        
-        #hideNav
-          i.fa.fa-align-justify.fa-2x(title="close")
-          // img(src="images/egg.png")
-   
+          ul.nav.navbar-nav.navbar-right
+            if !loggedIn
+              li
+                a(href="#registerModal", id="register", data-toggle="modal")
+                  i.fa.fa-edit
+                  span Sign up
+              li
+                a(href="#loginModal", id="login", data-toggle="modal")
+                  i.fa.fa-sign-in  
+                  span Sign in
+            else
+              li
+                a(href="/logout")
+                  i.fa.fa-sign-out
+                  span Sign out
+              li
+                a(href="/user")
+                  i.fa.fa-dashboard
+                  // If username 4 chars or less, render name. Otherwise, "my-fu" default.
+                  if(user.username.length <= 7)
+                    span #{user.username}-fu
+                  else
+                    span My Fu
+      
       // Modals
       #registerModal.modal.fade
         .modal-dialog
@@ -298,56 +367,4 @@ html
                 .form-group
                   .col-xs-12
                     button#loginHelpSubmit.btn.btn-success.pull-right.disabled(type="submit", name="submit", onclick="loginHelpSubmit()") Send me a new password
-  
-    //- NAVBAR 
-      div.navbar.navbar-fixed-top
-          div.navbar-inner
-              div.container-fluid
-                  button.btn.btn-navbar(type="button", data-toggle="collapse", data-target=".nav-collapse")
-                      span.fa-bar
-                      span.fa-bar
-                      span.fa-bar
-                  a.brand(href="/") VenFu
-                  ul.nav
-                      li.dropdown
-                          a(href="#", class="dropdown-toggle", data-toggle="dropdown") 
-                              strong.caret
-                          ul.dropdown-menu
-                              li.nav-header You are a
-                              li
-                                  a(href="/customers") Customer
-                              li
-                                  a(href="/vendors") Vendor
-                              li
-                                  a(href="/delivery") Delivery Person
-                              li.divider
-                              li.nav-header Other Stuff...
-                              li
-                                  a(href="#") About Us
-                              li
-                                  a(href="/suggestions") Suggestions
-                              li
-                                  a(href="/customerService") Problems?
-                      li.divider-vertical
-                      // SEARCH BAR
-                      form.navbar-search(action="")
-                          input.search-query.span6(type="text", placeholder="Search")
-                   
-                  // SIGN UP/IN will collapse
-                  div.nav-collapse.collapse
-                      ul.nav.pull-right
-                          li 
-                            a(href="#") Sign Up
-                          li.divider-vertical
-                          li.dropdown
-                              a(href="#", class="dropdown-toggle", data-toggle="dropdown") Sign In 
-                                  strong.caret
-                              div.dropdown-menu(style="padding: 15px; padding-bottom: 0px;")
-                                  form.form-signin
-                                      h2.form-signin-heading Please sign in
-                                      input.input-block-level(type="text", name="username", placeholder="ID")
-                                      input.input-block-level(type="password", name="password", placeholder="Password")
-                                      label.checkbox Remember me
-                                          input(type="checkbox", value="remember-me") 
-                                      button.btn.btn-large.btn-primary(type="submit") Sign in
-                                      hr
+                    

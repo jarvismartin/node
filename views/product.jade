@@ -1,0 +1,68 @@
+extends layout
+
+block content
+  
+  .productPage
+    .col-xs-12.col-md-8.col-md-offset-2
+      a(href="#", style="color: #DDD")
+        h1.pull-left
+          i.fa.fa-star-o
+          i.fa.fa-star-o
+          i.fa.fa-star-o
+          i.fa.fa-star-o
+      h1.pull-right &#36;#{product.price}
+    .col-xs-12.col-md-8.col-md-offset-2
+      h1.text-center #{product.name}
+    .col-xs-12.col-md-8.col-md-offset-2.text-center
+      p #{product.caption}
+    .col-xs-12.col-md-2.col-md-offset-2
+      a(href="#imgModal", data-toggle="modal")
+        img.productPageThumb.img-thumbnail.center-block(src="productImages/" + product._id + "." + product.format, title="click to enlarge", alt=product.description)
+    .col-xs-12.col-md-6
+      p 
+        strong by:
+        br
+        span #{product.username}
+    
+      p 
+        span #{product.description}
+    
+      p 
+        strong Ingredients:
+        br
+        span #{product.ingredients}
+      
+      p 
+        strong Instructions:
+        br
+        span #{product.instructions}
+   
+    #imgModal.modal.fade
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button(type="button", class="close", data-dismiss="modal", aria-hidden="true") &times;
+              h3 #{product.name}
+            .modal-body
+              col-xs-12
+                img.productModalImg.img-rounded.center-block(src="productImages/" + product._id + "." + product.format, alt=product.description)
+
+      
+  // Page-specific scripts
+  // set element heights
+  script.
+    $(function(){
+      var productImgHeight = 0.5 * window.innerHeight;
+      $('.productImgWrapper').css('height', productImgHeight + "px");
+    });
+  
+  // Auto-resize
+  script.
+    $(window).on(resize, function(){
+      alert('resized');
+      var 
+        productImgHeight = 0.25 * window.innerHeight;
+      console.log('productImgHeight:' + productImgHeight);
+      $(".productImg").css("height", productImgHeight + "px");
+
+    });
