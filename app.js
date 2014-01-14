@@ -28,16 +28,16 @@ var express = require('express')
 // MONGO DB
 // Connect to the db
 //MongoClient.connect("mongodb://127.4.192.1:27017", function(err, db) {
-var DB;
-MongoClient.connect("mongodb://venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282", function(err, db) {
-  if(err) {
-    throw err;
-  }
-  else {
-    console.log("Mongo connected");
-    DB = db;
-  }
-});
+// var DB;
+// MongoClient.connect("mongodb://venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282", function(err, db) {
+//   if(err) {
+//     throw err;
+//   }
+//   else {
+//     console.log("Mongo connected");
+//     DB = db;
+//   }
+// });
 
 var app = express();
 
@@ -117,9 +117,9 @@ var routes = require('./routes');
 //var databaseUrl = "venfu:ufnev@dharma.mongohq.com:10057/app16932282";
 //var collections = ["users"];
 //var userProvider = new UserProvider(databaseUrl, collections);
-// mongoose.connect('venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282');
+ mongoose.connect('venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282');
 
-// var db = mongoose.connection;
+ var db = mongoose.connection;
 
 var uri = 'venfu:1qazse4$ESZAQ!@dharma.mongohq.com:10057/app16932282';
 global.db = mongoose.createConnection(uri);
@@ -255,9 +255,9 @@ if ('development' == app.get('env')) {
 //app.get('/', routes.index);
 
 app.get('/',function(req, res){
-  
+  var Product = res.getProductProvider();
   var query = ({});
-  DB.collection('products').find(query).toArray(function(err, products){
+  Product.find(query).exec(function(err, products) {
     if(err) throw err;
     //console.dir(products);
     
@@ -647,11 +647,12 @@ app.post('/addProduct',
 app.get('/product:id', function(req, res) {
   // Then you can use the value of the id with req.params.id
   // So you use it to get the data from your database
+  var Product = res.getProductProvider();
   var id = req.params.id.slice(1);
   var obj_id = BSON.ObjectID.createFromHexString(id);
   var query = {'_id' : obj_id};
   //console.dir(query);
-  DB.collection('products').findOne( query, function(err, doc){
+  Product.findOne( query, function(err, doc){
     if (err) {
       console.log('No product found');
       throw err;
@@ -672,9 +673,9 @@ app.get('/product:id', function(req, res) {
 //          SEARCH RESULTS PAGE
 //******************************************
 app.get('/searchresults',function(req, res){
-  
+  var Product = res.getProductProvider();
   var query = ({});
-  DB.collection('products').find(query).toArray(function(err, products){
+  Product.find(query).toArray(function(err, products){
     if(err) throw err;
     //console.dir(products);
     
@@ -688,9 +689,9 @@ app.get('/searchresults',function(req, res){
 
 // For AngularJS to connect to MongoDB
 app.get('/products', function(req,res){
-  
+  var Product = res.getProductProvider();
   var query = ({});
-  DB.collection('products').find(query).toArray(function(err, products){
+  Product.find(query).toArray(function(err, products){
     if(err){ 
       console.log("ERROR:  APP.JS LINE 691");
       throw err;
